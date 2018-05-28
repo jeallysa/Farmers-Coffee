@@ -53,6 +53,12 @@
 			}else{
 				$this->db->where('client_id', $client_id);
 				$this->db->update('contract', $data);
+				$new_machines = array(
+					'mach_serial' => $this->input->post("contract_serial"),
+					'mach_qty' => $this->input->post("contract_mqty")
+				);
+				$this->db->where('contract_id', $contract_id);
+				$this->db->update('machine_out', $data);
 				$this->session->set_flashdata('success', 'Update successful!');
 			}
 			
