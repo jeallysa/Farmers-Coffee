@@ -62,7 +62,7 @@
 
 			$raw_coffee = $this->input->post("name");
 			$raw_type = $this->input->post("raw_type");
-			if($this->db->query("SELECT IF (EXISTS (SELECT * FROM raw_coffee WHERE raw_coffee = '".$raw_coffee."' AND raw_type = '".$raw_type."'), 1,  0) AS result")->row()->result == 1){
+			if(($this->db->query("SELECT IF (EXISTS (SELECT * FROM raw_coffee WHERE raw_coffee = '".$raw_coffee."' AND raw_type = '".$raw_type."'), 1,  0) AS result")->row()->result == 1) || !preg_match('/[a-zA-Z ]+/', $name)){
 					$this->session->set_flashdata('error', 'Raw coffee already exist');
 								redirect('adminProductInventory');
 				}else{
