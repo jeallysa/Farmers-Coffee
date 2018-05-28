@@ -1,0 +1,15 @@
+Configuration:
+(php.ini)
+SMTP = smtp.gmail.com
+smtp_port = 587
+sendmail_from = "<any email address as long as gmail>"
+sendmail_path = "C:\wamp64\sendmail\sendmail.exe"
+
+(sendmail.ini)
+smtp_server=smtp.gmail.com
+smtp_port=587
+smtp_ssl=auto
+auth_username=<any email address as long as gmail>
+auth_password=<its corresponding password>
+
+note: place sendmail on c:/wamp64
