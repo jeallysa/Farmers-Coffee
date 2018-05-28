@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 24, 2018 at 02:16 AM
+-- Generation Time: May 28, 2018 at 07:59 PM
 -- Server version: 5.7.14
 -- PHP Version: 5.6.25
 
@@ -64,7 +64,8 @@ CREATE TABLE `client_coffreturn` (
   `resolved` enum('Yes','No') NOT NULL DEFAULT 'No',
   `inv_stat` varchar(45) NOT NULL DEFAULT '0',
   `pckng_stat` varchar(45) NOT NULL DEFAULT '0',
-  `stckr_stat` varchar(45) NOT NULL DEFAULT '0'
+  `stckr_stat` varchar(45) NOT NULL DEFAULT '0',
+  `walkinPo_id` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -126,7 +127,7 @@ CREATE TABLE `client_machreturn` (
 
 CREATE TABLE `coffee_blend` (
   `blend_id` int(11) NOT NULL,
-  `blend` varchar(20) NOT NULL,
+  `blend` varchar(50) NOT NULL,
   `package_id` varchar(45) NOT NULL,
   `blend_price` int(11) NOT NULL,
   `blend_qty` int(11) NOT NULL,
@@ -175,12 +176,10 @@ CREATE TABLE `contract` (
   `contract_id` int(50) NOT NULL,
   `date_started` date NOT NULL,
   `blend_id` int(11) NOT NULL,
-  `package_id` int(11) NOT NULL,
   `client_id` int(50) NOT NULL,
   `required_qty` int(11) NOT NULL,
   `credit_term` varchar(20) NOT NULL,
   `mach_id` int(50) NOT NULL,
-  `mach_salesID` int(50) NOT NULL,
   `date_expiration` date DEFAULT NULL,
   `seen` varchar(45) DEFAULT '0',
   `seen_admin` varchar(45) NOT NULL DEFAULT '0'
@@ -244,7 +243,6 @@ DELIMITER ;
 --
 
 CREATE TABLE `inv_transact` (
-  `inv_transactID` int(11) NOT NULL,
   `trans_id` int(11) NOT NULL,
   `transact_date` date NOT NULL,
   `company_returnID` int(11) DEFAULT NULL,
@@ -293,7 +291,8 @@ CREATE TABLE `machine_out` (
   `client_id` int(11) NOT NULL,
   `remarks` varchar(60) NOT NULL DEFAULT 'Received',
   `status` varchar(60) NOT NULL,
-  `mach_stat` varchar(45) NOT NULL DEFAULT '0'
+  `mach_stat` varchar(45) NOT NULL DEFAULT '0',
+  `contract_id` varchar(45) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -490,7 +489,7 @@ CREATE TABLE `supp_payment` (
   `supp_payment_id` int(50) NOT NULL,
   `supp_po_id` int(50) NOT NULL,
   `date` date NOT NULL,
-  `amount` double NOT NULL,
+  `amount` decimal(20,2) NOT NULL,
   `bank` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -510,7 +509,7 @@ CREATE TABLE `supp_po` (
   `delivery_stat` int(11) DEFAULT '0',
   `payment_stat` int(11) DEFAULT '0',
   `partial_stat` int(11) DEFAULT '0',
-  `payment` decimal(20,3) DEFAULT NULL,
+  `payment` decimal(20,2) DEFAULT NULL,
   `date_archived` date DEFAULT NULL,
   `archive` int(11) DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -549,8 +548,9 @@ CREATE TABLE `supp_temp_po` (
   `id_supp_temp_PO` int(50) NOT NULL,
   `supp_name` varchar(45) NOT NULL,
   `date` date NOT NULL,
-  `trucking_fee` double NOT NULL,
-  `credit_term` varchar(45) NOT NULL
+  `trucking_fee` decimal(20,2) NOT NULL,
+  `credit_term` varchar(45) NOT NULL,
+  `username` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -566,7 +566,8 @@ CREATE TABLE `supp_temp_po_order` (
   `type` varchar(20) NOT NULL,
   `unitPrice` decimal(20,2) NOT NULL,
   `amount` decimal(20,2) NOT NULL,
-  `categoryx` int(11) DEFAULT NULL
+  `categoryx` int(11) DEFAULT NULL,
+  `username` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -650,17 +651,10 @@ CREATE TABLE `user` (
   `u_email` varchar(50) NOT NULL,
   `u_contact` varchar(12) NOT NULL,
   `u_address` varchar(100) NOT NULL,
-  `password` varchar(20) NOT NULL,
+  `password` varchar(20) NOT NULL DEFAULT 'jhcs',
   `u_activation` int(11) NOT NULL DEFAULT '1',
   `u_type` varchar(45) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `user`
---
-
-INSERT INTO `user` (`user_no`, `username`, `u_lname`, `u_fname`, `u_email`, `u_contact`, `u_address`, `password`, `u_activation`, `u_type`) VALUES
-(1, 'admin', '', '', '', '', '', 'admin', 1, '');
 
 -- --------------------------------------------------------
 
@@ -764,7 +758,7 @@ ALTER TABLE `contracted_po`
 -- Indexes for table `inv_transact`
 --
 ALTER TABLE `inv_transact`
-  ADD PRIMARY KEY (`inv_transactID`),
+  ADD PRIMARY KEY (`trans_id`),
   ADD KEY `inv_trans1_idx` (`company_returnID`),
   ADD KEY `inv_trans2_idx` (`client_returnID`),
   ADD KEY `inv_trans3_idx` (`po_supplier`),
@@ -993,7 +987,7 @@ ALTER TABLE `contracted_po`
 -- AUTO_INCREMENT for table `inv_transact`
 --
 ALTER TABLE `inv_transact`
-  MODIFY `inv_transactID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `trans_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `machine`
 --
@@ -1108,7 +1102,7 @@ ALTER TABLE `trans_stick`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `user_no` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `walkin_raw`
 --
