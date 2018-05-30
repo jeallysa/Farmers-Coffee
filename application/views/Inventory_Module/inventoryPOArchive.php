@@ -238,7 +238,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     <th align="center"><b>Product</b></th>
                                                     <th align="center"><b>Type</b></th>
                                                     <th align="center"><b>Supplier</b></th>
-                                                    <th align="center"><b>Quantity Needed</b></th>
+                                                    <th align="center"><b>Needed Quantity</b></th>
                                                 </tr>
                                             </thead>
                                                 <tbody>
@@ -254,15 +254,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>' . $object->name . ' </b></td>' ,
                                                 '<td>' . $object->type . ' </b></td>' ,
                                                 '<td>' . $object->supplier .  ' </b></td>' ,
-                                                '<td>' . number_format(((($object->reorder-$object->stock)/1000)+0.1),2) .  ' kg </b></td>' ,
+                                                '<td>More than ' . number_format((($object->reorder-$object->stock)/1000)+0.1,2) .  ' kg </b></td>' ,
                                                 '</tr>' ;
                                               
+                                              }elseif($category == 4){
+                                                echo   '<tr>' ,
+                                                '<td>' . $object->name . ' </b></td>' ,
+                                                '<td>' . $object->type . ' </b></td>' ,
+                                                '<td>' . $object->supplier .  ' </b></td>' ,
+                                                '<td>More than ' . number_format(($object->reorder-$object->stock)+1) .  ' unit/s </b></td>' ,
+                                                '</tr>' ;
+
                                               }else{
                                                   echo   '<tr>' ,
                                                 '<td>' . $object->name . ' </b></td>' ,
                                                 '<td>' . $object->type . ' </b></td>' ,
                                                 '<td>' . $object->supplier .  ' </b></td>' ,
-                                                '<td>' . number_format(($object->reorder-$object->stock+1)) .  ' pc/s </b></td>' ,
+                                                '<td>More than ' . number_format(($object->reorder-$object->stock+1)) .  ' pc/s </b></td>' ,
                                                 '</tr>' ;
                                               }
                                               
@@ -365,17 +373,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <div class="modal-body" style="padding: 5px;">
                                 <div id="page-wrapper">
                                     <div class="table-responsive">
-                                       <center><b>Details</b>
-                                            <br>
+                                        
+                                        <center><h3><b><?php echo $object->sup_company  ?></b></h3></center>
+                                        <center><h4><b><p>Details</p></b></h4></center> 
+                                        <center><h5><b><p>Purchase Order No. <?php echo $temp ?></p></b></h5>
                                             
                                             <?php 
                                              $arr = explode('-', $dateMin);
                                              $newDate = $arr[1].'/'.$arr[2].'/'.$arr[0];
                                              ?>
                                             
-                                           <b><?php echo $newDate ?></b></center>
-                                            <br>
-                                            <center><h3><b><p>Purchase Order No. <?php echo $temp ?></p></b></h3></center>
+                                            <b><?php echo $newDate ?></b>
+                                            </center> 
+
 
                                         <table class="table table-striped" id="table-mutasi">
                                             <thead>
@@ -590,24 +600,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                    </div>
               </div>
           </div>
-     </div>   
-     </div>
-               <footer class="footer navbar navbar-fixed-bottom" >
-                <div class="container">
-                  <div class="copyright float-center">
-                    <center>
-                    &copy;
-                    <a href="https://www.creative-tim.com" target="_blank">Creative Team</a>
-                    <script>
-                      document.write(new Date().getFullYear())
-                    </script>, made with <i class="material-icons">favorite</i> by
-                    Team Barako for John Hay Coffee Services Incorporation.
-                </center>
-                  </div>
-                </div>
-              </footer>
-        </div>
-</div>
+     </div> 
+<div>
                <footer class="footer navbar navbar-fixed-bottom" >
                 <div class="container">
                   <div class="copyright float-center">
@@ -674,6 +668,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 $(document).ready(function() {
     $('#example2').DataTable({
+      "aaSorting": [2, 'asc'],
         select: {
             style: 'single'
         }

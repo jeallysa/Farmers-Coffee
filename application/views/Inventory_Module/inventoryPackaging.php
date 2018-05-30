@@ -250,7 +250,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     <th align="center"><b>Product</b></th>
                                                     <th align="center"><b>Type</b></th>
                                                     <th align="center"><b>Supplier</b></th>
-                                                    <th align="center"><b>Quantity Needed</b></th>
+                                                    <th align="center"><b>Needed Quantity</b></th>
                                                 </tr>
                                             </thead>
                                                 <tbody>
@@ -266,15 +266,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>' . $object->name . ' </b></td>' ,
                                                 '<td>' . $object->type . ' </b></td>' ,
                                                 '<td>' . $object->supplier .  ' </b></td>' ,
-                                                '<td>' . number_format(((($object->reorder-$object->stock)/1000)+0.1),2) .  ' kg </b></td>' ,
+                                                '<td>More than ' . number_format((($object->reorder-$object->stock)/1000)+0.1,2) .  ' kg </b></td>' ,
                                                 '</tr>' ;
                                               
+                                              }elseif($category == 4){
+                                                echo   '<tr>' ,
+                                                '<td>' . $object->name . ' </b></td>' ,
+                                                '<td>' . $object->type . ' </b></td>' ,
+                                                '<td>' . $object->supplier .  ' </b></td>' ,
+                                                '<td>More than ' . number_format(($object->reorder-$object->stock)+1) .  ' unit/s </b></td>' ,
+                                                '</tr>' ;
+
                                               }else{
                                                   echo   '<tr>' ,
                                                 '<td>' . $object->name . ' </b></td>' ,
                                                 '<td>' . $object->type . ' </b></td>' ,
                                                 '<td>' . $object->supplier .  ' </b></td>' ,
-                                                '<td>' . number_format(($object->reorder-$object->stock+1)) .  ' pc/s </b></td>' ,
+                                                '<td>More than ' . number_format(($object->reorder-$object->stock+1)) .  ' pc/s </b></td>' ,
                                                 '</tr>' ;
                                               }
                                               
@@ -724,6 +732,7 @@ $(document).ready(function() {
 
 $(document).ready(function() {
     $('#example2').DataTable({
+        "aaSorting": [2, 'asc'],
         select: {
             style: 'single'
         }

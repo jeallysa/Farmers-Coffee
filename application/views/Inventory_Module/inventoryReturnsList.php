@@ -314,7 +314,7 @@ s}
                                                     <th align="center"><b>Product</b></th>
                                                     <th align="center"><b>Type</b></th>
                                                     <th align="center"><b>Supplier</b></th>
-                                                    <th align="center"><b>Quantity Needed</b></th>
+                                                    <th align="center"><b>Needed Quantity</b></th>
                                                 </tr>
                                             </thead>
                                                 <tbody>
@@ -330,15 +330,23 @@ s}
                                                 '<td>' . $object->name . ' </b></td>' ,
                                                 '<td>' . $object->type . ' </b></td>' ,
                                                 '<td>' . $object->supplier .  ' </b></td>' ,
-                                                '<td>' . number_format(((($object->reorder-$object->stock)/1000)+0.1),2) .  ' kg </b></td>' ,
+                                                '<td>More than ' . number_format((($object->reorder-$object->stock)/1000)+0.1,2) .  ' kg </b></td>' ,
                                                 '</tr>' ;
                                               
+                                              }elseif($category == 4){
+                                                echo   '<tr>' ,
+                                                '<td>' . $object->name . ' </b></td>' ,
+                                                '<td>' . $object->type . ' </b></td>' ,
+                                                '<td>' . $object->supplier .  ' </b></td>' ,
+                                                '<td>More than ' . number_format(($object->reorder-$object->stock)+1) .  ' unit/s </b></td>' ,
+                                                '</tr>' ;
+
                                               }else{
                                                   echo   '<tr>' ,
                                                 '<td>' . $object->name . ' </b></td>' ,
                                                 '<td>' . $object->type . ' </b></td>' ,
                                                 '<td>' . $object->supplier .  ' </b></td>' ,
-                                                '<td>' . number_format(($object->reorder-$object->stock+1)) .  ' pc/s </b></td>' ,
+                                                '<td>More than ' . number_format(($object->reorder-$object->stock+1)) .  ' pc/s </b></td>' ,
                                                 '</tr>' ;
                                               }
                                               
@@ -399,14 +407,13 @@ s}
                                              <table id="" class="table hover order-column" cellspacing="0" width="100%">
                                             <thead>
                                                 <tr>
-                                                     <th><b>Purchase Order No.</b></th>
                                                      <th><b>Delivery Receipt No.</b></th>
 													 <th><b>Date Returned</b></th>
                                                      <th><b>Item Returned</b></th>
                                                      <th><b>Quantity</b></th>
                                                      <th><b>Weight(kg)</b></th>
                                                      <th><b>Remarks</b></th>
-                                                     <th></th>
+                                                     <th><b>Action</b></th>
                                                     
                                                 </tr>
                                             </thead>
@@ -419,7 +426,6 @@ s}
                                                 if($row->categoryr==1){ 
                                                   ?>
                                                 <tr>
-                                                    <td><?php echo $row->poNo ?></td>
                                                     <td><?php echo $row->drNo ?></td>
                                                     <td><?php echo $row->sup_returnDate ?></td>
                                                     <td><?php echo $row->item."  ".$row->type ?></td>
@@ -988,8 +994,8 @@ $(document).on('click', '.series-select', function() {
 
 })
 
-    });
-});
+
+
        
   
     
@@ -1010,6 +1016,7 @@ $(document).ready(function(){
 
 $(document).ready(function() {
     $('#example2').DataTable({
+        "aaSorting": [2, 'asc'],
         select: {
             style: 'single'
         }

@@ -243,7 +243,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     <th align="center"><b>Product</b></th>
                                                     <th align="center"><b>Type</b></th>
                                                     <th align="center"><b>Supplier</b></th>
-                                                    <th align="center"><b>Quantity Needed</b></th>
+                                                    <th align="center"><b>Needed Quantity</b></th>
                                                 </tr>
                                             </thead>
                                                 <tbody>
@@ -259,15 +259,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>' . $object->name . ' </b></td>' ,
                                                 '<td>' . $object->type . ' </b></td>' ,
                                                 '<td>' . $object->supplier .  ' </b></td>' ,
-                                                '<td>' . number_format(((($object->reorder-$object->stock)/1000)+0.1),2) .  ' kg </b></td>' ,
+                                                '<td>More than ' . number_format((($object->reorder-$object->stock)/1000)+0.1,2) .  ' kg </b></td>' ,
                                                 '</tr>' ;
                                               
+                                              }elseif($category == 4){
+                                                echo   '<tr>' ,
+                                                '<td>' . $object->name . ' </b></td>' ,
+                                                '<td>' . $object->type . ' </b></td>' ,
+                                                '<td>' . $object->supplier .  ' </b></td>' ,
+                                                '<td>More than ' . number_format(($object->reorder-$object->stock)+1) .  ' unit/s </b></td>' ,
+                                                '</tr>' ;
+
                                               }else{
                                                   echo   '<tr>' ,
                                                 '<td>' . $object->name . ' </b></td>' ,
                                                 '<td>' . $object->type . ' </b></td>' ,
                                                 '<td>' . $object->supplier .  ' </b></td>' ,
-                                                '<td>' . number_format(($object->reorder-$object->stock+1)) .  ' pc/s </b></td>' ,
+                                                '<td>More than ' . number_format(($object->reorder-$object->stock+1)) .  ' pc/s </b></td>' ,
                                                 '</tr>' ;
                                               }
                                               
@@ -317,8 +325,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <div class="modal-body" style="padding: 5px;">
                                 <div id="page-wrapper">
                                     <div class="table-responsive">
-                                        <center><b>Delivery</b>
-                                            <br>
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                    <center><h3><b><?php echo $object->sup_company  ?></b></h3></center>
+                                        <center><h4><b><p>Delivery</p></b></h4></center> 
+                                        <center><h5><b><p>Purchase Order No. <?php echo $temp ?></p></b></h5>
                                             
                                             <?php 
                                              $arr = explode('-', $dateMin);
@@ -326,9 +341,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                              ?>
                                             
                                             <b><?php echo $newDate ?></b>
-                                            <br>
-                                            <b><?php echo "Purchase Order No. ".$temp ?></b></center> 
-
+                                            </center>
 
 
                                         <div class="col-md-4 form-group">
@@ -666,8 +679,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <div class="modal-body" style="padding: 5px;">
                                 <div id="page-wrapper">
                                     <div class="table-responsive">
-                                       <center><b>Details</b>
-                                            <br>
+                                        
+                                        <center><h3><b><?php echo $object->sup_company  ?></b></h3></center>
+                                        <center><h4><b><p>Details</p></b></h4></center> 
+                                        <center><h5><b><p>Purchase Order No. <?php echo $temp ?></p></b></h5>
                                             
                                             <?php 
                                              $arr = explode('-', $dateMin);
@@ -675,20 +690,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                              ?>
                                             
                                             <b><?php echo $newDate ?></b>
-                                            <br>
-                                            <b><?php echo "Purchase Order No. ".$temp ?></b></center> 
+                                            </center> 
+                                           
 
                                         <table class="table table-striped" id="table-mutasi">
                                             <thead>
                                                 <tr>
                                                     
                                                    
-                                                    <th>Item Name</th>
-                                                    <th>Type</th>
-                                                    <th>Quantity</th>
-                                                    <th>Weight(kg)</th>
-                                                    <th>Unit Price</th>
-                                                    <th>Amount</th>
+                                                    <th><b>Item Name</b></th>
+                                                    <th><b>Type</b></th>
+                                                    <th><b>Quantity</b></th>
+                                                    <th><b>Weight(kg)</b></th>
+                                                    <th><b>Unit Price</b></th>
+                                                    <th><b>Amount</b></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -702,7 +717,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 $arrayType = array("raw_type","sticker_type","package_size","brewer_type");
                    for($table = 0 ; $table < 4 ; $table++){
                           
-                     $retrieveDetails ="SELECT * FROM ".$arrayItem[$table]." join supp_po_ordered  on ".$arrayOn[$table] ." = item join supp_po using (supp_po_id) where supp_PO_id =".$temp." and sup_id = ".$sup_id." and type =".$arrayType[$table];
+                     $retrieveDetails2 ="SELECT * FROM ".$arrayItem[$table]." join supp_po_ordered  on ".$arrayOn[$table] ." = item join supp_po using (supp_po_id) where supp_PO_id =".$temp." and sup_id = ".$sup_id." and type =".$arrayType[$table];
+					   
+					   
+			  
+					 $retrieveDetails = "select * from supp_po join supp_po_ordered using (supp_po_id)  join ".$arrayItem[$table] ." on item = ".$arrayOn[$table] ." 
+					 where item = ".$arrayOn[$table] ." and type = ".$arrayType[$table]." and supp_po_id = ".$temp." and sup_id = ".$sup_id;   
+					   
+					   
+					   //pagnagkasabay ng order ata nababago yung supp_id kaya nwawala
+					   
+					   
+					   
+					   
                                               $query = $this->db->query($retrieveDetails);
                                               if ($query->num_rows() > 0) {
                                               foreach ($query->result() as $object) {
@@ -924,23 +951,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               </div>
           </div>
      </div>   
-     </div>
-               <footer class="footer navbar navbar-fixed-bottom" >
-                <div class="container">
-                  <div class="copyright float-center">
-                    <center>
-                    &copy;
-                    <a href="https://www.creative-tim.com" target="_blank">Creative Team</a>
-                    <script>
-                      document.write(new Date().getFullYear())
-                    </script>, made with <i class="material-icons">favorite</i> by
-                    Team Barako for John Hay Coffee Services Incorporation.
-                </center>
-                  </div>
-                </div>
-              </footer>
-        </div>
-</div>
+<div>
                <footer class="footer navbar navbar-fixed-bottom" >
                 <div class="container">
                   <div class="copyright float-center">
@@ -1117,6 +1128,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 $(document).ready(function() {
     $('#example2').DataTable({
+        "aaSorting": [2, 'asc'],
         select: {
             style: 'single'
         }
