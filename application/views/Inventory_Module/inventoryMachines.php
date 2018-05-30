@@ -599,7 +599,6 @@ SELECT sup_returnQty AS TotalOut FROM company_returns INNER JOIN supp_po_ordered
                                     <br>
                                     <table id="example" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                                         <thead>
-                                            <th><b class="pull-left">No.</b></th>
                                             <th><b class="pull-left">Machine</b></th>
                                             <th><b class="pull-left">Type</b></th>
                                             <th><b class="pull-left">Suppplier</b></th>
@@ -622,8 +621,6 @@ SELECT sup_returnQty AS TotalOut FROM company_returns INNER JOIN supp_po_ordered
                                              
                                             
                                            echo '<tr>' ,
-                                                
-                                                '<td>'  . $object->mach_id . '</td>' ,
                                                 '<td>'  . $object->brewer . '</td>' ,
                                                 '<td>'  . $object->brewer_type   . '</td>' ,
                                                 '<td>'  . $object->sup_company . '</td>' ,

@@ -946,6 +946,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     
 $(document).ready(function() {
     var table = $('#example').DataTable({
+        "aaSorting": [1,'asc'],
         select: {
             style: 'single'
         }

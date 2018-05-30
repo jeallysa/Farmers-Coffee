@@ -348,6 +348,79 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <!----------------------------------------------------------END     OF     MODAL -------------------------------------->     
             
             
+            
+            
+            
+            
+    <!----------------------------------------------------------Delete Archive -------------------------------------->           
+          
+    <?php
+      $delete = 1;
+        if(!empty($order)) {                                
+           foreach($order as $object){
+            $temp =  $object->supp_po_id;
+            $sup_id = $object->sup_id;   
+            $dateMin = $object->suppPO_date;
+
+?>                                                     
+                                    
+                                
+                                    
+    <div class="modal fade" id="<?php echo "delete" . $delete  ?>" role="dialog">
+      <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">  
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <!--<h4 class="modal-title">Resolve the Issue</h4>-->
+        </div>
+          
+    <form action="InventoryPOArchive/delete/<?php echo $temp ?>" method="post" accept-charset="utf-8">    
+        <div class="modal-body">
+            <center><h4><b><p>Are you sure you want to Delete Purchase Order No. <?php echo $temp ?></p></b></h4></center>.
+           
+            <input type="hidden" class="form-control" name="supp_po_id"         value = "<?php echo $temp ?>" > 
+            
+        </div>
+       
+               <div  align="center">
+                                 <button type="submit" class="btn btn-success accept">Yes</button>
+                                 <button type="button" class="btn btn-danger btn-close" data-dismiss="modal">No</button>
+                        
+              </div>
+            </form>     
+        </div>
+      </div>
+      
+    </div>
+                                          
+           
+            
+ <?php      
+         $delete++;        
+        }
+    }
+?>    
+                      
+ 
+            
+        <!----------------------------------------------------------END     OF     MODAL -------------------------------------->         
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
                   
             
             
@@ -575,8 +648,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                <td><center>
                                                    <a class="btn btn-success btn-sm" data-toggle="modal" data-target="#<?php echo "archive" . $mapModal  ?>">Retrieve</a>
                                                    <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#<?php echo "details" . $mapModal  ?>">Details</a>
+                                                   <a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#<?php echo "delete" . $mapModal  ?>">Delete</a>
                                                    </center>
-                                            </td>
+                                              </td>
                                             
                                             
                                             
@@ -647,6 +721,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     
  $(document).ready(function() {
     var table = $('#example').DataTable({
+      "aaSorting": [1,'desc'],
         select: {
             style: 'single'
         }

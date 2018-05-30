@@ -600,7 +600,6 @@ SELECT sup_returnQty AS TotalOut FROM company_returns INNER JOIN supp_po_ordered
                                     <br>
                                     <table id="example" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                                         <thead>
-                                            <th><b class="pull-left">No.</b></th>
                                             <th><b class="pull-left">Packaging</b></th>
                                             <th><b class="pull-left">Size</b></th>
                                             <th><b class="pull-left">Supplier</b></th>
@@ -623,8 +622,6 @@ SELECT sup_returnQty AS TotalOut FROM company_returns INNER JOIN supp_po_ordered
                                              
                                             
                                            echo '<tr>' ,
-                                                
-                                                '<td>'  . $object->package_id . '</td>' ,
                                                 '<td>'  . $object->package_type . ' </td>' ,
                                                 '<td>'  . number_format($object->package_size)   . ' g</td>' ,
                                                 '<td>'  . $object->sup_company . '</td>' ,

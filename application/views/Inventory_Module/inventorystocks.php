@@ -327,11 +327,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             
                                            echo '<tr>' ,
                                                 '<td>'  . $object->raw_coffee . '</td>' ,
-                                                '<td>'  . $object->raw_type . '</td>' ,
-                                                '<td><input id="physcount'.$mapModal.'" min="0" step= "0.001" placeholder="Kilograms" name="physcount" type="number" class="form-control"/></td>' ,
-                                                '<td><input value="0" id="discrepancy'.$mapModal.'" name="discrepancy" readonly="" class="form-control" readonly/></td>' ,
-                                                '<td><input value="'.date("Y-m-d").'" id="date'.$mapModal.'" type="date" name="date" class="form-control" min="2017-01-01" max="'.date("Y-m-d").'"/></td>' ,
-                                                '<td><textarea style="resize:vertical;" class="form-control" rows="2" name="remarks" id="remarks'.$mapModal.'"></textarea></td>' ,
+                                                '<td><input value="'.$mapModal.'" class="form-control" name="rawid[]" type="hidden" />'  . $object->raw_type . '</td>' ,
+                                                '<td><input id="physcount'.$mapModal.'" min="0" step= "0.001" placeholder="Kilograms" name="physcount[]" type="number" class="form-control"/></td>' ,
+                                                '<td><input value="0" id="discrepancy'.$mapModal.'" name="discrepancy[]" readonly="" class="form-control" readonly/></td>' ,
+                                                '<td><input value="'.date("Y-m-d").'" id="date'.$mapModal.'" type="date" name="date[]" class="form-control" min="2017-01-01" max="'.date("Y-m-d").'"/></td>' ,
+                                                '<td><textarea style="resize:vertical;" class="form-control" rows="2" name="remarks[]" id="remarks'.$mapModal.'"></textarea></td>' ,
                                                 '</tr>' ; 
                            $mapModal++;
                                          }  
@@ -544,7 +544,7 @@ SELECT quantity AS TotalOut FROM trans_raw INNER JOIN inv_transact ON trans_raw.
                                                                     <div class="form-group">
                                                                         <label for="type"></label>
                                                                         <div class="col-md-4">
-                                                                            
+                                                                            <input value="<?php echo $id; ?>" class="form-control" name="rawid" type="hidden" />
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group">

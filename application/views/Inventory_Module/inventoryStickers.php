@@ -597,7 +597,6 @@ SELECT sup_returnQty AS TotalOut FROM company_returns INNER JOIN supp_po_ordered
                                     <br>
                                     <table id="example" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                                         <thead>
-                                            <th><b class="pull-left">No.</b></th>
                                             <th><b class="pull-left">Sticker</b></th>
                                             <th><b class="pull-left">Supplier</b></th>
                                             <th><b class="pull-left">Re-order Level</b></th>
@@ -619,8 +618,6 @@ SELECT sup_returnQty AS TotalOut FROM company_returns INNER JOIN supp_po_ordered
                                              
                                             
                                            echo '<tr>' ,
-                                                
-                                                '<td>'  . $object->sticker_id . '</td>' ,
                                                 '<td>'  . $object->sticker . '</td>' ,
                                                 '<td>'  . $object->sup_company . '</td>' ,
                                                 '<td>'  . number_format($object->sticker_reorder)   . ' pc/s</td>' ,

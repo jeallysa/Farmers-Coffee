@@ -1034,14 +1034,14 @@ document.getElementById('addToTemp').onclick = function() {
                      var stocks = data['stocks'];
                   
                   if(category == 1){
-                     var total1 = ((reorder - stocks)/1000) + 0.1;
+                     var total1 = ((reorder - stocks)/1000);
                      var total  = total1.toPrecision(3);
                  
                      var notifHeader = itemName+" "+" "+itemType;
-                     var notif = "Your order should be atleast "+total+" kg to reach the reorder level";
+                     var notif = "Your order should be more than "+total+" kg to reach the reorder level";
                   }else{
-                     var total = reorder - stocks  + 1 ;
-                     var notif = "Your order should be atleast "+total+" to reach the reorder level";
+                     var total = reorder - stocks;
+                     var notif = "Your order should be more than "+total+" to reach the reorder level";
                   }
                   
                   
@@ -1135,14 +1135,14 @@ document.getElementById('addToTempsssss').onclick = function() {
                   var stocks = data['stocks'];
                   
             if(category == 1){
-                  var total1 = ((reorder - stocks)/1000) + 0.1;
+                  var total1 = ((reorder - stocks)/1000);
                   var total  = total1.toPrecision(3);
                  
                   var notifHeader = itemName+" "+" "+itemType;
-                  var notif = "Your order should be atleast "+total+" kg to reach the reorder level";
+                  var notif = "Your order should be more than "+total+" kg to reach the reorder level";
             }else{
-                  var total = reorder - stocks  + 1 ;
-                  var notif = "Your order should be atleast "+total+" to reach the reorder level";
+                  var total = reorder - stocks;
+                  var notif = "Your order should be more than "+total+" to reach the reorder level";
             }
                   
                   

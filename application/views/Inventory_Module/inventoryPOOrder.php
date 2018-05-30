@@ -464,7 +464,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     
                                                 <td>
                                                      
-                                            <input type="number"  step="0.01" class="form-control" placeholder="<?php echo number_format(($object->qty/1000)-($object->received/1000),2) ?>"  name="received[]" min ="0" max= "<?php echo ($object->qty/1000)-($object->received/1000) ?>" id ="<?php echo "received".$i?>" />
+                                            <input type="number"  step="0.01" class="form-control" placeholder="<?php echo number_format(($object->qty/1000)-($object->received/1000),2) ?>" value="<?php echo ($object->qty/1000)-($object->received/1000) ?>" name="received[]" min ="0" max= "<?php echo ($object->qty/1000)-($object->received/1000) ?>" id ="<?php echo "received".$i?>" />
                                                      
                                                 </td>
                                                     
@@ -505,12 +505,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     
                                                 <td>
                                                      
-                                                <input type="number" class="form-control" placeholder="<?php echo number_format($object->qty-$object->received) ?>"  name="received[]" min ="0" max= "<?php echo $object->qty-$object->received ?>" id ="<?php echo "received".$i?>" />
+                                                <input type="number" class="form-control" placeholder="<?php echo number_format($object->qty-$object->received) ?>" value="<?php echo $object->qty - $object->received?>" name="received[]" min ="0" max= "<?php echo $object->qty-$object->received ?>" id ="<?php echo "received".$i?>" />
                                                      
                                                </td>
-                                                    
-                                                    
-                                                    
                                                     
                                                     
                                                     
@@ -1107,6 +1104,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     
  $(document).ready(function() {
     var table = $('#example').DataTable({
+        "aaSorting": [1,'asc'],
         select: {
             style: 'single'
         }

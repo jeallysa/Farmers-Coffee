@@ -623,7 +623,6 @@ SELECT contractPO_qty AS TotalOut FROM jhcs.contracted_po INNER JOIN contracted_
                                     <br>
                                     <table id="example" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                                         <thead>
-                                            <th><b class="pull-left">No.</b></th>
                                             <th><b class="pull-left">Blend</b></th>
                                             <th><b class="pull-left">Packaging</b></th>
                                             <th><b class="pull-left">Size</b></th>
@@ -645,8 +644,6 @@ SELECT contractPO_qty AS TotalOut FROM jhcs.contracted_po INNER JOIN contracted_
                                              
                                             
                                            echo '<tr>' ,
-                                                
-                                                '<td>'  . $object->blend_id . '</td>' ,
                                                 '<td>'  . $object->blend . '</td>' ,
                                                 '<td>'  . $object->package_type   . '</td>' ,
                                                 '<td>'  . number_format($object->package_size)  . ' g</td>' ,
