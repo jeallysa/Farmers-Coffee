@@ -391,7 +391,7 @@ a:focus {
                                             <th><b class="pull-left">Packaging</b></th>
                                             <th><b class="pull-left">Price</b></th>
                                            <th><b class="pull-left">Quantity</b></th>
-                                              <?php
+                                             <!--  <?php
                                                     $query_head = $this->db->query("SELECT CONCAT(raw_coffee, ' ', UCASE(LEFT(raw_type, 1)), SUBSTRING(raw_type, 2), ' ', '') AS type FROM raw_coffee WHERE raw_activation = 1");
  
                                                     if ($query_head->num_rows() > 0) {
@@ -403,8 +403,8 @@ a:focus {
                                                 } else {
                                                     echo "0 results";
                                                 }
-                                                ?>
-                                            
+                                                ?> -->
+                                            <th><b class="pull-left">Proportions</b></th>
                                             <th><b class="pull-left">Action</b></th>
                                             <th><b class="pull-left">Activation</b></th>
                                         </thead>
@@ -412,7 +412,7 @@ a:focus {
                                             <tr>
 
                                                 <?php
-                                                    $qcount = $this->db->query('SELECT * FROM raw_coffee');
+                                                     $qcount = $this->db->query('SELECT * FROM raw_coffee');
 
                                                     if($fetch_data_eb->num_rows() > 0){
 
@@ -427,7 +427,7 @@ a:focus {
                                                 <td><?php echo $row->blend_qty; ?></td>
 
                                                 
-                                                <?php
+                                                <!-- <?php
                                                 foreach($qcount->result() as $row2){
                                                     $colname = "per" . $row2->raw_id?>
                                                         <td><?php echo $row->$colname; ?></td>
@@ -435,7 +435,7 @@ a:focus {
 
                                                 }
                                                 
-                                                ?>
+                                                ?> -->
                                                
 
                                                 <!--
@@ -446,7 +446,57 @@ a:focus {
                                                 <td>350</td>
                                                 </td>
                                                 -->
-                                                
+                                                <td>
+                                                     <!-- PROPORTIONS DATA -->
+                                                        <div class="modal fade" id="proportions<?php echo $row->main_id; ?>" tabindex="-1" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+                                                                            <div class="modal-dialog">
+                                                                                <div class="panel panel-primary">
+                                                                                    <div class="panel-heading" >
+                                                                                        <button type="button" class="close" data-dismiss="modal"  aria-hidden="true">×</button>
+                                                                                        <h4 class="panel-title" id="contactLabel"> Blend Proportions for <?php echo $row->blend; ?></h4>
+                                                                                    </div>
+                                                                                    
+                                                                                        <div class="modal-body" style="padding: 5px;">
+                                                                                            <table id="blends" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                                                                                                <thead>
+                                                                                                    <th> Raw Coffee </th>
+                                                                                                    <th> Percentage </th>
+                                                                                                </thead>
+                                                                                                <tbody>
+                                                                                                    <?php 
+
+                                                                                                        $sql = "SELECT CONCAT(a.raw_coffee, ' ', a.raw_type) AS raw_coff, CONCAT(percentage, '%') AS percentage FROM raw_coffee a JOIN proportions b JOIN coffee_blend c ON c.blend_id = b.blend_id AND a.raw_id = b.raw_id WHERE c.blend_id = '".$row->main_id."' AND percentage > 0;";
+                                                                                                            $queryper = $this->db->query($sql);
+
+                                                                                                     ?>
+                                                                                                    <?php foreach ($queryper->result() as $percentage_result ): ?>
+                                                                                                        <tr>
+                                                                                                            <td><?= $percentage_result->raw_coff ?></td>
+                                                                                                            <td><?= $percentage_result->percentage ?></td></td>
+                                                                                                        </tr>
+                                                                                                    <?php endforeach ?>
+                                                                                                   <!--  <tr> 
+                                                                                                        <td> Guatemala </td>
+                                                                                                        <td> 30% </td>
+                                                                                                    </tr>
+                                                                                                    <tr> 
+                                                                                                        <td> Guatemala </td>
+                                                                                                        <td> 30% </td>
+                                                                                                    </tr> -->
+                                                                                                </tbody>
+                                                                                            </table>
+                                                                                        </div>
+                                                                                        <div class="panel-footer" style="margin-bottom:-14px;">
+                                                                                            
+                                                                                            <button type="button" class="btn btn-danger btn-close"  data-dismiss="modal">Close</button>
+                                                                                        </div>
+                                                                                        
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                            <!-- END OF PROPORTION DATA-->
+                                                    <button class="btn btn-primary" data-toggle="modal" data-target="#proportions<?php echo $row->main_id; ?>">Show Proportions</button>
+                                                </td>
                                                 <td>
                                                     <a href="<?php echo base_url(); ?>AdminBlends/edit_show?id=<?php echo $row->main_id; ?>" class="btn btn-warning btn-sm" style="float: right">Edit</a>
                                                 </td>
