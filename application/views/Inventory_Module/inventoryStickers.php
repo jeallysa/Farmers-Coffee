@@ -700,13 +700,7 @@ SELECT sup_returnQty AS TotalOut FROM company_returns INNER JOIN supp_po_ordered
 <script>
 $(document).ready(function() {
     $('#example').DataTable({
-        "columnDefs": [
-            { "orderable": false, "targets": 0 },
-            { "orderable": false, "targets": 2 },
-            { "orderable": false, "targets": 3 },
-            { "orderable": false, "targets": 4 }
-        ],
-        "aaSorting": [1,'asc'],
+        "aaSorting": [0,'asc'],
         "dom":' fBrtip',
         "lengthChange": false,
         "info":     false,

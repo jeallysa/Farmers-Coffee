@@ -757,12 +757,10 @@ $(document).ready(function() {
 
 $(document).ready(function() {
     $('#example2').DataTable({
-        /*select: {
+        select: {
             style: 'single'
         }
-*/
 
-        });
     });
 });
 </script>

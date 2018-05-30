@@ -722,13 +722,7 @@ SELECT quantity AS TotalOut FROM trans_raw INNER JOIN inv_transact ON trans_raw.
 
 $(document).ready(function() {
     $('#example').DataTable({
-        "columnDefs": [
-            { "orderable": false, "targets": 0 },
-            { "orderable": false, "targets": 2 },
-            { "orderable": false, "targets": 3 },
-            { "orderable": false, "targets": 4 }
-        ],
-        "aaSorting": [1,'asc'],
+        "aaSorting": [0,'asc'],
         "dom":' fBrtip',
         "lengthChange": false,
         "info":     false,
