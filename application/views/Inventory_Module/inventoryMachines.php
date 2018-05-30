@@ -297,7 +297,85 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         </div>
                                     </div>
                                 </div>
-                            </div>                               
+                            </div>          
+
+                            <form action="InventoryMachines/update/" method="post" accept-charset="utf-8">
+                            <div class="modal fade" id="physcountmodal" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h1 class="panel-title" id="contactLabel"><b>Physical Count</b></h1>
+                                        </div>
+                                        <div class="modal-body" style="padding: 5px;">
+                                            <table id="example3" class="table table-striped table-bordered dt-responsive" width="100%">
+                                                <thead>
+                                                <tr>
+                                                    <th align="center"><b>Machine</b></th>
+                                                    <th align="center"><b>Type</b></th>
+                                                    <th align="center"><b>Physical Count</b></th>
+                                                    <th align="center"><b>Discrepancy</b></th>
+                                                    <th align="center"><b>Inventory Date</b></th>
+                                                    <th align="center"><b>Remarks</b></th>
+                                                </tr>
+                                            </thead>
+                                                <tbody>
+                                                    
+                           <?php
+                              if(!empty($machine)) {                  
+                                      $mapModal = 1;
+                                          foreach($machine as $object){ 
+                                             
+                                            
+                                           echo '<tr>' ,
+                                               
+                                                '<td>'. $object->brewer .'<input type="hidden" style="resize:vertical;" class="form-control" rows="2" name="mach_name[]" value="'. $object->brewer .'" id="mach_type'.$mapModal.'"></td>' ,
+                                                '<td>'. $object->brewer_type .'<input type="hidden" style="resize:vertical;" class="form-control" rows="2" name="mach_type[]" value="'. $object->brewer_type .'" id="mach_name'.$mapModal.'"></td>' ,
+                                              
+                                                '<td><input  id="physcount'.$mapModal.'" min="0" step= "0.001"    name="physcount[]" placeholder="Kilograms" type="number" class="form-control"/></td>',
+                                                '<td><input  id="discrepancy'.$mapModal.'" name="discrepancy[]" class="form-control" readonly/></td>',
+                                                '<td><input value="'.date("Y-m-d").'" id="date'.$mapModal.'" type="date" name="date[]" class="form-control" min="2017-01-01" max="'.date("Y-m-d").'"/></td>',
+                                                '<td><input style="resize:vertical;" class="form-control"    name="remarks[]" id="remarks'.$mapModal.'"><input  type="hidden" value="'.$object->mach_id.'" name="machid[]" /></td>' ,
+                                        
+                                              
+                                                '</tr>' ; 
+                           $mapModal++;
+                                         }  
+                              }
+               ?>
+                                                </tbody>
+                                            </table>
+                                            <!--modal for verification-->
+                                            
+                                            
+                    <div class="modal fade" id="verify" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading" style="background-color: #990000;">
+                                    <h4 class="panel-title" id="contactLabel"><center><b>Verification</b></center> </h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="col-md-12 col-md-offset-1">
+                                        <h3>Do you want to continue?</h3></div>
+                                </div>
+                                <hr>
+                              <div align="right">
+                                <button type="submit" class="btn btn-success">Yes</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                              </div>
+                            </div>
+                            </div>
+                        </div>
+
+                        <div align="right">
+                                                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#verify" id="submit"> Save </button>
+                                                            <input type="reset" class="btn btn-danger" value="Clear" />
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>  
+                        </form>                                  
          <!-----------------------------------------------------------------------  MODAL DETAILS -------------------------------------->
             <div class="modal fade" id="<?php echo "details" . $details   ?>" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
@@ -306,7 +384,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             <h4 class="panel-title" id="contactLabel"><span class="glyphicon glyphicon-info-sign"></span>Stock Card Details</h4>
                         </div>
-                        <form action="InventoryMachines/update/<?php echo $id ?>" method="post" accept-charset="utf-8">
                             <div class="modal-body" style="padding: 5px;">
                                 <div id="page-wrapper">
                                     
@@ -468,28 +545,6 @@ SELECT sup_returnQty AS TotalOut FROM company_returns INNER JOIN supp_po_ordered
                                                                             '<input value="'  . number_format(($physical)+($query->row()->TotalIn - $query2->row()->TotalOut))  . ' unit/s"  id="subtotal<?php echo $details; ?>" name="subtotal" readonly="" class="form-control" />';
                                                                             ?>
                                                                         </div>
-                                                                        <label class="col-md-6 control">Physical Count :</label>
-                                                                        <div class="col-md-4">
-                                                                            <input id="physcount<?php echo $details; ?>" min="0" step= "0.001" placeholder="unit/s" name="physcount" type="number" class="form-control" required/>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                        <label class="col-md-6 control">Discrepancy :</label>
-                                                                        <div class="col-md-4">
-                                                                            <input value="0" id="discrepancy<?php echo $details; ?>" name="discrepancy" readonly="" class="form-control" />
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                        <label class="col-md-6 control">Date of Inventory :</label>
-                                                                        <div class="col-md-4">
-                                                                            <input value="<?php   echo date("Y-m-d") ?>" id="date<?php echo $details; ?>" type="date" name="date" class="form-control" min="2017-01-01" max="<?php   echo date("Y-m-d") ?>"/>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                        <label class="col-md-6 control">Remarks :</label>
-                                                                        <div class="col-md-4">
-                                                                            <textarea style="resize:vertical;" class="form-control" rows="2" name="remarks"></textarea>
-                                                                        </div>
                                                                     </div>
                                                                     <div class="form-group">
                                                                         <label for="type"></label>
@@ -506,35 +561,12 @@ SELECT sup_returnQty AS TotalOut FROM company_returns INNER JOIN supp_po_ordered
                                                             </div>
                                                         
                                                     </center>  
-                                                    <!--modal for verification-->
-                    <div class="modal fade" id="verify<?php echo $details; ?>" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="panel panel-primary">
-                                <div class="panel-heading" style="background-color: #990000;">
-                                    <h4 class="panel-title" id="contactLabel"><center><b>Verification</b></center> </h4>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="col-md-12 col-md-offset-1">
-                                        <h3>Do you want to continue?</h3></div>
-                                </div>
-                                <hr>
-                              <div align="right">
-                                <button type="submit" class="btn btn-success">Yes</button>
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                              </div>
-                            </div>
-                            </div>
-                        </div>
                                                     </div>
                                     </div>
                                 
                             </div>
-                                <div align="right">
-                                                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#verify<?php echo $details; ?>" id="submit<?php echo $details; ?>" disabled="disabled"> Save </button>
-                                                            <input type="reset" class="btn btn-danger" value="Clear" />
-                                                </div>
                         </div>
-                        </form>
+                        
                     </div>
                 </div>
             </div>
@@ -596,6 +628,9 @@ SELECT sup_returnQty AS TotalOut FROM company_returns INNER JOIN supp_po_ordered
                                 </div>
                                 
                                 <div class="card-content ">
+                                    <div style="text-align:right">
+                                        <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#physcountmodal">Physical Count</a>
+                                    </div>
                                     <br>
                                     <table id="example" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                                         <thead>
@@ -738,6 +773,19 @@ $(document).ready(function() {
 
 <script>
 
+$(document).ready(function() {
+    $('#example3').DataTable({
+        "pageLength": 200,
+        select: {
+            style: 'single'
+        }
+
+    });
+});
+</script>
+
+<script>
+
 <?php
            
            $c = 1; 
@@ -750,18 +798,11 @@ $(document).ready(function() {
                                                   
     
   $(document).ready(function(){                
-           $(<?php echo "'#details".$c." input[id=physcount".$c."]'"?>).keyup(function(){
+           $(<?php echo "'input[id=physcount".$c."]'"?>).keyup(function(){
             var y = parseFloat($(this).val());
-            var x = parseFloat($(<?php echo "'#details".$c." input[id=machstocks".$c."]'"?>).val());
+            var x = parseFloat($(<?php echo "'input[id=machstocks".$c."]'"?>).val());
             var res = y - x || 0;
-            $(<?php echo "'#details".$c." input[id=discrepancy".$c."]'"?>).val(res);
-
-            if ($(this).val() !== "" && $(this).val() !== null && $(this).val() !== " ")
-                {
-                    $(<?php echo "'#details".$c." button[id=submit".$c."]'"?>).prop("disabled", false);
-                } else {
-                    $(<?php echo "'#details".$c." button[id=submit".$c."]'"?>).prop("disabled", true);
-                }
+            $(<?php echo "'input[id=discrepancy".$c."]'"?>).val(res);
 });      
 });     
   

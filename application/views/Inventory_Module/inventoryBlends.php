@@ -300,6 +300,86 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     </div>
                                 </div>
                             </div>              
+
+                            <form action="InventoryBlends/update/" method="post" accept-charset="utf-8">
+                            <div class="modal fade" id="physcountmodal" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h1 class="panel-title" id="contactLabel"><b>Physical Count</b></h1>
+                                        </div>
+                                        <div class="modal-body" style="padding: 5px;">
+                                            <table id="example3" class="table table-striped table-bordered dt-responsive" width="100%">
+                                                <thead>
+                                                <tr>
+                                                    <th align="center"><b>Blend</b></th>
+                                                    <th align="center"><b>Packaging</b></th>
+                                                    <th align="center"><b>Size</b></th>
+                                                    <th align="center"><b>Physical Count</b></th>
+                                                    <th align="center"><b>Discrepancy</b></th>
+                                                    <th align="center"><b>Inventory Date</b></th>
+                                                    <th align="center"><b>Remarks</b></th>
+                                                </tr>
+                                            </thead>
+                                                <tbody>
+                                                    
+                           <?php
+                              if(!empty($blend)) {                  
+                                      $mapModal = 1;
+                                          foreach($blend as $object){ 
+                                             
+                                            
+                                           echo '<tr>' ,
+                                               
+                                                '<td>'. $object->blend .'<input type="hidden" style="resize:vertical;" class="form-control" rows="2" name="blnd_name[]" value="'. $object->blend .'" id="blnd_name'.$mapModal.'"></td>' ,
+                                                '<td>'. $object->package_type .'<input type="hidden" style="resize:vertical;" class="form-control" rows="2" name="pck_pckgng[]" value="'. $object->package_type .'" id="blnd_pckgng'.$mapModal.'"></td>' ,
+                                                '<td>'. $object->package_size .' g<input type="hidden" style="resize:vertical;" class="form-control" rows="2" name="blnd_size[]" value="'. $object->package_size .'" id="blnd_size'.$mapModal.'"></td>' ,
+                                              
+                                                '<td><input  id="physcount'.$mapModal.'" min="0" step= "0.001"    name="physcount[]" placeholder="Kilograms" type="number" class="form-control"/></td>',
+                                                '<td><input  id="discrepancy'.$mapModal.'" name="discrepancy[]" class="form-control" readonly/></td>',
+                                                '<td><input value="'.date("Y-m-d").'" id="date'.$mapModal.'" type="date" name="date[]" class="form-control" min="2017-01-01" max="'.date("Y-m-d").'"/></td>',
+                                                '<td><input style="resize:vertical;" class="form-control"    name="remarks[]" id="remarks'.$mapModal.'"><input  type="hidden" value="'.$object->package_id.'" name="blndid[]" /></td>' ,
+                                        
+                                              
+                                                '</tr>' ; 
+                           $mapModal++;
+                                         }  
+                              }
+               ?>
+                                                </tbody>
+                                            </table>
+                                            <!--modal for verification-->
+                                            
+                                            
+                    <div class="modal fade" id="verify" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading" style="background-color: #990000;">
+                                    <h4 class="panel-title" id="contactLabel"><center><b>Verification</b></center> </h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="col-md-12 col-md-offset-1">
+                                        <h3>Do you want to continue?</h3></div>
+                                </div>
+                                <hr>
+                              <div align="right">
+                                <button type="submit" class="btn btn-success">Yes</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                              </div>
+                            </div>
+                            </div>
+                        </div>
+
+                        <div align="right">
+                                                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#verify" id="submit"> Save </button>
+                                                            <input type="reset" class="btn btn-danger" value="Clear" />
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>  
+                        </form>
                             
                                              
          <!-----------------------------------------------------------------------  MODAL DETAILS -------------------------------------->
@@ -310,7 +390,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             <h4 class="panel-title" id="contactLabel"><span class="glyphicon glyphicon-info-sign"></span>Stock Card Details</h4>
                         </div>
-                        <form action="InventoryBlends/update/<?php echo $id ?>" method="post" accept-charset="utf-8">
                             <div class="modal-body" style="padding: 5px;">
                                 <div id="page-wrapper">
                                     <div id="toBePrinted<?php echo $details; ?>">
@@ -489,75 +568,14 @@ SELECT contractPO_qty AS TotalOut FROM jhcs.contracted_po INNER JOIN contracted_
                                                                             '<input value="'  . number_format(($physical)+($query->row()->TotalIn - $query2->row()->TotalOut))  . ' bag/s"  id="subtotal<?php echo $details; ?>" name="subtotal" readonly="" class="form-control" />';
                                                                             ?>
                                                                         </div>
-
-                                                                        <label class="col-md-6 control">Physical Count :</label>
-                                                                        <div class="col-md-4">
-                                                                            <input id="physcount<?php echo $details; ?>" min="0" step= "0.001" placeholder="Bags" name="physcount" type="number" class="form-control" required/>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                        <label class="col-md-6 control">Discrepancy :</label>
-                                                                        <div class="col-md-4">
-                                                                            <input value="0" id="discrepancy<?php echo $details; ?>" name="discrepancy" readonly="" class="form-control" />
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                        <label class="col-md-6 control">Date of Inventory :</label>
-                                                                        <div class="col-md-4">
-                                                                            <input value="<?php   echo date("Y-m-d") ?>" id="date<?php echo $details; ?>" type="date" name="date" class="form-control" min="2017-01-01" max="<?php   echo date("Y-m-d") ?>"/>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                        <label class="col-md-6 control">Remarks :</label>
-                                                                        <div class="col-md-4">
-                                                                            <textarea style="resize:vertical;" class="form-control" rows="2" name="remarks"></textarea>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                        <label for="type"></label>
-                                                                        <div class="col-md-4">
-                                                                            <input value="<?php echo $id; ?>" class="form-control" name="blndid" type="hidden" />
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                        <label for="type"></label>
-                                                                        <div class="col-md-4">
-                                                                            <input value="<?php echo $stock; ?>" class="form-control" id = "blndstocks<?php echo $details; ?>" name="blndstocks" type="hidden" />
-                                                                        </div>
-                                                                    </div>
                                                             </div>
                                                         
                                                     </div>
                                                     </center>
-                                                    <!--modal for verification-->
-                    <div class="modal fade" id="verify<?php echo $details; ?>" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
-                      <div class="modal-dialog">
-                        <div class="panel panel-primary">
-                          <div class="panel-heading" style="background-color: #990000;">
-                                    <h4 class="panel-title" id="contactLabel"><center><b>Verification</b></center> </h4>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="col-md-12 col-md-offset-1">
-                                        <h3>Do you want to continue?</h3></div>
-                                </div>
-                                <hr>
-                                <div align="right">
-                                <button type="submit" class="btn btn-success">Yes</button>
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                              </div>
-                              
-                        </div>
-                      </div>
-                    </div>
                                     </div>
                                 </div>
                             </div>
-                                <div align="right">
-                                                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#verify<?php echo $details; ?>" id="submit<?php echo $details; ?>" disabled="disabled"> Save </button>
-                                                            <input type="reset" class="btn btn-danger" value="Clear" />
-                                                </div>
                         </div>
-                            </form>
                         
                     </div>
                 </div>
@@ -763,6 +781,19 @@ $(document).ready(function() {
 $(document).ready(function() {
     $('#example2').DataTable({
         "aaSorting": [2, 'asc'],
+        select: {
+            style: 'single'
+        }
+
+    });
+});
+</script>
+
+<script>
+
+$(document).ready(function() {
+    $('#example3').DataTable({
+        "pageLength": 200,
         select: {
             style: 'single'
         }

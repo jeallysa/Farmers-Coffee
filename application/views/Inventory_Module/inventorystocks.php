@@ -331,15 +331,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             
                                            echo '<tr>' ,
                                                
-                                                '<td><input  style="resize:vertical;" class="form-control" rows="2" name="raw_name[]" value="'.$object->raw_coffee.'" id="raw_type'.$mapModal.'"></td>' ,
-                                                '<td><input  style="resize:vertical;" class="form-control" rows="2" name="raw_type[]" value="'.$object->raw_type.'" id="raw_name'.$mapModal.'"></td>' ,
+                                                '<td>'.$object->raw_coffee.'<input type="hidden" style="resize:vertical;" class="form-control" rows="2" name="raw_name[]" value="'.$object->raw_coffee.'" id="raw_type'.$mapModal.'"></td>' ,
+                                                '<td>'.$object->raw_type.'<input type="hidden" style="resize:vertical;" class="form-control" rows="2" name="raw_type[]" value="'.$object->raw_type.'" id="raw_name'.$mapModal.'"></td>' ,
                                               
                                                 '<td><input  id="physcount'.$mapModal.'" min="0" step= "0.001"    name="physcount[]" placeholder="Kilograms" type="number" class="form-control"/></td>',
                                                 '<td><input  id="discrepancy'.$mapModal.'" name="discrepancy[]" class="form-control" readonly/></td>',
                                                 '<td><input value="'.date("Y-m-d").'" id="date'.$mapModal.'" type="date" name="date[]" class="form-control" min="2017-01-01" max="'.date("Y-m-d").'"/></td>',
-                                                '<td><input style="resize:vertical;" class="form-control"    name="remarks[]" id="remarks'.$mapModal.'"></td>' ,
-                                           
-                                                '<td><input  type="hidden" value="'.$object->raw_id.'" name="rawid[]" /> </td>',
+                                                '<td><input style="resize:vertical;" class="form-control"    name="remarks[]" id="remarks'.$mapModal.'"><input  type="hidden" value="'.$object->raw_id.'" name="rawid[]" /></td>' ,
+                                        
                                               
                                                 '</tr>' ; 
                            $mapModal++;
@@ -587,25 +586,6 @@ SELECT quantity AS TotalOut FROM trans_raw INNER JOIN inv_transact ON trans_raw.
                                                             </div>
                                                 
                                                     </center>  
-                                                    <!--modal for verification-->
-                    <div class="modal fade" id="verify<?php echo $details; ?>" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="panel panel-primary">
-                                <div class="panel-heading" style="background-color: #990000;">
-                                    <h4 class="panel-title" id="contactLabel"><center><b>Verification</b></center> </h4>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="col-md-12 col-md-offset-1">
-                                        <h3>Do you want to continue?</h3></div>
-                                </div>
-                                <hr>
-                              <div align="right">
-                                <button type="submit" class="btn btn-success">Yes</button>
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                              </div>
-                            </div>
-                            </div>
-                        </div>
                                                     </div>
                                     </div>
                                 
@@ -680,7 +660,6 @@ SELECT quantity AS TotalOut FROM trans_raw INNER JOIN inv_transact ON trans_raw.
                                     <br>
                                     <table id="example" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                                         <thead>
-                                            <th><b class="pull-left">No.</b></th>
                                             <th><b class="pull-left">Raw Coffee</b></th>
                                             <th><b class="pull-left">Type of Roast</b></th>
                                             <th><b class="pull-left">Supplier</b></th>
@@ -703,8 +682,6 @@ SELECT quantity AS TotalOut FROM trans_raw INNER JOIN inv_transact ON trans_raw.
                                              
                                             
                                            echo '<tr>' ,
-                                                
-                                                '<td>'  . $object->raw_id . '</td>' ,
                                                 '<td>'  . $object->raw_coffee . '</td>' ,
                                                 '<td>'  . $object->raw_type . '</td>' ,
                                                 '<td>'  . $object->sup_company . '</td>' ,
@@ -825,7 +802,7 @@ $(document).ready(function() {
 
 $(document).ready(function() {
     $('#example3').DataTable({
-        "pageLength": 100,
+        "pageLength": 200,
         select: {
             style: 'single'
         }

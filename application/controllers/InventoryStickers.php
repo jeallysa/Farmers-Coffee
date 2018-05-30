@@ -20,31 +20,49 @@
 			}
 		}
 
-		function update($id){
-             
+        function update(){
+            $stck_idv         = $this->input->post("stckid");
+            $stck_stockv      = $this->input->post("physcount");
+            $stck_physcountv  = $this->input->post("physcount");
+            $stck_discrepancyv= $this->input->post("discrepancy");
+            $stck_remarksv    = $this->input->post("remarks");
+            $inventory_datev    = $this->input->post("date");
+            $name               = $this->input->post("stck_name");
             
-            $data = array(
-                        'sticker_id'         => $this->input->post("stckrid"),
-                        'sticker_stock'  => $this->input->post("physcount"),
-                        'sticker_physcount'  => $this->input->post("physcount"),
-                        'sticker_discrepancy'=> $this->input->post("discrepancy"),
-                        'sticker_remarks'    => $this->input->post("remarks"),
-                        'inventory_date'    => $this->input->post("date"),
-                    );              
-                
-        
-            $this->InventoryStickers_Model->update($data , $id);    
-        	
-        	$this->InventoryStickers_Model->activity_logs('inventory', "Record Physical Count under Stickers Invetory Stocks ");
+            
+    if ($_POST){        
+       for ($i = 0; $i < count($this->input->post("stckid")); $i++){
 
-        	$this->InventoryStickers_Model->walkin_sales(1, $id);
-        	$this->InventoryStickers_Model->client_coffreturn(1, $id);  
-        	$this->InventoryStickers_Model->contracted_po(1, $id);
-        	$this->InventoryStickers_Model->company_returns(1, $id);  
-        	$this->InventoryStickers_Model->supp_po_ordered(1, $id);   
+             if((!empty($pck_physcountv[$i]) )){   
+              
+                $data = array(
+                    'sticker_id'             => $stck_idv[$i],
+                    'sticker_stock'          => $stck_stockv[$i],
+                    'sticker_physcount'      => $stck_physcountv[$i],
+                    'sticker_discrepancy'    => $stck_discrepancyv[$i],
+                    'sticker_remarks'        => $stck_remarksv[$i],
+                    'inventory_date'     => $inventory_datev[$i],
+
+                );
+
+            $this->InventoryStickers_Model->update($data , $stck_idv[$i]);    
             
-            redirect('inventoryStickers');
-        }  
+            $this->InventoryStickers_Model->activity_logs('inventory', "Record Physical Count under Stickers Invetory Stocks ");
+
+            $this->InventoryStickers_Model->walkin_sales(1, $stck_idv[$i]);
+            $this->InventoryStickers_Model->client_coffreturn(1, $stck_idv[$i]);  
+            $this->InventoryStickers_Model->contracted_po(1, $stck_idv[$i]);
+            $this->InventoryStickers_Model->company_returns(1, $stck_idv[$i]);  
+            $this->InventoryStickers_Model->supp_po_ordered(1, $stck_idv[$i]); 
+        
+       
+        }
+    }
+ }        
+       redirect('inventoryStickers');                  
+           
+
+    }
 
 	}
 

@@ -22,9 +22,9 @@ class InventoryMachines_Model extends CI_model
   }
 
 
-      function update($data, $id){
+      function update($data, $mach_idv){
               
-    $this->db->where('mach_id', $id ); 
+    $this->db->where('mach_id', $mach_idv ); 
     $this->db->update('machine', $data);    
    
         

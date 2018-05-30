@@ -21,9 +21,9 @@ class InventoryStickers_Model extends CI_model
           return NULL;
   }
 
-	function update($data, $id){
+	function update($data, $stck_idv){
               
-    $this->db->where('sticker_id', $id ); 
+    $this->db->where('sticker_id', $stck_idv ); 
     $this->db->update('sticker', $data);    
    
         

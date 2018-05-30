@@ -21,9 +21,9 @@ class InventoryPackaging_Model extends CI_model
           return NULL;
   }
 
-	function update($data, $id){
+	function update($data, $pck_idv){
               
-    $this->db->where('package_id', $id ); 
+    $this->db->where('package_id',  $pck_idv ); 
     $this->db->update('packaging', $data);    
    
         
