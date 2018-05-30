@@ -298,7 +298,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     </div>
                                 </div>
                             </div>
-                            <form action="InventoryStocks/update/" method="post" accept-charset="utf-8">
+            
+            
+            
+             <form action="InventoryStocks/update/" method="post" accept-charset="utf-8">
                             <div class="modal fade" id="physcountmodal" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-lg">
                                     <div class="panel panel-primary">
@@ -319,19 +322,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 </tr>
                                             </thead>
                                                 <tbody>
-                                  <?php
+                                                    
+                           <?php
                               if(!empty($coffee)) {                  
                                       $mapModal = 1;
                                           foreach($coffee as $object){ 
                                              
                                             
                                            echo '<tr>' ,
-                                                '<td>'  . $object->raw_coffee . '</td>' ,
-                                                '<td><input value="'.$mapModal.'" class="form-control" name="rawid[]" type="hidden" />'  . $object->raw_type . '</td>' ,
-                                                '<td><input id="physcount'.$mapModal.'" min="0" step= "0.001" placeholder="Kilograms" name="physcount[]" type="number" class="form-control"/></td>' ,
-                                                '<td><input value="0" id="discrepancy'.$mapModal.'" name="discrepancy[]" readonly="" class="form-control" readonly/></td>' ,
-                                                '<td><input value="'.date("Y-m-d").'" id="date'.$mapModal.'" type="date" name="date[]" class="form-control" min="2017-01-01" max="'.date("Y-m-d").'"/></td>' ,
-                                                '<td><textarea style="resize:vertical;" class="form-control" rows="2" name="remarks[]" id="remarks'.$mapModal.'"></textarea></td>' ,
+                                               
+                                                '<td><input  style="resize:vertical;" class="form-control" rows="2" name="raw_name[]" value="'.$object->raw_coffee.'" id="raw_type'.$mapModal.'"></td>' ,
+                                                '<td><input  style="resize:vertical;" class="form-control" rows="2" name="raw_type[]" value="'.$object->raw_type.'" id="raw_name'.$mapModal.'"></td>' ,
+                                              
+                                                '<td><input  id="physcount'.$mapModal.'" min="0" step= "0.001"    name="physcount[]" placeholder="Kilograms" type="number" class="form-control"/></td>',
+                                                '<td><input  id="discrepancy'.$mapModal.'" name="discrepancy[]" class="form-control" readonly/></td>',
+                                                '<td><input value="'.date("Y-m-d").'" id="date'.$mapModal.'" type="date" name="date[]" class="form-control" min="2017-01-01" max="'.date("Y-m-d").'"/></td>',
+                                                '<td><input style="resize:vertical;" class="form-control"    name="remarks[]" id="remarks'.$mapModal.'"></td>' ,
+                                           
+                                                '<td><input  type="hidden" value="'.$object->raw_id.'" name="rawid[]" /> </td>',
+                                              
                                                 '</tr>' ; 
                            $mapModal++;
                                          }  
@@ -340,6 +349,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 </tbody>
                                             </table>
                                             <!--modal for verification-->
+                                            
+                                            
                     <div class="modal fade" id="verify" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="panel panel-primary">
@@ -368,6 +379,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 </div>
                             </div>  
                         </form>
+            
+            
+            
+            
+            
+            
+            
+            
          <!-----------------------------------------------------------------------  MODAL DETAILS -------------------------------------->
             <div class="modal fade" id="<?php echo "details" . $details   ?>" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
