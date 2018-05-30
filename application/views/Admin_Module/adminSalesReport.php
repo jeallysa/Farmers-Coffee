@@ -172,8 +172,18 @@ a:focus {
                     <div class="collapse navbar-collapse">
                         <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
-                                <li>
-                                    <p class="title">Hi, <?php $username = $this->session->userdata('username'); print_r($username); ?></p>
+                                <li id="nameheader">
+                                    <?php $username = $this->session->userdata('username') ?>
+                                
+                                <?php
+                                              $retrieveUserDetails ="SELECT * FROM jhcs.user WHERE username = '$username';" ;
+                                              $query = $this->db->query($retrieveUserDetails);
+                                              if ($query->num_rows() > 0) {
+                                              foreach ($query->result() as $object) {
+                                           echo '<p class="title">Hi, '  . $object->u_fname  . ' ' . $object->u_lname  . '</p>' ;
+                                              }
+                                            }
+                                        ?>
                                 </li>
                                 <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
                                          <i class="glyphicon glyphicon-user"></i>
@@ -229,7 +239,7 @@ a:focus {
                                                 <span></span>
                                                 <li class="">
                                                     <a href="<?php echo base_url(); ?>adminReceivableReport">
-                                            Accounts Receivables Report
+                                            Accounts Receivable Report
                                             <div class="ripple-container"></div>
                                         </a>
                                                 </li>
@@ -381,7 +391,7 @@ a:focus {
     function parseDateValue(rawDate) {
         var month = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
         var dateArray = rawDate.split(" ");
-        var parsedDate = dateArray[2] + month + dateArray[2];
+        var parsedDate = dateArray[2] + month + dateArray[0];
         return parsedDate;
     }
 
@@ -397,20 +407,77 @@ a:focus {
                 }
             },
             
-			{ "extend": 'pdf', "text":'<i class="fa fa-file-pdf-o"></i> PDF',"className": 'btn btn-danger btn-xs',
-                orientation: 'landscape',
-                        exportOptions: {
-                         columns: ':visible'
-                 
-                        },
-                    customize: function (doc) {
-                        doc.defaultStyle.alignment = 'right';
-                        doc.styles.tableHeader.alignment = 'center';
-                        doc.pageMargins = [50,50,100,80];
-                        doc.defaultStyle.fontSize = 10;
-                        doc.styles.tableHeader.fontSize = 10;
-                        doc.styles.title.fontSize = 12;
-                         doc.content[1].table.widths = [ '11%', '11%', '11%', '16%', '16%', '11%', '11%', '11%', '11%', '11%', '11%']; }
+			{ 
+                "extend": 'pdf',
+                "text":'<i class="fa fa-file-pdf-o"></i> PDF',
+                "className": 'btn btn-danger btn-xs', 
+                "orientation": 'landscape', 
+                "title": 'Sales Report',
+                "download": 'open',
+                
+                "messageBottom": "\n \n \n \n \n Prepared by: ",
+                styles: {
+                    "messageBottom": {
+                        bold: true,
+                        fontSize: 15
+                    }
+                },
+                "exportOptions": {
+                     columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,],
+                     /*modifier: {
+                          page: 'current'
+                        }*/
+                  },
+
+                "header": true,
+                customize: function(doc) {
+                    var now = new Date();
+                    var jsDate = now.getDate()+'-'+(now.getMonth()+1)+'-'+now.getFullYear();
+                    var logo = 'data:assets/img/logo.png';
+                    doc.content.splice(0, 1, {
+                      text: [{
+                        text: 'John Hay Coffee Services Inc.\n',
+                        bold: true,
+                        fontSize: 15
+                      }, {
+                        text: ' Sales Report \n',
+                        bold: true,
+                        fontSize: 11
+                      }, {
+                        text: '',
+                        bold: true,
+                        fontSize: 11
+                      }],
+                      margin: [0, 0, 0,20],
+                      alignment: 'center',
+                     image: logo
+                    });
+
+                    doc.pageMargins = [40, 40, 40,40];
+                    doc['footer']=(function(page, pages) {
+                            return {
+                                columns: [
+                                    {
+                                        alignment: 'left',
+                                        text: ['Date Downloaded: ', { text: jsDate.toString() }]
+                                    },
+                                    {
+                                        alignment: 'right',
+                                        text: ['page ', { text: page.toString() },  ' of ', { text: pages.toString() }]
+                                    }
+                                ],
+                                margin: 20
+                            }
+                        });
+
+                    
+
+
+ 
+                  }
+
+
+
             }
         ]
     });
