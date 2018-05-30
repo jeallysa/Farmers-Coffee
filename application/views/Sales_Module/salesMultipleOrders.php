@@ -365,7 +365,13 @@
 				}
 				window.location.href = "<?php echo base_url(); ?>salesSellProduct";
 				alert('Purchase order added');
-			}	
+			},
+
+			error: function( jqXhr ) {
+		        if( jqXhr.status == 400 ) { //Validation error or other reason for Bad Request 400
+		            var json = $.parseJSON( jqXhr.responseText );
+		        }
+		    }	
 		});
 	});
 		});

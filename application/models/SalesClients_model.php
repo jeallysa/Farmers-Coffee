@@ -96,7 +96,9 @@
 						}
 						$taker = round($quantity*($package*($percentage * 0.01)));
 						if ($stock < $taker){
-							echo '<script> alert("Insufficient stocks for raw coffee! Transaction halted."); </script>';
+							$this->output->set_status_header('400'); //Triggers the jQuery error callback
+        					$this->data['message'] = "Insufficient stocks for raw coffee! Transaction halted.";
+        					echo json_encode($this->data);
 							return;
 						}
 					}
@@ -105,10 +107,14 @@
 					$pack_stock = $this->db->query("SELECT * FROM packaging WHERE package_id = '".$pack_id."';")->row()->package_stock;
 					$sticker_stock = $this->db->query("SELECT * FROM sticker WHERE sticker_id = '".$stick_id."';")->row()->sticker_stock;
 					if ($pack_stock < $quantity){
-						echo '<script> alert("Insufficient stocks for packaging! Transaction halted."); </script>';
+						$this->output->set_status_header('400'); //Triggers the jQuery error callback
+        				$this->data['message'] = "Insufficient stocks for packaging! Transaction halted.";
+						echo json_encode($this->data);
 						return;
 					}else if($sticker_stock < $quantity){
-						echo '<script> alert("Insufficient stocks for packaging! Transaction halted."); </script>';
+						$this->output->set_status_header('400'); //Triggers the jQuery error callback
+        				$this->data['message'] = "Insufficient stocks for stickers! Transaction halted.";
+						echo json_encode($this->data);
 						return;
 					}
             }
