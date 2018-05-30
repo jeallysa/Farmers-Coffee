@@ -64,6 +64,7 @@
 				}
 				$taker = round($quantity*($package*($percentage * 0.01)));
 				if ($stock < $taker){
+					$this->session->set_flashdata('error', 'Insufficient stocks for raw coffee! Transaction halted.');
 					return;
 				}
 			}
@@ -75,10 +76,10 @@
 			$pack_stock = $this->db->query("SELECT * FROM packaging WHERE package_id = '".$pack_id."';")->row()->package_stock;
 			$sticker_stock = $this->db->query("SELECT * FROM sticker WHERE sticker_id = '".$stick_id."';")->row()->sticker_stock;
 			if ($pack_stock < $quantity){
-				echo '<script> alert("Insufficient stocks for packaging! Transaction halted."); </script>';
+				$this->session->set_flashdata('error', 'Insufficient stocks for packaging! Transaction halted.');
 				return;
 			}else if($sticker_stock < $quantity){
-				echo '<script> alert("Insufficient stocks for stickers! Transaction halted."); </script>';
+				$this->session->set_flashdata('error', 'Insufficient stocks for stickers! Transaction halted.');
 				return;
 			}else{
 				$this->db->query("UPDATE packaging SET package_stock = package_stock - ".$quantity." WHERE package_id =".$pack_id.";");
