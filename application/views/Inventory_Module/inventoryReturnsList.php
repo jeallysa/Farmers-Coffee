@@ -1012,6 +1012,8 @@ $(document).ready(function(){
     }
  });
     </script>
+<<<<<<< HEAD
+=======
  <script>
 
 $(document).ready(function() {
@@ -1024,6 +1026,7 @@ $(document).ready(function() {
     });
 });
 </script>   
+>>>>>>> 2aae9f50edba2752a2661b089b4078164fa5cd49
     
  
 </html>

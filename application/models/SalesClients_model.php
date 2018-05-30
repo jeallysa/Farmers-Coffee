@@ -81,7 +81,12 @@
                     $quantity = $data[$x]['quantity'];
                 
                     $query = $this->db->query('SELECT c.percentage, c.raw_id, d.package_id, d.package_size, b.sticker_id FROM coffee_blend b JOIN proportions c JOIN packaging d ON b.blend_id = c.blend_id AND b.package_id = d.package_id WHERE c.blend_id ='.$blend_id.';');
-                   
+                   $data = array(
+						'walkin_date' => $date,
+						'walkin_qty' => $quantity,
+						'blend_id' => $blend_id
+					);
+                   $this->db->insert('walkin_sales', $data);
                 	$inserted_id = $this->db->insert_id();
                     $pack_id = $query->row()->package_id;
                     $stick_id = $query->row()->sticker_id;

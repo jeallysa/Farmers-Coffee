@@ -607,4 +607,28 @@ $(document).ready(function(){
 
 </script>
 
+<script type="text/javascript">
+    $(document).ready(function() {
+    $('#example').DataTable({
+        "dom":' fBrtip',
+        "lengthChange": false,
+        "info":     true,
+        buttons: [
+            
+            
+            { "extend": 'excel', "text":'<i class="fa fa-file-excel-o"></i> CSV',"className": 'btn btn-success btn-xs',
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4, 5]
+                }
+            },
+            
+            { "extend": 'pdf', "text":'<i class="fa fa-file-pdf-o"></i> PDF',"className": 'btn btn-danger btn-xs',
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4, 5]
+                }
+            }
+        ]
+    });
+});
+</script>
 </html>
