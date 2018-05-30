@@ -369,11 +369,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <div class="tab-content">
                                         <div class="tab-pane active" id="coffeeout">
                                             <ul class="nav nav-tabs navbar-default justify-content-center" id="coffeeout" >
-                                                <li class="active"><a href="#walkin" data-toggle="tab" >Walk-In Client</a></li>
-                                                <li><a href="#contracted" data-toggle="tab">Contracted Client</a></li>
+                                                <li class="active"><a href="#contracted" data-toggle="tab">Contracted Client</a></li>
+                                                <li><a href="#walkin" data-toggle="tab" >Walk-In Client</a></li>
                                             </ul>
                                             <div class="tab-content tab-color">
-                                                <div class="tab-pane active" id="walkin">
+                                                <div class="tab-pane fade" id="walkin">
                                                     <table id="walkin" class="table hover order-column" cellspacing="0" width="100%">
                                                         <thead>
                                                             <tr>
@@ -404,7 +404,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                         </tbody>
                                                     </table>
                                                 </div>
-                                                <div class="tab-pane fade" id="contracted">
+                                                <div class="tab-pane active" id="contracted">
                                                     <table id="contracted" class="table hover order-column" cellspacing="0" width="100%">
                                                         <thead>
                                                             <tr>
@@ -530,7 +530,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script>
 $(document).ready(function() {
     $('table.table').DataTable({
-        "aaSorting": [2, 'asc'],
+        "order": [[ 1, "desc"]],
         select: {
             style: 'single'
         }
