@@ -837,7 +837,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>'  . $object->sup_company  . '</td>';
 												                      
                                              ?>
-                                                                              
+                                            <?php if($object->payment_stat == 1){ ?>                                  
+                                               <td>
+                                                   <center>
+                                                    <a class="btn btn-default btn-sm" data-toggle="modal" disabled>Payment</a>
+                                                    <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#<?php echo 'details' . $i   ?>">Details</a>
+                                                    <a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#<?php echo 'return' . $i   ?>">Return</a>
+                                                   </center>
+                                               </td>
+                                            <?php }else{ ?>
+                                            
                                                <td>
                                                    <center>
                                                     <a class=" btn btn-success btn-sm" data-toggle="modal" data-target="#<?php echo 'partial' . $i   ?>">Payment</a>
@@ -845,6 +854,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     <a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#<?php echo 'return' . $i   ?>">Return</a>
                                                    </center>
                                                </td>
+                                            
+                                            
+                                         <?php }   
+                                            
+                                            ?>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
                                             
                                     <?php                          
                                             '</tr>' ; 

@@ -389,8 +389,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                     <div class="form-group label-floating">
                                                                         <label>Supplier</label>
                                                                         
-                                                                        <select  class="selectpicker" data-live-search="true" id="supplier" name = "dropdown" >
-                                                                    
+                                                                        <select  class="selectpicker" data-live-search="true" id="supplier" name = "dropdown" required >
+                                                                            <option value=''>Select Supplier</option>
                                            <?php
                                                          foreach($suppliers as $object){ 
                                                             echo '<option>'  . $object->sup_company . '</option>' ;
