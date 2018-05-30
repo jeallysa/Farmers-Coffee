@@ -36,6 +36,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         redirect(base_url('inventoryPOArchive'));
       }    
         
+      public function delete(){
+         $supp_po_id = $this->input->post('supp_po_id');
+         $this->inventoryPOArchive_model->delete($supp_po_id);
+          
+          
+        redirect(base_url('inventoryPOArchive'));
+      }    
+        
+        
         
      
         
