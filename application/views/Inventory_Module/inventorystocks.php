@@ -297,7 +297,61 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         </div>
                                     </div>
                                 </div>
-                            </div>              
+                            </div>
+
+                            <div class="modal fade" id="physcountmodal" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h1 class="panel-title" id="contactLabel"><span class="glyphicon glyphicon-info-sign"></span><b>Kindly Reorder the following:</b></h1>
+                                        </div>
+                                        <div class="modal-body" style="padding: 5px;">
+                                            <table id="example2" class="table table-striped table-bordered dt-responsive nowrap" width="100%">
+                                                <thead>
+                                                <tr>
+                                                    <th align="center"><b>Raw Coffee</b></th>
+                                                    <th align="center"><b>Type of Roast</b></th>
+                                                    <th align="center"><b>Physical Count</b></th>
+                                                    <th align="center"><b>Discrepancy</b></th>
+                                                    <th align="center"><b>Inventory Date</b></th>
+                                                    <th align="center"><b>Discrepancy</b></th>
+                                                    <th align="center"><b>Remarks</b></th>
+                                                </tr>
+                                            </thead>
+                                                <tbody>
+                                  <?php
+                              if(!empty($coffee)) {                  
+                                      $mapModal = 1;
+                                          foreach($coffee as $object){ 
+                                             
+                                            
+                                           echo '<tr>' ,
+                                                '<td>'  . $object->raw_coffee . '</td>' ,
+                                                '<td>'  . $object->raw_type . '</td>' ,
+                                                '<td><input id="physcount<?php echo $details; ?>" min="0" step= "0.001" placeholder="Kilograms" name="physcount" type="number" class="form-control" required/></td>' ,
+                                                '<td><input value="0" id="discrepancy<?php echo $details; ?>" name="discrepancy" readonly="" class="form-control" /></td>' ,
+                                                '<td><input value="<?php   echo date("Y-m-d") ?>" id="date<?php echo $details; ?>" type="date" name="date" class="form-control" min="2017-01-01" max="<?php echo date("Y-m-d") ?>"/></td>' ,
+                                                '<td><textarea style="resize:vertical;" class="form-control" rows="2" name="remarks"></textarea></td>' ;
+
+                                                                      
+                                        ?>
+                                                                              
+                                               <td><a class="btn btn-info btn-sm" data-toggle="modal" data-target="#<?php echo "details" . $mapModal  ?>">View</a></td>
+                                            
+                                            
+                                            
+                <?php                          '</tr>' ; 
+                           $mapModal++;
+                                         }  
+                              }
+               ?>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>  
          <!-----------------------------------------------------------------------  MODAL DETAILS -------------------------------------->
             <div class="modal fade" id="<?php echo "details" . $details   ?>" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
@@ -471,29 +525,6 @@ SELECT quantity AS TotalOut FROM trans_raw INNER JOIN inv_transact ON trans_raw.
                                                                             '<input value="'  . number_format(($physical/1000)+($query->row()->TotalIn/1000 - $query2->row()->TotalOut/1000),2)  . ' kg"  id="subtotal<?php echo $details; ?>" name="subtotal" readonly="" class="form-control" />';
                                                                             ?>
                                                                         </div>
-                                                                        <label class="col-md-6 control">Physical Count :</label>
-                                                                        <div class="col-md-4">
-                                                                            <input id="physcount<?php echo $details; ?>" min="0" step= "0.001" placeholder="Kilograms" name="physcount" type="number" class="form-control" required/>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                        <label class="col-md-6 control">Discrepancy :</label>
-                                                                        <div class="col-md-4">
-                                                                            <input value="0" id="discrepancy<?php echo $details; ?>" name="discrepancy" readonly="" class="form-control" />
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                        <label class="col-md-6 control">Date of Inventory :</label>
-                                                                        <div class="col-md-4">
-                                                                            <input value="<?php   echo date("Y-m-d") ?>" id="date<?php echo $details; ?>" type="date" name="date" class="form-control" min="2017-01-01" max="<?php echo date("Y-m-d") ?>"/>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                        <label class="col-md-6 control">Remarks :</label>
-                                                                        <div class="col-md-4">
-                                                                            <textarea style="resize:vertical;" class="form-control" rows="2" name="remarks"></textarea>
-                                                                        </div>
-                                                                    </div>
                                                                     <div class="form-group">
                                                                         <label for="type"></label>
                                                                         <div class="col-md-4">
@@ -611,6 +642,7 @@ SELECT quantity AS TotalOut FROM trans_raw INNER JOIN inv_transact ON trans_raw.
                                 </div>
                                 
                                 <div class="card-content ">
+                                    <a class="btn btn-info btn-sm" data-toggle="modal" data-target="physcountmodal">Physical Count</a>
                                     <br>
                                     <table id="example" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                                         <thead>
