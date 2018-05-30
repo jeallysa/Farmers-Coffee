@@ -431,21 +431,16 @@ a:focus {
                                                 </td>
                                                  <td>
                                                      <div class="onoffswitch">
-                                                         <?php
-                                                        if($row->pack_activation == 1){
-
-                                                    ?>
-                                                         <input type="checkbox" id="button<?php echo $row->package_id;?>" class="toggle-switch" data-toggle="modal" data-target="#deactivate<?php echo $row->package_id;?>" checked>
-                                                    <?php
-                                                        }else{
-
-                                                    ?>
-
-                                                        <input type="checkbox" id="button<?php echo $row->package_id;?>" class="toggle-switch" data-toggle="modal" data-target="#deactivate<?php echo $row->package_id;?>">
-                                                    <?php
-                                                        }
-
-                                                    ?>
+                                                         <?php if ($row->pack_activation == 1): ?>
+                                                          <!-- Button to deactivate -->
+                                                        <button class="btn btn-danger" data-toggle="modal" data-target="#deactivate<?php echo $row->package_id;?>">Deactivate</button>
+                                                     <!--     <input type="checkbox" id="button<?php echo $row->raw_id;?>" class="toggle-switch" data-toggle="modal" data-target="#deactivate<?php echo $row->raw_id;?>" checked> -->
+                                                    <?php else: ?>
+                                                        <!-- Button to Activate -->
+                                                        <button class="btn btn-success" data-toggle="modal" data-target="#deactivate<?php echo $row->package_id;?>">Activate</button>
+                                                       <!--  <input type="checkbox" id="button<?php echo $row->raw_id;?>" class="toggle-switch" data-toggle="modal" data-target="#deactivate<?php echo $row->raw_id;?>"> -->
+                                                    <?php endif ?>
+                                                  
                                                     </div>
                                                 </td>
                                                 <div class="modal fade" id="deactivate<?php echo $row->package_id;?>" tabindex="-1" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
@@ -459,7 +454,7 @@ a:focus {
                                                                 <div class="modal-body">
                                                                     <div class="row" style="text-align: center">
                                                                         <br>
-                                                                        <h4> Are you sure you want to activate/deactivate this packaging?</h4>
+                                                                        <h4> Are you sure you want to <?= $row->pack_activation == 1 ? 'deactivate' : 'activate'?> this packaging?</h4>
                                                                         <br>
                                                                     </div>
                                                                     <div class="row">

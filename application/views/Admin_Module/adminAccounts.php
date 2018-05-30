@@ -300,21 +300,15 @@ a:focus {
                                                         </td>
                                                         <td>
                                                      <div class="onoffswitch">
-                                                         <?php
-                                                        if($row->u_activation == 1){
-
-                                                    ?>
-                                                         <input type="checkbox" id="button<?php echo $row->user_no;?>" class="toggle-switch" data-toggle="modal" data-target="#deactivate<?php echo $row->user_no;?>" checked>
-                                                    <?php
-                                                        }else{
-
-                                                    ?>
-
-                                                        <input type="checkbox" id="button<?php echo $row->user_no;?>" class="toggle-switch" data-toggle="modal" data-target="#deactivate<?php echo $row->user_no;?>">
-                                                    <?php
-                                                        }
-
-                                                    ?>
+                                                         <?php if ($row->u_activation == 1): ?>
+                                                          <!-- Button to deactivate -->
+                                                        <button class="btn btn-danger" data-toggle="modal" data-target="#deactivate<?php echo $row->user_no;?>">Deactivate</button>
+                                                     <!--     <input type="checkbox" id="button<?php echo $row->raw_id;?>" class="toggle-switch" data-toggle="modal" data-target="#deactivate<?php echo $row->raw_id;?>" checked> -->
+                                                    <?php else: ?>
+                                                        <!-- Button to Activate -->
+                                                        <button class="btn btn-success" data-toggle="modal" data-target="#deactivate<?php echo $row->user_no;?>">Activate</button>
+                                                       <!--  <input type="checkbox" id="button<?php echo $row->raw_id;?>" class="toggle-switch" data-toggle="modal" data-target="#deactivate<?php echo $row->raw_id;?>"> -->
+                                                    <?php endif ?>
                                                     </div>
                                                 </td>
 
@@ -329,7 +323,8 @@ a:focus {
                                                                 <div class="modal-body" style="padding: 5px;">
                                                                     <div class="row" style="text-align: center">
                                                                         <br>
-                                                                        <h4> Are you sure you want to activate/deactivate this account?</h4>
+                                                                        <h4> Are you sure you want to <?= $row->u_activation == 1 ? 'deactivate' : 'activate'?> this client?</h4>
+                                                                        <br>
                                                                         <br>
                                                                     </div>
                                                                     <div class="row">
