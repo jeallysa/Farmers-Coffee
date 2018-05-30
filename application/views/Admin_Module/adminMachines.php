@@ -244,8 +244,18 @@ a:focus {
                     <div class="collapse navbar-collapse">
                         <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
-                                <li>
-                                    <p class="title">Hi, <?php $username = $this->session->userdata('username'); print_r($username); ?></p>
+                                <li id="nameheader">
+                                    <?php $username = $this->session->userdata('username') ?>
+                                
+                                <?php
+                                              $retrieveUserDetails ="SELECT * FROM jhcs.user WHERE username = '$username';" ;
+                                              $query = $this->db->query($retrieveUserDetails);
+                                              if ($query->num_rows() > 0) {
+                                              foreach ($query->result() as $object) {
+                                           echo '<p class="title">Hi, '  . $object->u_fname  . ' ' . $object->u_lname  . '</p>' ;
+                                              }
+                                            }
+                                        ?>
                                 </li>
                                 <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
                                          <i class="glyphicon glyphicon-user"></i>
@@ -388,7 +398,6 @@ a:focus {
                                     <a class="btn btn-success" data-toggle="modal" data-target="#stock" data-original-title style="float: right">Add New Machine</a>
                                     <table id="example" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                                         <thead>
-                                            <th><b class="pull-left">Machine No.</b></th>
                                             <th><b class="pull-left">Machine</b></th>
                                             <th><b class="pull-left">Type</b></th>
                                             <th><b class="pull-left">Price</b></th>
@@ -404,7 +413,6 @@ a:focus {
                                                 foreach ($data['machines'] as $row) {
                                              ?>
                                              <tr>
-                                                 <td><?php echo $row->mach_id; ?></td>
                                                  <td><?php echo $row->brewer; ?></td>
                                                  <td><?php echo $row->brewer_type; ?></td>
                                                  <td>Php <?php echo number_format($row->unitPrice,2); ?></td>
@@ -619,14 +627,89 @@ $(document).ready(function() {
             
 			{ "extend": 'excel', "text":'<i class="fa fa-file-excel-o"></i> CSV',"className": 'btn btn-success btn-xs',
                 exportOptions: {
-                    columns: [0, 1, 2, 3, 4, 5, 6]
+                    columns: [0, 1, 2, 3, 4, 5]
                 }
             },
             
-			{ "extend": 'pdf', "text":'<i class="fa fa-file-pdf-o"></i> PDF',"className": 'btn btn-danger btn-xs',
+			/*{ "extend": 'pdf', title: 'Machine Inventory', "text":'<i class="fa fa-file-pdf-o"></i> PDF',"className": 'btn btn-danger btn-xs',
                 exportOptions: {
                     columns: [0, 1, 2, 3, 4, 5, 6]
+                },
+                customize: function ( doc ) {
+                doc.content[1].table.widths = ['9%','12%','14%','18%','26%','10%','10%']
                 }
+            }*/
+            { 
+                "extend": 'pdf',
+                "text":'<i class="fa fa-file-pdf-o"></i> PDF',
+                "className": 'btn btn-danger btn-xs', 
+                "orientation": 'portrait', 
+                "title": 'Machine Inventory',
+                "download": 'open',
+                
+                "messageBottom": "\n \n \n \n \n Prepared by: ",
+                styles: {
+                    "messageBottom": {
+                        bold: true,
+                        fontSize: 15
+                    }
+                },
+                "exportOptions": {
+                     columns: [0, 1, 2, 3, 4, 5],
+                     /*modifier: {
+                          page: 'current'
+                        }*/
+                  },
+
+                "header": true,
+                customize: function(doc) {
+                    var now = new Date();
+                    var jsDate = now.getDate()+'-'+(now.getMonth()+1)+'-'+now.getFullYear();
+                    var logo = 'data:assets/img/logo.png';
+                    doc.content.splice(0, 1, {
+                      text: [{
+                        text: 'John Hay Coffee Services Inc.\n',
+                        bold: true,
+                        fontSize: 15
+                      }, {
+                        text: ' Machine Inventory \n',
+                        bold: true,
+                        fontSize: 11
+                      }, {
+                        text: '',
+                        bold: true,
+                        fontSize: 11
+                      }],
+                      margin: [0, 0, 0,20],
+                      alignment: 'center',
+                     image: logo
+                    });
+                    doc.content[1].table.widths = ['12%','20%','17%','29%','10%','10%'];
+                    doc.pageMargins = [40, 40, 40,40];
+                    doc['footer']=(function(page, pages) {
+                            return {
+                                columns: [
+                                    {
+                                        alignment: 'left',
+                                        text: ['Date Downloaded: ', { text: jsDate.toString() }]
+                                    },
+                                    {
+                                        alignment: 'right',
+                                        text: ['page ', { text: page.toString() },  ' of ', { text: pages.toString() }]
+                                    }
+                                ],
+                                margin: 20
+                            }
+                        });
+
+                    
+
+
+ 
+                  }
+
+
+
             }
         ]
     });
