@@ -17,7 +17,7 @@ class InventoryInventoryReport_model extends CI_Model {
 								        ELSE 0
 								    END)";
 			}
-			$query_append .=  " AS ". $row->raw_coffee ." ";
+			$query_append .=  " AS '". $row->raw_coffee ."' ";
 		}
 
 		$query_append .= " FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid
@@ -34,7 +34,7 @@ class InventoryInventoryReport_model extends CI_Model {
 								        ELSE 0
 								    END)";
 			}
-			$query_append .=  " AS ". $row->raw_coffee ." ";
+			$query_append .=  " AS '". $row->raw_coffee ."' ";
 		}
         
         $query_append .= " FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN client_coffreturn d ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.client_returnID = d.client_coffReturnID GROUP BY c.trans_id) a WHERE type = 'IN' and month(transact_date)=month(now()) GROUP BY a.main_id UNION SELECT a.* FROM (SELECT c.trans_id AS main_id, c.type AS type, c.transact_date AS transact_date, c.walkin_return, 'Walk-In Return' as supplier";
@@ -48,7 +48,7 @@ class InventoryInventoryReport_model extends CI_Model {
 								        ELSE 0
 								    END)";
 			}
-			$query_append .=  " AS ". $row->raw_coffee ." ";
+			$query_append .=  " AS '". $row->raw_coffee ."' ";
 		}
         
         $query_append .= " FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN walkin_sales d ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.walkin_return = d.walkin_id GROUP BY c.trans_id) a WHERE type = 'IN' and month(transact_date)=month(now()) GROUP BY a.main_id;";
@@ -73,7 +73,7 @@ class InventoryInventoryReport_model extends CI_Model {
 								        ELSE 0
 								    END)";
 			}
-			$query_append .=  " AS ". $row->raw_coffee ." ";
+			$query_append .=  " AS '". $row->raw_coffee ."' ";
 		}
 
 		$query_append .= " FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid
@@ -90,7 +90,7 @@ class InventoryInventoryReport_model extends CI_Model {
 								        ELSE 0
 								    END)";
 			}
-			$query_append .=  " AS ". $row->raw_coffee ." ";
+			$query_append .=  " AS '". $row->raw_coffee ."' ";
 		}
         
         $query_append .= " FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN client_coffreturn d ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.client_returnID = d.client_coffReturnID GROUP BY c.trans_id) a WHERE type = 'IN' and month(transact_date)='".$sdf."' GROUP BY a.main_id UNION SELECT a.* FROM (SELECT c.trans_id AS main_id, c.type AS type, c.transact_date AS transact_date, c.walkin_return, 'Walk-In Return' as supplier";
@@ -104,7 +104,7 @@ class InventoryInventoryReport_model extends CI_Model {
 								        ELSE 0
 								    END)";
 			}
-			$query_append .=  " AS ". $row->raw_coffee ." ";
+			$query_append .=  " AS '". $row->raw_coffee ."' ";
 		}
         
         $query_append .= " FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN walkin_sales d ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.walkin_return = d.walkin_id GROUP BY c.trans_id) a WHERE type = 'IN' and month(transact_date)='".$sdf."' GROUP BY a.main_id;";
@@ -130,7 +130,7 @@ class InventoryInventoryReport_model extends CI_Model {
 								        ELSE 0
 								    END)";
 			}
-			$query_append .=  " AS ". $row->raw_coffee ." ";
+			$query_append .=  " AS '". $row->raw_coffee ."' ";
 		}
         
 		$query_append .= " FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN contracted_po d JOIN contracted_client e ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.po_client = d.contractPO_id AND d.client_id = e.client_id GROUP BY c.trans_id) a WHERE type = 'OUT' and month(transact_date)=month(now()) GROUP BY a.main_id UNION SELECT a.* FROM (SELECT c.trans_id AS main_id, c.transact_date AS transact_date, c.type AS type, c.sales_inv AS po_no, 'Walk-in' AS client";
@@ -144,7 +144,7 @@ class InventoryInventoryReport_model extends CI_Model {
 								        ELSE 0
 								    END)";
 			}
-			$query_append .=  " AS ". $row->raw_coffee ." ";
+			$query_append .=  " AS '". $row->raw_coffee ."' ";
 		}
         
         $query_append .= " FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN walkin_sales d ON c.sales_inv = d.walkin_id GROUP BY c.trans_id) a WHERE type = 'OUT' AND MONTH(transact_date)=month(now()) GROUP BY a.main_id UNION SELECT a.* FROM (SELECT c.trans_id AS main_id, c.transact_date AS transact_date, c.type AS type, c.company_returnID, 'Company Return' as client";
@@ -158,7 +158,7 @@ class InventoryInventoryReport_model extends CI_Model {
 								        ELSE 0
 								    END)";
 			}
-			$query_append .=  " AS ". $row->raw_coffee ." ";
+			$query_append .=  " AS '". $row->raw_coffee ."' ";
 		}
         
         $query_append .= " FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN company_returns d ON c.company_returnID = d.company_returnID GROUP BY c.trans_id) a WHERE type = 'OUT' AND MONTH(transact_date)=month(now()) GROUP BY a.main_id "  ;
@@ -183,7 +183,7 @@ class InventoryInventoryReport_model extends CI_Model {
 								        ELSE 0
 								    END)";
 			}
-			$query_append .=  " AS ". $row->raw_coffee ." ";
+			$query_append .=  " AS '". $row->raw_coffee ."' ";
 		}
         
 		$query_append .= " FROM raw_coffee a JOIN trans_raw b JOIN inv_transact c JOIN contracted_po d JOIN contracted_client e ON a.raw_id = b.raw_coffeeid AND b.trans_id = c.trans_id AND c.po_client = d.contractPO_id AND d.client_id = e.client_id GROUP BY c.trans_id) a WHERE type = 'OUT' and month(transact_date)='".$sdf."' GROUP BY a.main_id UNION SELECT a.* FROM (SELECT c.trans_id AS main_id, c.transact_date AS transact_date, c.type AS type, c.sales_inv AS po_no, 'Walk-in' AS client";
@@ -197,7 +197,7 @@ class InventoryInventoryReport_model extends CI_Model {
 								        ELSE 0
 								    END)";
 			}
-			$query_append .=  " AS ". $row->raw_coffee ." ";
+			$query_append .=  " AS '". $row->raw_coffee ."' ";
 		}
         
         $query_append .= " FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN walkin_sales d ON c.sales_inv = d.walkin_id GROUP BY c.trans_id) a WHERE type = 'OUT' AND MONTH(transact_date)='".$sdf."' GROUP BY a.main_id UNION SELECT a.* FROM (SELECT c.trans_id AS main_id, c.transact_date AS transact_date, c.type AS type, c.company_returnID, 'Company Return' as client";
@@ -212,7 +212,7 @@ class InventoryInventoryReport_model extends CI_Model {
 								        
 								    END)";
 			}
-			$query_append .=  " AS ". $row->raw_coffee ." ";
+			$query_append .=  " AS '". $row->raw_coffee ."' ";
 		}
         
         $query_append .= " FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN company_returns d ON c.company_returnID = d.company_returnID GROUP BY c.trans_id) a WHERE type = 'OUT' AND MONTH(transact_date)='".$sdf."' GROUP BY a.main_id "  ;
