@@ -298,16 +298,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     </div>
                                 </div>
                             </div>
-
+                            <form action="InventoryStocks/update/" method="post" accept-charset="utf-8">
                             <div class="modal fade" id="physcountmodal" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-lg">
                                     <div class="panel panel-primary">
                                         <div class="panel-heading">
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                            <h1 class="panel-title" id="contactLabel"><span class="glyphicon glyphicon-info-sign"></span><b>Kindly Reorder the following:</b></h1>
+                                            <h1 class="panel-title" id="contactLabel"><b>Physical Count</b></h1>
                                         </div>
                                         <div class="modal-body" style="padding: 5px;">
-                                            <table id="example2" class="table table-striped table-bordered dt-responsive nowrap" width="100%">
+                                            <table id="example3" class="table table-striped table-bordered dt-responsive" width="100%">
                                                 <thead>
                                                 <tr>
                                                     <th align="center"><b>Raw Coffee</b></th>
@@ -315,7 +315,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     <th align="center"><b>Physical Count</b></th>
                                                     <th align="center"><b>Discrepancy</b></th>
                                                     <th align="center"><b>Inventory Date</b></th>
-                                                    <th align="center"><b>Discrepancy</b></th>
                                                     <th align="center"><b>Remarks</b></th>
                                                 </tr>
                                             </thead>
@@ -329,29 +328,46 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                            echo '<tr>' ,
                                                 '<td>'  . $object->raw_coffee . '</td>' ,
                                                 '<td>'  . $object->raw_type . '</td>' ,
-                                                '<td><input id="physcount<?php echo $details; ?>" min="0" step= "0.001" placeholder="Kilograms" name="physcount" type="number" class="form-control" required/></td>' ,
-                                                '<td><input value="0" id="discrepancy<?php echo $details; ?>" name="discrepancy" readonly="" class="form-control" /></td>' ,
-                                                '<td><input value="<?php   echo date("Y-m-d") ?>" id="date<?php echo $details; ?>" type="date" name="date" class="form-control" min="2017-01-01" max="<?php echo date("Y-m-d") ?>"/></td>' ,
-                                                '<td><textarea style="resize:vertical;" class="form-control" rows="2" name="remarks"></textarea></td>' ;
-
-                                                                      
-                                        ?>
-                                                                              
-                                               <td><a class="btn btn-info btn-sm" data-toggle="modal" data-target="#<?php echo "details" . $mapModal  ?>">View</a></td>
-                                            
-                                            
-                                            
-                <?php                          '</tr>' ; 
+                                                '<td><input id="physcount'.$mapModal.'" min="0" step= "0.001" placeholder="Kilograms" name="physcount" type="number" class="form-control"/></td>' ,
+                                                '<td><input value="0" id="discrepancy'.$mapModal.'" name="discrepancy" readonly="" class="form-control" readonly/></td>' ,
+                                                '<td><input value="'.date("Y-m-d").'" id="date'.$mapModal.'" type="date" name="date" class="form-control" min="2017-01-01" max="'.date("Y-m-d").'"/></td>' ,
+                                                '<td><textarea style="resize:vertical;" class="form-control" rows="2" name="remarks" id="remarks'.$mapModal.'"></textarea></td>' ,
+                                                '</tr>' ; 
                            $mapModal++;
                                          }  
                               }
                ?>
                                                 </tbody>
                                             </table>
+                                            <!--modal for verification-->
+                    <div class="modal fade" id="verify" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading" style="background-color: #990000;">
+                                    <h4 class="panel-title" id="contactLabel"><center><b>Verification</b></center> </h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="col-md-12 col-md-offset-1">
+                                        <h3>Do you want to continue?</h3></div>
+                                </div>
+                                <hr>
+                              <div align="right">
+                                <button type="submit" class="btn btn-success">Yes</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                              </div>
+                            </div>
+                            </div>
+                        </div>
+
+                        <div align="right">
+                                                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#verify" id="submit"> Save </button>
+                                                            <input type="reset" class="btn btn-danger" value="Clear" />
+                                                </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>  
+                        </form>
          <!-----------------------------------------------------------------------  MODAL DETAILS -------------------------------------->
             <div class="modal fade" id="<?php echo "details" . $details   ?>" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
@@ -360,7 +376,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             <h4 class="panel-title" id="contactLabel"><span class="glyphicon glyphicon-info-sign"></span>Stock Card Details</h4>
                         </div>
-                        <form action="InventoryStocks/update/<?php echo $id ?>" method="post" accept-charset="utf-8">
+                        
                             <div class="modal-body" style="padding: 5px;">
                                 <div id="page-wrapper">
                                     <div class="table-responsive">
@@ -528,7 +544,7 @@ SELECT quantity AS TotalOut FROM trans_raw INNER JOIN inv_transact ON trans_raw.
                                                                     <div class="form-group">
                                                                         <label for="type"></label>
                                                                         <div class="col-md-4">
-                                                                            <input value="<?php echo $id; ?>" class="form-control" name="rawid" type="hidden" />
+                                                                            
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group">
@@ -575,12 +591,9 @@ SELECT quantity AS TotalOut FROM trans_raw INNER JOIN inv_transact ON trans_raw.
                                     </div>
                                 
                             </div>
-                                <div align="right">
-                                                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#verify<?php echo $details; ?>" id="submit<?php echo $details; ?>" disabled="disabled"> Save </button>
-                                                            <input type="reset" class="btn btn-danger" value="Clear" />
-                                                </div>
+                                
                         </div>
-                          </form>   
+                           
                     </div>
                 </div>
             </div>
@@ -642,7 +655,9 @@ SELECT quantity AS TotalOut FROM trans_raw INNER JOIN inv_transact ON trans_raw.
                                 </div>
                                 
                                 <div class="card-content ">
-                                    <a class="btn btn-info btn-sm" data-toggle="modal" data-target="physcountmodal">Physical Count</a>
+                                    <div style="text-align:right">
+                                        <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#physcountmodal">Physical Count</a>
+                                    </div>
                                     <br>
                                     <table id="example" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                                         <thead>
@@ -789,6 +804,18 @@ $(document).ready(function() {
 </script>
 <script>
 
+$(document).ready(function() {
+    $('#example3').DataTable({
+        "pageLength": 100,
+        select: {
+            style: 'single'
+        }
+
+    });
+});
+</script>
+<script>
+
 <?php
            
            $c = 1; 
@@ -801,18 +828,11 @@ $(document).ready(function() {
                                                   
     
   $(document).ready(function(){                
-           $(<?php echo "'#details".$c." input[id=physcount".$c."]'"?>).keyup(function(){
+           $(<?php echo "'input[id=physcount".$c."]'"?>).keyup(function(){
             var y = parseFloat($(this).val());
-            var x = parseFloat($(<?php echo "'#details".$c." input[id=rawstocks".$c."]'"?>).val());
+            var x = parseFloat($(<?php echo "'input[id=rawstocks".$c."]'"?>).val());
             var res = y - (x / 1000) || 0;
-            $(<?php echo "'#details".$c." input[id=discrepancy".$c."]'"?>).val(res);
-
-            if ($(this).val() !== "" && $(this).val() !== null && $(this).val() !== " ")
-                {
-                    $(<?php echo "'#details".$c." button[id=submit".$c."]'"?>).prop("disabled", false);
-                } else {
-                    $(<?php echo "'#details".$c." button[id=submit".$c."]'"?>).prop("disabled", true);
-                }
+            $(<?php echo "'input[id=discrepancy".$c."]'"?>).val(res);
 });      
 });     
     
