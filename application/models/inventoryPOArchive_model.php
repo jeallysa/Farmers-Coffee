@@ -19,7 +19,7 @@
   
   
   function retrieveArchive(){
-      $query = $this->db->query('SELECT * FROM supp_po join supplier on supp_id = sup_id where (delivery_stat) = 0 and (payment_stat = 0) and archive = 0');
+      $query = $this->db->query('SELECT * FROM supp_po join supplier on supp_id = sup_id where delivery_stat = 0 and payment_stat = 0 and archive = 0 and delete_archive = 0');
             
       if($query->num_rows() > 0){
           return $query-> result();
@@ -39,7 +39,22 @@
       
          
        
-        }     
+        }  
+      
+      
+      
+      function delete($supp_po_id){    
+        $data = array(
+                                 'delete_archive' => 1
+                                        );
+    
+                           $this->db->where('supp_po_id', $supp_po_id);
+                           $this->db->update('supp_po', $data);    
+      
+         
+       
+        }   
+      
       
       
   }
