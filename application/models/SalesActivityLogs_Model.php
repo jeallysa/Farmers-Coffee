@@ -13,8 +13,8 @@ class SalesActivityLogs_Model extends CI_model
 	}
 
 	function fetch_data(){
-		$query = $this->db->query("SELECT timestamp, CONCAT(u_fname,' ', u_lname) AS name, message 
-			FROM `jhcs`.`activitylogs` INNER JOIN jhcs.user ON activitylogs.user_no=user.user_no;");
+		$query = $this->db->query("SELECT timestamp, CONCAT(u_fname,' ', u_lname) AS name, message, type 
+			FROM `jhcs`.`activitylogs` INNER JOIN jhcs.user ON activitylogs.user_no=user.user_no WHERE type = 'sales';");
 		return $query;
 	}
 }
