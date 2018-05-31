@@ -13,5 +13,4 @@ class Receivable_model extends CI_MODEL
 		return $query->result();
 	}
 }
-
 ?>

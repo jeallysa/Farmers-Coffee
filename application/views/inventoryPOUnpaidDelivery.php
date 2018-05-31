@@ -242,7 +242,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     <th align="center"><b>Product</b></th>
                                                     <th align="center"><b>Type</b></th>
                                                     <th align="center"><b>Supplier</b></th>
-                                                    <th align="center"><b>Quantity Needed</b></th>
+                                                    <th align="center"><b>Needed Quantity</b></th>
                                                 </tr>
                                             </thead>
                                                 <tbody>
@@ -258,15 +258,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>' . $object->name . ' </b></td>' ,
                                                 '<td>' . $object->type . ' </b></td>' ,
                                                 '<td>' . $object->supplier .  ' </b></td>' ,
-                                                '<td>' . number_format(((($object->reorder-$object->stock)/1000)+0.1),2) .  ' kg </b></td>' ,
+                                                '<td>More than ' . number_format((($object->reorder-$object->stock)/1000)+0.1,2) .  ' kg </b></td>' ,
                                                 '</tr>' ;
                                               
+                                              }elseif($category == 4){
+                                                echo   '<tr>' ,
+                                                '<td>' . $object->name . ' </b></td>' ,
+                                                '<td>' . $object->type . ' </b></td>' ,
+                                                '<td>' . $object->supplier .  ' </b></td>' ,
+                                                '<td>More than ' . number_format(($object->reorder-$object->stock)+1) .  ' unit/s </b></td>' ,
+                                                '</tr>' ;
+
                                               }else{
                                                   echo   '<tr>' ,
                                                 '<td>' . $object->name . ' </b></td>' ,
                                                 '<td>' . $object->type . ' </b></td>' ,
                                                 '<td>' . $object->supplier .  ' </b></td>' ,
-                                                '<td>' . number_format(($object->reorder-$object->stock+1)) .  ' pc/s </b></td>' ,
+                                                '<td>More than ' . number_format(($object->reorder-$object->stock+1)) .  ' pc/s </b></td>' ,
                                                 '</tr>' ;
                                               }
                                               
@@ -837,9 +845,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>'  . $object->sup_company  . '</td>';
 												                      
                                              ?>
+<<<<<<< HEAD
                                              
 
                                             <?php if($object->payment_stat == 1){ ?>
+=======
+                                            <?php if($object->payment_stat == 1){ ?>                                  
+                                               <td>
+                                                   <center>
+                                                    <a class="btn btn-default btn-sm" data-toggle="modal" disabled>Payment</a>
+                                                    <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#<?php echo 'details' . $i   ?>">Details</a>
+                                                    <a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#<?php echo 'return' . $i   ?>">Return</a>
+                                                   </center>
+                                               </td>
+                                            <?php }else{ ?>
+                                            
+>>>>>>> 2aae9f50edba2752a2661b089b4078164fa5cd49
                                                <td>
                                                    <center>
                                                     <a class=" btn btn-default btn-sm" data-toggle="modal" disabled>Payment</a>
@@ -862,6 +883,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 
 
+                                            
+                                            
+                                         <?php }   
+                                            
+                                            ?>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
                                             
                                     <?php                          
                                             '</tr>' ; 
@@ -1163,6 +1201,7 @@ $(document).ready(function() {
 
 $(document).ready(function() {
     $('#example2').DataTable({
+        "aaSorting": [2, 'asc'],
         select: {
             style: 'single'
         }

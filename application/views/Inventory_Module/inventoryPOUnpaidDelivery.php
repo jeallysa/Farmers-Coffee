@@ -16,6 +16,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <meta name="viewport" content="width=device-width" />
     <!-- Bootstrap core CSS     -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap.min.css"/>
+    <link href="<?php echo base_url(); ?>assets/css/jquery.dataTable.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/dataTables.bootstrap.min.css"/>
     <!--  Material Dashboard CSS    -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/material-dashboard.css?v=1.2.0"/>
     <!--  CSS for Demo Purpose, don't include it in your project     -->
@@ -240,7 +242,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     <th align="center"><b>Product</b></th>
                                                     <th align="center"><b>Type</b></th>
                                                     <th align="center"><b>Supplier</b></th>
-                                                    <th align="center"><b>Quantity Needed</b></th>
+                                                    <th align="center"><b>Needed Quantity</b></th>
                                                 </tr>
                                             </thead>
                                                 <tbody>
@@ -256,15 +258,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>' . $object->name . ' </b></td>' ,
                                                 '<td>' . $object->type . ' </b></td>' ,
                                                 '<td>' . $object->supplier .  ' </b></td>' ,
-                                                '<td>' . number_format(((($object->reorder-$object->stock)/1000)+0.1),2) .  ' kg </b></td>' ,
+                                                '<td>More than ' . number_format((($object->reorder-$object->stock)/1000)+0.1,2) .  ' kg </b></td>' ,
                                                 '</tr>' ;
                                               
+                                              }elseif($category == 4){
+                                                echo   '<tr>' ,
+                                                '<td>' . $object->name . ' </b></td>' ,
+                                                '<td>' . $object->type . ' </b></td>' ,
+                                                '<td>' . $object->supplier .  ' </b></td>' ,
+                                                '<td>More than ' . number_format(($object->reorder-$object->stock)+1) .  ' unit/s </b></td>' ,
+                                                '</tr>' ;
+
                                               }else{
                                                   echo   '<tr>' ,
                                                 '<td>' . $object->name . ' </b></td>' ,
                                                 '<td>' . $object->type . ' </b></td>' ,
                                                 '<td>' . $object->supplier .  ' </b></td>' ,
-                                                '<td>' . number_format(($object->reorder-$object->stock+1)) .  ' pc/s </b></td>' ,
+                                                '<td>More than ' . number_format(($object->reorder-$object->stock+1)) .  ' pc/s </b></td>' ,
                                                 '</tr>' ;
                                               }
                                               
@@ -330,8 +340,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <form action="InventoryPOUnpaidDelivery/insertReturn" method="post" accept-charset="utf-8">
                             <div class="modal-body" style="padding: 5px;">
                                 
-                                        <center><b>Return</b>
-                                            <br>
+                                        <center><h3><b><?php echo $object->sup_company  ?></b></h3></center>
+                                        <center><h4><b><p>Return</p></b></h4></center> 
+                                        <center><h5><b><p>Purchase Order No. <?php echo $temp ?></p></b></h5>
                                             
                                             <?php 
                                              $arr = explode('-', $dateMin);
@@ -339,14 +350,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                              ?>
                                             
                                             <b><?php echo $newDate ?></b>
-                                            <br></center>
-                                            <center><h3><b><p>Purchase Order No. <?php echo $temp ?></p></b></h3></center> 
+                                            </center> 
+
                                 
                                 <div class="row">
                              
                                       <div class="col-md-6 form-group">
                                         <div class="form-group label-floating">
-                                            <label for="email">Date</label>
+                                            <label for="email">Date Returned</label>
                                             <input class="form-control" type="date" name="date" min="<?php echo $dateMin ?>" max="<?php   echo date("Y-m-d") ?>" required>
                                         </div>
                                     </div>
@@ -450,7 +461,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             $temp =  $object->supp_po_id;
             $sup_id = $object->sup_id;
             $dateMin = $object->suppPO_date;
-               $tfee = $object->trucking_fee
+            $tfee = $object->trucking_fee
 ?>                                 
                                     
                                <!--------------------------- MODAL Partial Payment ------------------------------->
@@ -460,8 +471,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <div class="panel panel-primary">
                                             <form action="InventoryPOUnpaidDelivery/insertPartialPayment/<?php echo $temp ?>" method="post" accept-charset="utf-8">
                                             <div class="modal-body" style="padding: 0px;">
-                                            <center><b>Payment</b>
-                                            <br>
+                                                
+                                                
+                                             <center><h3><b><?php echo $object->sup_company  ?></b></h3></center>
+                                        <center><h4><b><p>Payment</p></b></h4></center> 
+                                        <center><h5><b><p>Purchase Order No. <?php echo $temp ?></p></b></h5>
                                             
                                             <?php 
                                              $arr = explode('-', $dateMin);
@@ -469,17 +483,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                              ?>
                                             
                                             <b><?php echo $newDate ?></b>
-                                                <br></center>
-                                            <center><h3><b><p>Purchase Order No. <?php echo $temp ?></p></b></h3></center> 
+                                            </center> 
 
                                                 
                                                 <table class="table table-striped" id="table-mutasi">
                                                     <thead>
                                                         <tr>
-                                                            <th>Item Name</th>
-                                                            <th>Type</th>
+                                                            <th><b>Item Name</b></th>
+                                                            <th><b>Type</b></th>
                                                      <!--  <th>Yield Weight(g)</th> -->
-                                                            <th>Amount</th>
+                                                            <th><b>Amount</b></th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -616,6 +629,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
            foreach($unpaid as $object){
             $temp =  $object->supp_po_id;
             $sup_id = $object->sup_id;
+            $dateMin = $object->suppPO_date;
 
 ?>
                                                       
@@ -627,8 +641,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 <div class="modal-body" style="padding: 5px;">
                                                     <div id="page-wrapper">
                                                         <div class="table-responsive">
-                                            <center><b>Details</b>
-                                            <br>
+                                           <center><h3><b><?php echo $object->sup_company  ?></b></h3></center>
+                                        <center><h4><b><p>Details</p></b></h4></center> 
+                                        <center><h5><b><p>Purchase Order No. <?php echo $temp ?></p></b></h5>
                                             
                                             <?php 
                                              $arr = explode('-', $dateMin);
@@ -636,20 +651,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                              ?>
                                             
                                             <b><?php echo $newDate ?></b>
-                                                <br></center>
-                                            <center><h3><b><p>Purchase Order No. <?php echo $temp ?></p></b></h3></center>
+                                            </center>
                                                             <table class="table table-striped" id="table-mutasi">
                                                                 <thead>
                                                                     <tr>
-                                                                        <th>Date Received</th>
-                                                                       <th>DR No.</th>
-                                                                        <th>Item Name</th>
-                                                                        <th>Type</th>
-                                                                        <th>Quantity</th>
-                                                                        <th>Weight(kg)</th>
-                                                                        <th>Yield Weight(kg)</th>
-                                                                        <th>Yield(kg)</th>
-                                                                        
+                                                                        <th><b>Date Received</b></th>
+                                                                        <th><b>DR No.</b></th>
+                                                                        <th><b>Item Name</b></th>
+                                                                        <th><b>Type</b></th>
+                                                                        <th><b>Quantity</b></th>
+                                                                        <th><b>Weight(kg)</b></th>
+                                                                        <th><b>Yield Weight(kg)</b></th>
+                                                                        <th><b>Yield(kg)</b></th>
+                                                                        <th><b>Received by</b></th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
@@ -658,25 +672,29 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                     
                                  
         <?php
-                                                                
-      //$i = 1;                                                             
+                                                                             
             
                  $arrayItem = array("raw_coffee","sticker","packaging","machine");
-                   $arrayOn = array("raw_coffee","sticker","package_type","brewer");
-                      $arrayType = array("raw_type","sticker_type","package_size","brewer_type");
+                   $arrayOn = array("raw_coffee","sticker","package_type","brewer");                                   //lahat ng delivery kahit pare-pareho ng DR received by, kinukuha niya as isang delivery
+                      $arrayType = array("raw_type","sticker_type","package_size","brewer_type");                       //pero pwede naman iSum nalang. pero sabi kahit ganito nlang raw. 
                          for($table = 0 ; $table < 4 ; $table++){
                           
-                             $retrieveDetails ="SELECT distinct supp_po_ordered_id , date_received, drNo , item , type ,  qty ,supp_delivery.received as received, yield_weight , yields , unitPrice , amount,category    FROM supp_delivery join supp_po_ordered using(supp_po_ordered_id)  join ".$arrayItem[$table]." on   item =  ".$arrayOn[$table]." where sup_id = 
+                             $retrieveDetails ="SELECT supp_po_ordered_id , date_received, drNo , item , type ,  qty ,supp_delivery.received as received, yield_weight , yields , unitPrice , amount,category,received_by   FROM supp_delivery join supp_po_ordered using(supp_po_ordered_id)  join ".$arrayItem[$table]." on   item =  ".$arrayOn[$table]." where sup_id = 
                              ".$sup_id ." and  type = ".$arrayType[$table]." and supp_po_ordered.supp_po_id = $temp"  ;  
                
                                               $query = $this->db->query($retrieveDetails);
                                            if ($query->num_rows() > 0) {
                                               foreach ($query->result() as $object) {
+                                                  $date = $object->date_received;
+                                                  
+                                                  $arr = explode('-', $date);
+                                                  $newDateModal = $arr[1].'/'.$arr[2].'/'.$arr[0];
+                                             
                                                   
                                                    // $tempItemId = $object->supp_po_ordered_id;    can use later
                                             if($object->category == 1){      
                                            echo '<tr>' ,
-                                                '<td>'  . $object->date_received   . '</td>' ,
+                                                '<td>'  . $newDateModal   . '</td>' ,
                                                 '<td>'  . $object->drNo   . '</td>' , 
                                                 '<td>'  . $object->item  . '</td>' ,
                                                 '<td>'  . $object->type  . '</td>' ,
@@ -684,6 +702,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>'  . number_format((($object->received)/1000),2)  . '</td>' ,
                                                 '<td>'  . number_format((($object->yield_weight)/1000),2). '</td>' ,
                                                 '<td>'  . number_format((($object->yields)/1000),2)  . '</td>' ,
+                                                '<td>'  . $object->received_by . '</td>' ,
                                              
                                                 '</tr>' ;
                                                 
@@ -693,9 +712,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>'  . $object->drNo   . '</td>' , 
                                                 '<td>'  . $object->item  . '</td>' ,
                                                 '<td>'  . $object->type  . '</td>' ,
-                                               // '<td>'  . number_format($object->received)  . '</td>' ,
                                                 '<td>'  . number_format($object->yield_weight). '</td>' ,
-                                             
+                                                '<td>'  .  '</td>' ,
+                                                '<td>'  .  '</td>' ,
+                                                '<td>'  .  '</td>' ,
+                                                '<td>'  . $object->received_by  . '</td>' , 
+                                                
                                                 '</tr>' ;
                                                   
                                               }
@@ -776,7 +798,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 <span></span>
                                                <li class="">
                                                 <a href="<?php echo base_url(); ?>inventoryPOArchive">
-                                                    Archived PO
+                                                    Archived Purchase Order
                                                     <div class="ripple-container"></div>
                                                 </a>
                                             </li>
@@ -823,7 +845,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>'  . $object->sup_company  . '</td>';
 												                      
                                              ?>
-                                                                              
+                                            <?php if($object->payment_stat == 1){ ?>                                  
+                                               <td>
+                                                   <center>
+                                                    <a class="btn btn-default btn-sm" data-toggle="modal" disabled>Payment</a>
+                                                    <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#<?php echo 'details' . $i   ?>">Details</a>
+                                                    <a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#<?php echo 'return' . $i   ?>">Return</a>
+                                                   </center>
+                                               </td>
+                                            <?php }else{ ?>
+                                            
                                                <td>
                                                    <center>
                                                     <a class=" btn btn-success btn-sm" data-toggle="modal" data-target="#<?php echo 'partial' . $i   ?>">Payment</a>
@@ -831,6 +862,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     <a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#<?php echo 'return' . $i   ?>">Return</a>
                                                    </center>
                                                </td>
+                                            
+                                            
+                                         <?php }   
+                                            
+                                            ?>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
                                             
                                     <?php                          
                                             '</tr>' ; 
@@ -855,23 +903,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </div>
         </div>
     </div>
-    </div>
-               <footer class="footer navbar navbar-fixed-bottom" >
-                <div class="container">
-                  <div class="copyright float-center">
-                    <center>
-                    &copy;
-                    <a href="https://www.creative-tim.com" target="_blank">Creative Team</a>
-                    <script>
-                      document.write(new Date().getFullYear())
-                    </script>, made with <i class="material-icons">favorite</i> by
-                    Team Barako for John Hay Coffee Services Incorporation.
-                </center>
-                  </div>
-                </div>
-              </footer>
-        </div>
-</div>
+      <div>
                <footer class="footer navbar navbar-fixed-bottom" >
                 <div class="container">
                   <div class="copyright float-center">
@@ -963,13 +995,14 @@ $partial = 1;
             
                   
                    var remaining = total - payment;
+                   var remaining = remaining.toFixed(2);
                    var remaining1 = remaining.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                   //var remaining2 = remaining1.toFixed(2);
-                   
+                  // var n = Math.floor(remaining);
+                  
+                   //var remaining = remaining.toFixed(2);
                   $(<?php echo "'#partial".$partial." input[id=total]'" ?>).val(total1); 
                   $(<?php echo "'#partial".$partial." input[id=remaining]'" ?>).val(remaining1);
                   $(<?php echo "'#partial".$partial." input[id=amount]'" ?>).attr("max", remaining)
-                 // $(<?php echo "'#partial".$partial." input[id=truckingFee]'" ?>).val(truckingFee);
               },
               error: function(){
                   //alert("error"); 
@@ -1145,6 +1178,7 @@ $(document).ready(function() {
 
 $(document).ready(function() {
     $('#example2').DataTable({
+        "aaSorting": [2, 'asc'],
         select: {
             style: 'single'
         }

@@ -13,5 +13,4 @@ class AdminReceivableReport_model extends CI_MODEL
 		return $query->result();
 	}
 }
-
 ?>

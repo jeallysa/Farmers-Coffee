@@ -19,7 +19,11 @@
   
   
   function retrieveOrder(){
+<<<<<<< HEAD
       $query = $this->db->query('SELECT * FROM supp_po join supplier on supp_id = sup_id where delivery_stat = 0 and archive = 1');
+=======
+      $query = $this->db->query('SELECT * FROM supp_po join supplier on supp_id = sup_id where (delivery_stat) = 0 and archive = 1');
+>>>>>>> 2aae9f50edba2752a2661b089b4078164fa5cd49
             
       if($query->num_rows() > 0){
           return $query-> result();

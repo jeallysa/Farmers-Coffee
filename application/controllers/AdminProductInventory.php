@@ -31,8 +31,17 @@
 			$stocks = $this->input->post("stocks");
 			$price = $this->input->post("price");
 			$sup_id = $this->input->post("sup_company");
+			$data = array(
+				"raw_coffee" =>$this->input->post("name"),
+				"raw_type" =>$this->input->post("raw_type"),
+				"raw_reorder" =>$reorder * 1000,
+                "raw_stock" =>$this->input->post("stocks"),
+                "unitPrice" =>$this->input->post("price"),
+                "sup_id" =>$this->input->post("sup_company")
+			);
 			$this->AdminProductInventory_model->activity_logs('admin', "Updated Raw Coffee: ".$name.", ".$raw_type." roast ");
-			$this->AdminProductInventory_model->update($id, $name, $raw_type, $reorder, $stocks, $price, $sup_id);
+			$this->db->where('raw_id', $id);
+			$this->db->update('raw_coffee', $data);
             echo "<script>alert('Update successful!');</script>";
 			redirect('adminProductInventory', 'refresh');
 		}
@@ -53,7 +62,7 @@
 
 			$raw_coffee = $this->input->post("name");
 			$raw_type = $this->input->post("raw_type");
-			if($this->db->query("SELECT IF (EXISTS (SELECT * FROM raw_coffee WHERE raw_coffee = '".$raw_coffee."' AND raw_type = '".$raw_type."'), 1,  0) AS result")->row()->result == 1){
+			if(($this->db->query("SELECT IF (EXISTS (SELECT * FROM raw_coffee WHERE raw_coffee = '".$raw_coffee."' AND raw_type = '".$raw_type."'), 1,  0) AS result")->row()->result == 1) || !preg_match('/[a-zA-Z ]+/', $name)){
 					$this->session->set_flashdata('error', 'Raw coffee already exist');
 								redirect('adminProductInventory');
 				}else{
