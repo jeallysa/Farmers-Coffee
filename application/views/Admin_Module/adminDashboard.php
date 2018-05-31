@@ -310,9 +310,33 @@ a:focus {
                         <div class="card-content table-responsive">
                             <table id=example class="table table-hover">
                                 <tbody>
+
+                                <?php
+
+                                            $query = $this->db->query("SELECT date_expiration,client_id,client_company,seen FROM contract NATURAL JOIN contracted_client");
+                                                $date = date('Y-m-d');
+
+                                             $query2 = $this->db->query("SELECT date_expiration FROM contract NATURAL JOIN contracted_client WHERE DATE_SUB(NOW(), INTERVAL 1 MONTH) ");
+
+                                                if(!empty($query)){
+                                                    foreach($query->result() as $object){
+                                                        if($object->date_expiration == $date ){
+                                        ?>
+                                                <tr>
+                                                    <td>
+                                                        The Contract of <?php echo $object->client_company; ?> has expired today ! 
+                                                    </td>
+
+                                                </tr>
+                                        <?php
+                                                        }
+                                                    }
+                                                }
+
+                                        ?>
 											
 												
-											<?php
+											<!-- <?php
 										
 												$query = $this->db->query("SELECT date_expiration,client_id,client_company,seen_admin FROM contract NATURAL JOIN contracted_client WHERE seen_admin='0'");
 												$date = date('Y-m-d');
@@ -353,7 +377,7 @@ a:focus {
 													echo 0;
 												}
 
-										 	?>
+										 	?> -->
                         </div>
                     </div>
                 </div>
@@ -460,7 +484,7 @@ $(function() {
 					$(".select-pane").show();
 		}
 	});
-	$(document).ready(function() {
+	/*$(document).ready(function() {
 		demo.initDashboardPageCharts();
 
 		$(document).on('click', '#check', function(e){   
@@ -478,7 +502,7 @@ $(function() {
 
 		});
 
-	});	
+	});	*/
 </script>
 
 </html>

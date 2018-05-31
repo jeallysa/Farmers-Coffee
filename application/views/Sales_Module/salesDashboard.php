@@ -383,8 +383,32 @@
                                     <table class="table">
                                         <tbody>
 
+                                        <?php
 
-                                            <?php
+                                            $query = $this->db->query("SELECT date_expiration,client_id,client_company,seen FROM contract NATURAL JOIN contracted_client");
+                                                $date = date('Y-m-d');
+
+                                             $query2 = $this->db->query("SELECT date_expiration FROM contract NATURAL JOIN contracted_client WHERE DATE_SUB(NOW(), INTERVAL 1 MONTH) ");
+
+                                                if(!empty($query)){
+                                                    foreach($query->result() as $object){
+                                                        if($object->date_expiration == $date ){
+                                        ?>
+                                                <tr>
+                                                    <td>
+                                                        The Contract of <?php echo $object->client_company; ?> has expired today ! 
+                                                    </td>
+
+                                                </tr>
+                                        <?php
+                                                        }
+                                                    }
+                                                }
+
+                                        ?>
+
+
+                                           <!--  <?php
 
                                                 $query = $this->db->query("SELECT date_expiration,client_id,client_company,seen FROM contract NATURAL JOIN contracted_client WHERE seen='0'");
                                                 $date = date('Y-m-d');
@@ -425,7 +449,7 @@
                                                     echo 0;
                                                 }
 
-                                            ?>
+                                            ?> -->
 
                                         </tbody>
                                     </table>
@@ -468,7 +492,7 @@
                     $(".select-pane").show();
         }
     });
-    $(document).ready(function() {
+    /*$(document).ready(function() {
         demo.initDashboardPageCharts();
 
         $(document).on('click', '#check', function(e){
@@ -485,7 +509,7 @@
                     });
 
         });
-
+*/
     });
 </script>
 

@@ -205,7 +205,7 @@
                 <strong><?php echo $success; ?></strong> 
             </div>
       <?php } ?> 
-    <table id="fresh-datatables" class="display hover order-column cell-border" cellspacing="0" width="100%">
+    <table id="" class="display hover order-column cell-border" cellspacing="0" width="100%">
         <thead>
             <th><b class="pull-left">Purchase Date</b></th>
             <th><b class="pull-left">Purchase Order No.</b></th>
@@ -486,12 +486,12 @@
 <div class="tab-pane" id="deliveries">
     <table id="" class="display hover order-column cell-border" cellspacing="0" width="100%">
         <thead>
-            <th><b class="pull-left">Delivery Date</b></th>
+            
             <th><b class="pull-left">Purchase Order No.</b></th>
             <th><b class="pull-left">Receipt No.</b></th>
-            
             <th><b class="pull-left">Client</b></th>
             <th><b class="pull-left">Coffee Blend</b></th>
+            <th><b class="pull-left">Delivery Date</b></th>
             <th><b class="pull-left">Quantity Delivered</b></th>
             <th><b class="pull-left">Total Amount</b></th>
             <th><b>Received By</b></th>
@@ -504,7 +504,7 @@
                 {
             ?>
             <tr>
-                <td><?php echo $row2->client_deliverDate; ?></td>
+                
                 <td><?php echo $row2->contractPO_id; ?></td>
                 <td><?php echo $row2->client_dr.'-'.$row2->client_invoice; ?></td>
                 
@@ -515,6 +515,7 @@
                         echo 'Php '.number_format($price,2);
                      ?>
                 </td>
+                <td><?php echo $row2->client_deliverDate; ?></td>
                 <td><?php echo $row2->deliver_quantity; ?> bags</td>
                 <td>Php                     
                     <?php
@@ -945,8 +946,11 @@
 $(document).ready(function() {
 
     $('table.display').DataTable( {
-        "order": [[ 0, "asc"]],
-        "order": [[ 1, "asc"]]
+
+      // "columnDefs": [
+      //   { "orderable": false, "targets": 0 }
+      // ]
+      "ordering": false
     } );
 
     $('#datePicker')
