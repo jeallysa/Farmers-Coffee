@@ -369,11 +369,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <div class="tab-content">
                                         <div class="tab-pane active" id="coffeeout">
                                             <ul class="nav nav-tabs navbar-default justify-content-center" id="coffeeout" >
-                                                <li class="active"><a href="#walkin" data-toggle="tab" >Walk-In Client</a></li>
-                                                <li><a href="#contracted" data-toggle="tab">Contracted Client</a></li>
+                                                <li class="active"><a href="#contracted" data-toggle="tab">Contracted Client</a></li>
+                                                <li><a href="#walkin" data-toggle="tab" >Walk-In Client</a></li>
                                             </ul>
                                             <div class="tab-content tab-color">
-                                                <div class="tab-pane active" id="walkin">
+                                                <div class="tab-pane fade" id="walkin">
                                                     <table id="walkin" class="table hover order-column" cellspacing="0" width="100%">
                                                         <thead>
                                                             <tr>
@@ -396,7 +396,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                  <td><?php echo $row->blend; ?></td>
                                                                  <td><?php echo $row->package_type; ?></td>
                                                                  <td><?php echo number_format($row->package_size); ?> g</td>
-                                                                 <td><?php echo number_format($row->walkin_qty); ?></td>
+                                                                 <td><?php echo number_format($row->walkin_qty); ?> bag/s</td>
                                                             </tr>
                                                             <?php
                                                         }
@@ -404,7 +404,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                         </tbody>
                                                     </table>
                                                 </div>
-                                                <div class="tab-pane fade" id="contracted">
+                                                <div class="tab-pane active" id="contracted">
                                                     <table id="contracted" class="table hover order-column" cellspacing="0" width="100%">
                                                         <thead>
                                                             <tr>
@@ -431,7 +431,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                 <td><?php echo $row->blend; ?></td>
                                                                 <td><?php echo $row->package_type; ?></td>
                                                                 <td><?php echo number_format($row->package_size); ?> g</td>
-                                                                <td><?php echo number_format($row->contractPO_qty); ?></td>
+                                                                <td><?php echo number_format($row->contractPO_qty); ?> bag/s</td>
                                                                 <td><?php echo $row->sticker; ?></td>
                                                                 <td><?php echo $row->client_receive; ?></td>
                                                             </tr>
@@ -463,7 +463,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                      <td><?php echo $row->date; ?></td>
                                                      <td><?php echo $row->client_company; ?></td>
                                                      <td><?php echo $row->brewer; ?></td>
-                                                     <td><?php echo number_format($row->mach_qty); ?></td>
+                                                     <td><?php echo number_format($row->mach_qty); ?> unit/s</td>
                                                      <td><?php echo $row->status; ?></td>
                                                 </tr>
                                                 <?php
@@ -530,7 +530,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script>
 $(document).ready(function() {
     $('table.table').DataTable({
-        "aaSorting": [2, 'asc'],
+        "order": [[ 1, "desc"]],
         select: {
             style: 'single'
         }

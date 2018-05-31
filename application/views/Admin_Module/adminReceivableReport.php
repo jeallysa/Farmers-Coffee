@@ -366,6 +366,7 @@ a:focus {
 
 
     var oTable = $('#example').dataTable({ 
+        "order": [[ 0, "desc"]],
         "dom":' fBrtip',
         "lengthChange": false,
         "info":     true,
