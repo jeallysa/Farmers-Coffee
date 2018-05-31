@@ -223,19 +223,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </nav>
             
             
-             <?php
-        $details = 1; 
-      if(!empty($blend)) {                                     
-           foreach($blend as $object){
-            $blnd = $object->blend; 
-            $pckg = $object->package_type;
-            $size = $object->package_size;
-            $id =  $object->blend_id;
-            $stock =  $object->blend_qty; 
-            $physical =  $object->blend_physcount; 
-          
-           
-?>
 
 <div class="modal fade" id="notifmodal" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-lg">
@@ -301,7 +288,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 </div>
                             </div>              
 
-                            <form action="InventoryBlends/update/" method="post" accept-charset="utf-8">
+            
+            
+               <form action="InventoryBlends/update/" method="post" accept-charset="utf-8">
                             <div class="modal fade" id="physcountmodal" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-lg">
                                     <div class="panel panel-primary">
@@ -310,7 +299,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <h1 class="panel-title" id="contactLabel"><b>Physical Count</b></h1>
                                         </div>
                                         <div class="modal-body" style="padding: 5px;">
-                                            <table id="example3" class="table table-striped table-bordered dt-responsive" width="100%">
+                                            <table id="example3" class="table table-striped table-bordered dt-responsive nowrap" width="100%">
                                                 <thead>
                                                 <tr>
                                                     <th align="center"><b>Blend</b></th>
@@ -329,19 +318,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                       $mapModal = 1;
                                           foreach($blend as $object){ 
                                              
-                                            
                                            echo '<tr>' ,
                                                
-                                                '<td>'. $object->blend .'<input type="hidden" style="resize:vertical;" class="form-control" rows="2" name="blnd_name[]" value="'. $object->blend .'" id="blnd_name'.$mapModal.'"></td>' ,
-                                                '<td>'. $object->package_type .'<input type="hidden" style="resize:vertical;" class="form-control" rows="2" name="pck_pckgng[]" value="'. $object->package_type .'" id="blnd_pckgng'.$mapModal.'"></td>' ,
-                                                '<td>'. $object->package_size .' g<input type="hidden" style="resize:vertical;" class="form-control" rows="2" name="blnd_size[]" value="'. $object->package_size .'" id="blnd_size'.$mapModal.'"></td>' ,
-                                              
-                                                '<td><input  id="physcount'.$mapModal.'" min="0" step= "0.001"    name="physcount[]" placeholder="Kilograms" type="number" class="form-control"/></td>',
-                                                '<td><input  id="discrepancy'.$mapModal.'" name="discrepancy[]" class="form-control" readonly/></td>',
-                                                '<td><input value="'.date("Y-m-d").'" id="date'.$mapModal.'" type="date" name="date[]" class="form-control" min="2017-01-01" max="'.date("Y-m-d").'"/></td>',
-                                                '<td><input style="resize:vertical;" class="form-control"    name="remarks[]" id="remarks'.$mapModal.'"><input  type="hidden" value="'.$object->package_id.'" name="blndid[]" /></td>' ,
-                                        
-                                              
+                       '<td><input type="text" style="resize:vertical;" class="form-control" name="blnd_name[]" value="'. $object->blend .'" id="blnd_name'.$mapModal.'"></td>' ,
+                       '<td><input type="text" style="resize:vertical;" class="form-control" name="pck_pckgng[]" value="'. $object->package_type .'" id="blnd_pckgng'.$mapModal.'"></td>' ,
+                       '<td><input type="text" style="resize:vertical;" class="form-control" name="blnd_size[]" value="'. $object->package_size .' g" id="blnd_size'.$mapModal.'"></td>' ,
+                       '<td><input  id="physcount'.$mapModal.'" min="0" step= "0.001"    name="physcount[]" placeholder="Kilograms" type="number" class="form-control"/></td>',
+                       '<td><input  value="0" id="discrepancy'.$mapModal.'" name="discrepancy[]" class="form-control" readonly/></td>',
+                       '<td><input  value="'.date("Y-m-d").'" id="date'.$mapModal.'" type="date" name="date[]" class="form-control" min="2017-01-01" max="'.date("Y-m-d").'"/></td>',
+                       '<td><input  type="hidden" value="'.$object->blend_id.'" name="blendid[]" /><input  style="resize:vertical;" class="form-control"    name="remarks[]" id="remarks'.$mapModal.'"></td>',
+
                                                 '</tr>' ; 
                            $mapModal++;
                                          }  
@@ -381,6 +367,33 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             </div>  
                         </form>
                             
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+                <?php
+        $details = 1; 
+      if(!empty($blend)) {                                     
+           foreach($blend as $object){
+            $blnd = $object->blend; 
+            $pckg = $object->package_type;
+            $size = $object->package_size;
+            $id =  $object->blend_id;
+            $stock =  $object->blend_qty; 
+            $physical =  $object->blend_physcount; 
+          
+           
+?>
+         
+            
                                              
          <!-----------------------------------------------------------------------  MODAL DETAILS -------------------------------------->
             <div class="modal fade" id="<?php echo "details" . $details   ?>" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
@@ -402,7 +415,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <table width = "100%" class="table table-striped table-bordered dt-responsive nowrap" id="table-mutasi<?php echo $details; ?>">
                                             <thead>
                                                 <tr>
-                                                    <td><b>Beginning Inventory</b></th>
+                                                    <td><b>Beginning Inventory</b></td>
                                                     <td><b> </b></td>
                                                     <td><b><?php echo ($physical); ?> bag/s</b></td>
                                                     <td><b> </b></td>
@@ -568,6 +581,12 @@ SELECT contractPO_qty AS TotalOut FROM jhcs.contracted_po INNER JOIN contracted_
                                                                             '<input value="'  . number_format(($physical)+($query->row()->TotalIn - $query2->row()->TotalOut))  . ' bag/s"  id="subtotal<?php echo $details; ?>" name="subtotal" readonly="" class="form-control" />';
                                                                             ?>
                                                                         </div>
+                                                                        <div class="form-group">
+                                                                        <label for="type"></label>
+                                                                        <div class="col-md-4">
+                                                                            <input value="<?php echo $stock; ?>" class="form-control" id = "blndstocks<?php echo $details; ?>" name="blndstocks" type="hidden" />
+                                                                        </div>
+                                                                    </div>
                                                             </div>
                                                         
                                                     </div>
@@ -579,8 +598,10 @@ SELECT contractPO_qty AS TotalOut FROM jhcs.contracted_po INNER JOIN contracted_
                         
                     </div>
                 </div>
-            </div>
-<?php                       
+            </div> 
+        </div>
+<?php             
+               
                    $details++;
                                
               }
@@ -638,6 +659,9 @@ SELECT contractPO_qty AS TotalOut FROM jhcs.contracted_po INNER JOIN contracted_
                                 </div>
                                 
                                 <div class="card-content ">
+                                    <div style="text-align:right">
+                                        <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#physcountmodal">Physical Count</a>
+                                    </div>
                                     <br>
                                     <table id="example" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                                         <thead>
@@ -694,10 +718,16 @@ SELECT contractPO_qty AS TotalOut FROM jhcs.contracted_po INNER JOIN contracted_
                         </div>     
               </div>
           </div>
-     </div>
     </div> 
-    </div>        
- </div>
+            
+            
+            
+</div>     
+</div>   
+        
+        
+        
+          <div>
                <footer class="footer navbar navbar-fixed-bottom" >
                 <div class="container">
                   <div class="copyright float-center">
@@ -816,18 +846,11 @@ $(document).ready(function() {
                                                   
     
   $(document).ready(function(){                
-           $(<?php echo "'#details".$c." input[id=physcount".$c."]'"?>).keyup(function(){
+           $(<?php echo "'input[id=physcount".$c."]'"?>).keyup(function(){
             var y = parseFloat($(this).val());
-            var x = parseFloat($(<?php echo "'#details".$c." input[id=blndstocks".$c."]'"?>).val());
+            var x = parseFloat($(<?php echo "'input[id=blndstocks".$c."]'"?>).val());
             var res = y - x || 0;
-            $(<?php echo "'#details".$c." input[id=discrepancy".$c."]'"?>).val(res);
-
-            if ($(this).val() !== "" && $(this).val() !== null && $(this).val() !== " ")
-                {
-                    $(<?php echo "'#details".$c." button[id=submit".$c."]'"?>).prop("disabled", false);
-                } else {
-                    $(<?php echo "'#details".$c." button[id=submit".$c."]'"?>).prop("disabled", true);
-                }
+            $(<?php echo "'input[id=discrepancy".$c."]'"?>).val(res);
 });      
 });     
   

@@ -639,49 +639,52 @@ input {
 
 </body>
 <!--   Core JS Files   -->
-<script src="<?php echo base_url(); ?>assets/js/jquery-3.2.1.min.js" type="text/javascript"></script>
-<script src="<?php echo base_url(); ?>assets/js/jquery.dataTables.min.js" type="text/javascript"></script>
-<script src="<?php echo base_url(); ?>assets/js/dataTables.bootstrap.min.js" type="text/javascript"></script>
+<script src="../assets/js/jquery-3.2.1.min.js" type="text/javascript"></script>
+<script src="../assets/js/jquery.dataTables.min.js" type="text/javascript"></script>
+
+<script src="../assets/js/dataTables.bootstrap.min.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/FileExport/dataTables.buttons.min.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/FileExport/buttons.flash.min.js" type="text/javascript"></script>
-<script src="<?php echo base_url(); ?>assets/FileExport/buttons.Html5.min.js" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>assets/FileExport/buttons.html5.min.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/FileExport/buttons.print.min.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/FileExport/jszip.min.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/FileExport/pdfmake.min.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/FileExport/vfs_fonts.js" type="text/javascript"></script>
-<script src="<?php echo base_url(); ?>assets/js/datepicker.js" type="text/javascript"></script>
-<script src="<?php echo base_url(); ?>assets/js/bootstrap.min.js" type="text/javascript"></script>
-<script src="<?php echo base_url(); ?>assets/js/material.min.js" type="text/javascript"></script>
+<script src="../assets/js/bootstrap-datepicker.min.js"></script>
+<script src="../assets/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="../assets/js/material.min.js" type="text/javascript"></script>
 <!--  Charts Plugin -->
-<script src="<?php echo base_url(); ?>assets/js/chartist.min.js"></script>
+<script src="../assets/js/chartist.min.js"></script>
 <!--  Dynamic Elements plugin -->
-<script src="<?php echo base_url(); ?>assets/js/arrive.min.js"></script>
+<script src="../assets/js/arrive.min.js"></script>
 <!--  PerfectScrollbar Library -->
-<script src="<?php echo base_url(); ?>assets/js/perfect-scrollbar.jquery.min.js"></script>
+<script src="../assets/js/perfect-scrollbar.jquery.min.js"></script>
 <!--  Notifications Plugin    -->
-<script src="<?php echo base_url(); ?>assets/js/bootstrap-notify.js"></script>
+<script src="../assets/js/bootstrap-notify.js"></script>
 <!--  Google Maps Plugin    -->
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
 <!-- Material Dashboard javascript methods -->
-<script src="<?php echo base_url(); ?>assets/js/material-dashboard.js?v=1.2.0"></script>
+<script src="../assets/js/material-dashboard.js?v=1.2.0"></script>
 <!-- Material Dashboard DEMO methods, don't include it in your project! -->
-<script src="<?php echo base_url(); ?>assets/js/demo.js"></script>
+<script src="../assets/js/demo.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/dataTables.responsive.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/responsive.bootstrap.min.js"></script>
 
 <script>
 $(document).ready(function() {
     $('#coffeein').DataTable({
-        "order": [[ 0, "desc"]],
+        "order": [[ 0, "asc"]],
         "responsive": true,
         "orderCellsTop": true,
         "dom":' fBrtip',
         "lengthChange": false,
-        "info":     false,
+        "info":     true,
         buttons: [
             { "extend": 'excel', "text":'<i class="fa fa-file-excel-o"></i> CSV',"className": 'btn btn-success btn-xs', footer: true },
             { "extend": 'pdf', "text":'<i class="fa fa-file-pdf-o"></i> PDF',"className": 'btn btn-danger btn-xs', footer: true, 
-                orientation: 'portrait',
+                orientation: 'landscape',
                         exportOptions: {
-                         columns: ':visible'
+                         columns: [0, 1, 2, 3, 4, 5, 6, 7]
                  
                         },
                     customize: function (doc) {
@@ -691,7 +694,7 @@ $(document).ready(function() {
                         doc.defaultStyle.fontSize = 10;
                         doc.styles.tableHeader.fontSize = 10;
                         doc.styles.title.fontSize = 12;
-                         doc.content[1].table.widths = [ '11%', '12%', '11%', '11%', '11%', '11%', '11%', '11%', '11%']; }
+                         doc.content[1].table.widths = [ '12%', '21%', '12%', '12%', '12%', '12%', '12%', '12%']; }
             }
         ]
       
@@ -701,16 +704,16 @@ $(document).ready(function() {
 <script>
 $(document).ready(function() {
     $('#coffeeout').DataTable({
-        "order": [[ 0, "desc"]],
+        "order": [[ 0, "asc"]],
         "responsive": true,
         "orderCellsTop": true,
         "dom":' fBrtip',
         "lengthChange": false,
-        "info":     false,
+        "info":     true,
         buttons: [
                         { "extend": 'excel', "text":'<i class="fa fa-file-excel-o"></i> CSV',"className": 'btn btn-success btn-xs', footer: true },
             { "extend": 'pdf', "text":'<i class="fa fa-file-pdf-o"></i> PDF',"className": 'btn btn-danger btn-xs', footer: true, 
-                orientation: 'portrait',
+                orientation: 'landscape',
                         exportOptions: {
                          columns: ':visible'
                  
@@ -722,7 +725,7 @@ $(document).ready(function() {
                         doc.defaultStyle.fontSize = 10;
                         doc.styles.tableHeader.fontSize = 10;
                         doc.styles.title.fontSize = 12;
-                         doc.content[1].table.widths = [ '11%', '12%', '11%', '11%', '11%', '11%', '11%', '11%', '11%']; }
+                         doc.content[1].table.widths = [ '12%', '21%', '12%', '12%', '12%', '12%', '12%', '12%']; }
             }
         ]
       

@@ -111,6 +111,7 @@ class Admin_Inventory_Report_Model extends CI_Model {
 
 		$query = $this->db->query($query_append);
 		return $query;
+
 	}
     
     public function get_coffeeout(){
@@ -164,7 +165,6 @@ class Admin_Inventory_Report_Model extends CI_Model {
 
 		$query = $this->db->query($query_append);
 		return $query;
-
 
 	}
     

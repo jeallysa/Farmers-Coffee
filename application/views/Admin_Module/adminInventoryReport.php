@@ -617,16 +617,16 @@ a:focus {
 <script>
 $(document).ready(function() {
     $('#coffeein').DataTable({
+        "order": [[ 0, "asc"]],
         "responsive": true,
         "orderCellsTop": true,
         "dom":' fBrtip',
         "lengthChange": false,
-        "info":     true,
+        "info":     false,
         buttons: [
-          
             { "extend": 'excel', "text":'<i class="fa fa-file-excel-o"></i> CSV',"className": 'btn btn-success btn-xs', footer: true },
             { "extend": 'pdf', "text":'<i class="fa fa-file-pdf-o"></i> PDF',"className": 'btn btn-danger btn-xs', footer: true, 
-                orientation: 'portrait',
+                orientation: 'landscape',
                         exportOptions: {
                          columns: ':visible'
                  
@@ -638,7 +638,7 @@ $(document).ready(function() {
                         doc.defaultStyle.fontSize = 10;
                         doc.styles.tableHeader.fontSize = 10;
                         doc.styles.title.fontSize = 12;
-                         doc.content[1].table.widths = [ '14%', '14%', '14%', '14%', '14%', '14%', '14%', '14%']; }
+                         doc.content[1].table.widths = [ '12%', '21%', '12%', '12%', '12%', '12%', '12%', '12%']; }
             }
         ]
       
@@ -648,25 +648,16 @@ $(document).ready(function() {
 <script>
 $(document).ready(function() {
     $('#coffeeout').DataTable({
+        "order": [[ 0, "asc"]],
         "responsive": true,
         "orderCellsTop": true,
         "dom":' fBrtip',
         "lengthChange": false,
         "info":     false,
         buttons: [
-            { extend: 'print', "text":'<i class="fa fa-files-o"></i> Print',"className": 'btn btn-default btn-xs', footer: true,
-                customize: function ( win ) { 
-                     $(win.document.body) .css( 'font-size', '10pt' )
-                    .prepend( '<label style="position:absolute; top:55; left:5;"><H4><b><?php echo $monthName; ?> <?php echo $year; ?> </b></H4></label>');
-                        $(win.document.body).find( 'table' )
-                            .addClass( 'compact' )
-                            .css( 'font-size', 'inherit' );
-                    $(win.document.body).find( 'thead' ).prepend('<div class="header-print">' + $('#dt-header').val() + '</div>');
-                }
-            },
-            { "extend": 'excel', "text":'<i class="fa fa-file-excel-o"></i> CSV',"className": 'btn btn-success btn-xs', footer: true },
+                        { "extend": 'excel', "text":'<i class="fa fa-file-excel-o"></i> CSV',"className": 'btn btn-success btn-xs', footer: true },
             { "extend": 'pdf', "text":'<i class="fa fa-file-pdf-o"></i> PDF',"className": 'btn btn-danger btn-xs', footer: true, 
-                orientation: 'portrait',
+                orientation: 'landscape',
                         exportOptions: {
                          columns: ':visible'
                  
@@ -678,7 +669,7 @@ $(document).ready(function() {
                         doc.defaultStyle.fontSize = 10;
                         doc.styles.tableHeader.fontSize = 10;
                         doc.styles.title.fontSize = 12;
-                         doc.content[1].table.widths = [ '14%', '14%', '14%', '14%', '14%', '14%', '14%', '14%']; }
+                         doc.content[1].table.widths = [ '12%', '21%', '12%', '12%', '12%', '12%', '12%', '12%']; }
             }
         ]
       

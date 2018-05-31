@@ -13,7 +13,7 @@ class InventoryBlends_Model extends CI_model
 	}
 
 	function retrieveBlends(){
-      $query = $this->db->query("SELECT blend_id, blend, package_type, package_size, blend_qty, blend_physcount, blend_discrepancy, coffee_blend.inventory_date, blend_remarks FROM jhcs.coffee_blend INNER JOIN packaging ON coffee_blend.package_id = packaging.package_id WHERE blend_activation = '1';");
+      $query = $this->db->query("SELECT blend_id, blend, package_type, package_size, blend_qty, blend_physcount, blend_discrepancy, coffee_blend.inventory_date, blend_remarks ,coffee_blend.package_id FROM jhcs.coffee_blend INNER JOIN packaging ON coffee_blend.package_id = packaging.package_id WHERE blend_activation = '1';");
             
       if($query->num_rows() > 0){
           return $query-> result();

@@ -223,17 +223,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </nav>
             
             
-             <?php
-        $details = 1; 
-      if(!empty($sticker)) {                                     
-           foreach($sticker as $object){
-            $stckr = $object->sticker; 
-            $id =  $object->sticker_id;
-            $stock =  $object->sticker_stock;
-            $physical =  $object->sticker_physcount;
-          
-           
-?>
+            
+            
+
                     <div class="modal fade" id="notifmodal" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-lg">
                                     <div class="panel panel-primary">
@@ -296,9 +288,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         </div>
                                     </div>
                                 </div>
-                            </div>                   
+                       </div>       
+            
+            
+            
+            
+            
 
-                            <form action="InventoryStickers/update/" method="post" accept-charset="utf-8">
+                      <form action="InventoryStickers/update/" method="post" accept-charset="utf-8">
                             <div class="modal fade" id="physcountmodal" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-lg">
                                     <div class="panel panel-primary">
@@ -327,12 +324,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             
                                            echo '<tr>' ,
                                                
-                                                '<td>'. $object->sticker .'<input type="hidden" style="resize:vertical;" class="form-control" rows="2" name="stck_name[]" value="'. $object->sticker .'" id="sticker'.$mapModal.'"></td>' ,
-                                              
-                                                '<td><input  id="physcount'.$mapModal.'" min="0" step= "0.001"    name="physcount[]" placeholder="Kilograms" type="number" class="form-control"/></td>',
-                                                '<td><input  id="discrepancy'.$mapModal.'" name="discrepancy[]" class="form-control" readonly/></td>',
-                                                '<td><input value="'.date("Y-m-d").'" id="date'.$mapModal.'" type="date" name="date[]" class="form-control" min="2017-01-01" max="'.date("Y-m-d").'"/></td>',
-                                                '<td><input style="resize:vertical;" class="form-control"    name="remarks[]" id="remarks'.$mapModal.'"><input  type="hidden" value="'.$object->sticker_id.'" name="stckid[]" /></td>' ,
+                        '<td><input  type="text" style="resize:vertical;" class="form-control" rows="2" name="stck_name[]" value="'. $object->sticker .'" id="sticker'.$mapModal.'"></td>' ,
+                        '<td><input  id="physcount'.$mapModal.'" min="0" step= "0.001"    name="physcount[]" placeholder="Kilograms" type="number" class="form-control"/></td>',
+                        '<td><input  id="discrepancy'.$mapModal.'" name="discrepancy[]" class="form-control" readonly/></td>',
+                        '<td><input  value="'.date("Y-m-d").'" id="date'.$mapModal.'" type="date" name="date[]" class="form-control" min="2017-01-01" max="'.date("Y-m-d").'"/></td>',
+                        '<td><input  style="resize:vertical;" class="form-control"    name="remarks[]" id="remarks'.$mapModal.'"></td>' ,
+                        '<td><input  type="hidden" class="form-control"  value="'.$object->sticker_id.'" name="stckid[]" /></td>' ,
                                         
                                               
                                                 '</tr>' ; 
@@ -372,7 +369,34 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     </div>
                                 </div>
                             </div>  
-                        </form>                    
+                   </form>               
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+                 
+    <?php
+        $details = 1; 
+      if(!empty($sticker)) {                                     
+           foreach($sticker as $object){
+            $stckr = $object->sticker; 
+            $id =  $object->sticker_id;
+            $stock =  $object->sticker_stock;
+            $physical =  $object->sticker_physcount;
+          
+           
+?>       
+            
          <!-----------------------------------------------------------------------  MODAL DETAILS -------------------------------------->
             <div class="modal fade" id="<?php echo "details" . $details   ?>" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
@@ -392,7 +416,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <table width = "100%" class="table table-striped table-bordered dt-responsive nowrap" id="table-mutasi<?php echo $details ?>">
                                             <thead>
                                                 <tr>
-                                                    <td><b>Beginning Inventory</b></th>
+                                                    <td><b>Beginning Inventory</b></td>
                                                     <td><b> </b></td>
                                                     <td><b><?php echo ($physical); ?> pc/s</b></td>
                                                     <td><b> </b></td>
@@ -553,9 +577,10 @@ SELECT sup_returnQty AS TotalOut FROM company_returns INNER JOIN supp_po_ordered
                                                                         </div>
                                                                     </div>
                                                             </div>
-                                                        
+                                                                
+                                                         </div> 
                                                     </center>  
-                                                    </div>
+                                                  
                                     </div>
                                 
                             </div>
@@ -564,6 +589,8 @@ SELECT sup_returnQty AS TotalOut FROM company_returns INNER JOIN supp_po_ordered
                     </div>
                 </div>
             </div>
+        
+    </div> 
 <?php                       
                    $details++;
                                
@@ -682,9 +709,11 @@ SELECT sup_returnQty AS TotalOut FROM company_returns INNER JOIN supp_po_ordered
               </div>
           </div>
      </div>
-    </div> 
-    </div>        
- <div>
+    </div>    
+    </div>     
+        
+        
+        <div>
                <footer class="footer navbar navbar-fixed-bottom" >
                 <div class="container">
                   <div class="copyright float-center">
