@@ -118,8 +118,9 @@
 			$date = $this->input->post("po_date");
 			$QTY = $this->input->post("po_qty");
 			$blend_id = $this->input->post("po_blend");
+			$dateNow = $this->input->post("dateNow");
 
-			$this->SalesDelivery_model->roastDel($date, $QTY, $blend_id, $po_id);
+			$this->SalesDelivery_model->roastDel($date, $QTY, $blend_id, $po_id, $dateNow);
 			redirect('SalesDelivery', 'refresh');
 		}
 
