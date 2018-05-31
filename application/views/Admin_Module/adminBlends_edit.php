@@ -266,7 +266,8 @@ a:focus {
                                                 <div class="row">
                                                     <?php
                                                             $id = $this->input->get('id');
-                                                            foreach($edit_page->result() as $row){
+                                                            $query_form = $this->db->query("SELECT c.blend_id AS main_id, c.blend_type AS type, c.blend AS blend, c.package_id AS package_id, c.sticker_id AS sticker,d.package_size, d.package_type, c.blend_price, c.blend_qty FROM raw_coffee a JOIN proportions b JOIN coffee_blend c JOIN packaging d ON a.raw_id = b.raw_id AND b.blend_id = c.blend_id AND c.package_id = d.package_id WHERE c.blend_id='".$id."' AND a.raw_activation = 1 GROUP BY c.blend_id;");
+                                                            foreach($query_form->result() as $row){
                                                     ?>
                                                     <div class="col-md-3">
                                                         <div class="form-group label-floating">
@@ -354,18 +355,18 @@ a:focus {
                                                     
                                                 
                                             </div>
-                                            <?php
+                                        <?php
 
                                                 }
                                                    
-                                            ?>
+                                            ?> 
                                                 
                                     </div><hr>
                                     <h3 style="text-align: center;"> PROPORTIONS </h3>  
                                     <table id="example" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                                 <thead>
                                     <tr>
-                                        <?php
+                                        <!-- <?php
                                                     $query_head = $this->db->query("SELECT CONCAT(raw_coffee, ' ', UCASE(LEFT(raw_type, 1)), SUBSTRING(raw_type, 2), ' ', 'Roast') AS type FROM raw_coffee WHERE raw_activation = 1");
  
                                                     if ($query_head->num_rows() > 0) {
@@ -377,27 +378,32 @@ a:focus {
                                                 } else {
                                                     echo "0 results";
                                                 }
-                                                ?>
+                                                ?> -->
+                                        <th><b>Raw Coffee</b></th>
+                                        <th><b>Proportions</b></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
+                                    
                                         <?php
 
-                                                $qcount = $this->db->query('SELECT * FROM raw_coffee');
+                                                
                                                 foreach($edit_page->result() as $row){
-                                                        foreach($qcount->result() as $row2){
-                                                            $colname = "per" . $row2->raw_id;
                                         ?>
+                                    <tr>
                                         <td>
-                                            <input oninput="findTotal(); validity.valid||(value='');" data-validate="required" type="number" min="0" max="" id="per" name="per[<?php echo $row2->raw_id;?>]" value="<?php echo $row->$colname; ?>" class="form-control">
+                                            <?php echo $row->raw; ?>
                                         </td>
+                                        <td>
+                                            <input oninput="findTotal(); validity.valid||(value='');" data-validate="required" type="number" min="0" max="" id="per" name="per[<?php echo $row->raw_id;?>]" value="<?php echo $row->percentage; ?>" class="form-control">
+                                        </td>
+                                    </tr>
                                         <?php
                                                 }
-                                            }
+                                            
                                         ?>
                                         
-                                    </tr>
+                                    
                                    
                                 </tbody>
                             </table>

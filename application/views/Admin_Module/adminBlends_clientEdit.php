@@ -267,7 +267,8 @@ a:focus {
                                                 <div class="row">
                                                     <?php
                                                             $id = $this->input->get('id');
-                                                            foreach($edit_page->result() as $row){
+                                                            $query_form = $this->db->query("SELECT a.blend_id AS main_id, a.client_id, b.client_company, c.sticker_id AS sticker, c.blend AS blend, c.package_id, d.package_type, d.package_size, c.blend_price FROM contract a JOIN contracted_client b ON a.client_id =  b.client_id LEFT JOIN coffee_blend c ON a.blend_id = c.blend_id LEFT JOIN packaging d ON c.package_id = d.package_id JOIN proportions e ON c.blend_id = e.blend_id JOIN raw_coffee f ON e.raw_id = f.raw_id WHERE a.blend_id = '".$id."' GROUP BY a.blend_id, a.client_id;");
+                                                            foreach($query_form->result() as $row){
                                                     ?>
                                                     <div class="col-md-3">
                                                         <div class="form-group label-floating">
@@ -378,7 +379,7 @@ a:focus {
                                     <table id="example" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                                 <thead>
                                     <tr>
-                                        <?php
+                                        <!-- <?php
                                                     $query_head = $this->db->query("SELECT CONCAT(raw_coffee, ' ', UCASE(LEFT(raw_type, 1)), SUBSTRING(raw_type, 2), ' ', 'Roast') AS type FROM raw_coffee WHERE raw_activation = 1");
  
                                                     if ($query_head->num_rows() > 0) {
@@ -390,32 +391,38 @@ a:focus {
                                                 } else {
                                                     echo "0 results";
                                                 }
-                                                ?>
+                                                ?> -->
+                                        <th><b>Raw Coffee</b></th>
+                                        <th><b>Proportions</b></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
+                                    
                                         <?php
 
-                                                $qcount = $this->db->query('SELECT * FROM raw_coffee');
+                                               
                                                 foreach($edit_page->result() as $row){
-                                                        foreach($qcount->result() as $row2){
-                                                            $colname = "per" . $row2->raw_id;
+                                                        
                                         ?>
-                                        <td>
-                                            <input oninput="findTotal(); validity.valid||(value='');" data-validate="required" type="number" min="0" max="" id="per" name="per[<?php echo $row2->raw_id;?>]" value="<?php echo $row->$colname; ?>" class="form-control">
+                                    <tr>
+                                         <td>
+                                            <?php echo $row->raw; ?>
                                         </td>
+                                        <td>
+                                            <input oninput="findTotal(); validity.valid||(value='');" data-validate="required" type="number" min="0" max="" id="per" name="per[<?php echo $row->raw_id;?>]" value="<?php echo $row->percentage; ?>" class="form-control">
+                                        </td>
+                                    </tr>
                                         <?php
-                                                }
+                                                
                                             }
                                         ?>
                                         
-                                    </tr>
+                                    
                                    
                                 </tbody>
                             </table>
                                     <div class="text-center" data-toggle="modal" data-target="#verify">
-                                        <button type="submit" id="myBtn" class="btn btn-success" disabled>
+                                        <button type="submit" id="myBtn" class="btn btn-success">
                                           Save
                                         </button>
                                         <a href="<?php echo base_url(); ?>adminBlends" class="btn btn-danger"> Cancel</a>

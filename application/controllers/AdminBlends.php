@@ -92,8 +92,9 @@
 					$this->db->query("UPDATE proportions SET percentage = '".$prop."' WHERE blend_id = '".$id."' AND raw_id = '".$row->raw_id."'");
 				}
 			}
-			echo "<script>alert('Update successful!');</script>";
-			redirect('adminBlends', 'refresh');
+			// echo "<script>alert('Update successful!');</script>";
+			$this->session->set_flashdata('success', 'Updating proportions of '.$blend_name.', given in '.$size.'g '.$pack.' is successful!');
+			redirect('adminBlends');
 		}
 
 		public function edit_clienttrial(){
@@ -123,8 +124,8 @@
 					$this->db->query("UPDATE proportions SET percentage = '".$prop."' WHERE blend_id = '".$id."' AND raw_id = '".$row->raw_id."'");
 				}
 			}
-			echo "<script>alert('Update successful!');</script>";
-			redirect('adminClientBlends', 'refresh');
+			$this->session->set_flashdata('success', 'Updating proportions of '.$blend_name.', given in '.$size.'g '.$pack.' is successful!');
+			redirect('adminClientBlends');
 		}
 
 		public function insertion(){
