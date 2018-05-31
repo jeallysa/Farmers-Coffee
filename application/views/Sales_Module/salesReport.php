@@ -101,9 +101,19 @@
                     <div class="collapse navbar-collapse">
                         <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
-                                <li>
-                                    <p class="title" style="color: black; font-size: 20px;">Hi, <?php $username = $this->session->userdata('username'); print_r($username); ?></p>
-                                </li><span style="display:inline-block; width: YOURWIDTH;"></span>
+                                 <li id="nameheader">
+                                    <?php $username = $this->session->userdata('username') ?>
+                                
+                                <?php
+                                              $retrieveUserDetails ="SELECT * FROM jhcs.user WHERE username = '$username';" ;
+                                              $query = $this->db->query($retrieveUserDetails);
+                                              if ($query->num_rows() > 0) {
+                                              foreach ($query->result() as $object) {
+                                           echo '<p class="title">Hi, '  . $object->u_fname  . ' ' . $object->u_lname  . '</p>' ;
+                                              }
+                                            }
+                                        ?>
+                                </li>
                                 <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
                                      <i class="glyphicon glyphicon-user"></i>
                                     <p class="hidden-lg hidden-md">Profile</p>
@@ -274,9 +284,9 @@ $(document).ready(function() {
 });
 </script> -->
 
-<script>
-
-
+<script>   
+    
+    
     $.fn.dataTableExt.afnFiltering.push(
         function(oSettings, aData, iDataIndex){
             var dateStart = parseDateValue($("#min").val());
@@ -299,19 +309,19 @@ $(document).ready(function() {
     }
 
     var oTable = $('#example').dataTable({
-        "order": [[ 2, "asc"]],
-
+        "order": [[ 2, "desc"]],
         "dom":' fBrtip',
         "lengthChange": false,
-        "info":     false,
-        buttons: [
+        "info":     true,
+		buttons: [
+    
+			{ "extend": 'excel', "text":'<i class="fa fa-file-excel-o"></i> CSV',"className": 'btn btn-success btn-xs',
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+                }
+            },
             
-            { "extend": 'excel', "text":'<i class="fa fa-file-excel-o"></i> CSV',"className": 'btn btn-success btn-xs',
-            title: 'Sales Report', "message": "John Hay Coffeee Services Inc. \n Sales Report "
-            
-               
-                },
-            { 
+			{ 
                 "extend": 'pdf',
                 "text":'<i class="fa fa-file-pdf-o"></i> PDF',
                 "className": 'btn btn-danger btn-xs', 
@@ -319,7 +329,7 @@ $(document).ready(function() {
                 "title": 'Sales Report',
                 "download": 'open',
                 
-                "messageBottom": "\n \n \n \n \n Prepared by: ",
+               "messageBottom": "\n \n \n \n \n Prepared by:  <?php echo $object->u_fname  . ' ' . $object->u_lname; ?>",
                 styles: {
                     "messageBottom": {
                         bold: true,
@@ -383,46 +393,7 @@ $(document).ready(function() {
 
 
             }
-
-        ],
-        "footerCallback": function ( row, data, start, end, display ) {
-                        var api = this.api(), data;
-             
-                        // Remove the formatting to get integer data for summation
-                        var intVal = function ( i ) {
-                            return typeof i === 'string' ?
-                                i.replace(/[^0-9\.]+/g, "")*1 :
-                                typeof i === 'number' ?
-                                    i : 0;
-                        };
-             
-                        // Total over all pages
-                        total = api
-                            .column( 9 )
-                            .data()
-                            .reduce( function (a, b) {
-                                return intVal(a) + intVal(b);
-                            }, 0 );
-             
-                        // Total over this page
-                        pageTotal = api
-                            .column( 9, { page: 'current'} )
-                            .data()
-                            .reduce( function (a, b) {
-                                return intVal(a) + intVal(b);
-                            }, 0 );
-             
-                        // Update footer
-                        $( api.column( 3 ).footer() ).html(
-                             ' Total Balance   : '
-                        );
-                        $( api.column( 4 ).footer() ).html(
-                           
-                            'Php '+ total.toLocaleString() 
-                        );
-                    }
-
-       
+        ]
     });
 
     $('#min,#max').datepicker({
@@ -435,12 +406,12 @@ $(document).ready(function() {
 
     // Event Listeners
     $("#min").datepicker().on( 'changeDate', function() {
-        oTable.fnDraw();
+        oTable.fnDraw(); 
     });
-    $("#max").datepicker().on( 'changeDate', function() {
-        oTable.fnDraw();
+    $("#max").datepicker().on( 'changeDate', function() { 
+        oTable.fnDraw(); 
     });
-
+    
 
 
 </script>

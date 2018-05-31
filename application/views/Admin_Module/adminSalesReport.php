@@ -395,7 +395,8 @@ a:focus {
         return parsedDate;
     }
 
-    var oTable = $('#example').dataTable({ 
+    var oTable = $('#example').dataTable({
+        "order": [[ 2, "desc"]],
         "dom":' fBrtip',
         "lengthChange": false,
         "info":     true,
