@@ -1006,17 +1006,6 @@ $(document).ready(function(){
     }
  });
     </script>
- <script>
-
-$(document).ready(function() {
-    $('#example2').DataTable({
-        select: {
-            style: 'single'
-        }
-
-    });
-});
-</script>   
     
  
 </html>

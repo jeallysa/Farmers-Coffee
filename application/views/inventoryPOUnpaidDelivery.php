@@ -402,7 +402,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     
                                     <div class="col-sm-6">
                                         <label> <p id="qtywt">Quantity | Weight(Kg)</p></label>
-                                        <input class="form-control" type="number" name="returnQty" id="<?php echo "returnQty".$return ?>"  min="1" required disabled/>
+                                        <input class="form-control"  type="number" name="returnQty" id="<?php echo "returnQty".$return ?>"  min="1" required disabled/>
                                     </div> 
                                     
                                     
@@ -837,14 +837,31 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>'  . $object->sup_company  . '</td>';
 												                      
                                              ?>
-                                                                              
+                                             
+
+                                            <?php if($object->payment_stat == 1){ ?>
                                                <td>
+                                                   <center>
+                                                    <a class=" btn btn-default btn-sm" data-toggle="modal" disabled>Payment</a>
+                                                    <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#<?php echo 'details' . $i   ?>">Details</a>
+                                                    <a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#<?php echo 'return' . $i   ?>">Return</a>
+                                                   </center>
+                                               </td>
+
+                                           <?php    
+                                             }else{ ?>
+
+                                                      <td>
                                                    <center>
                                                     <a class=" btn btn-success btn-sm" data-toggle="modal" data-target="#<?php echo 'partial' . $i   ?>">Payment</a>
                                                     <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#<?php echo 'details' . $i   ?>">Details</a>
                                                     <a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#<?php echo 'return' . $i   ?>">Return</a>
                                                    </center>
                                                </td>
+                                             <?php } ?>
+
+
+
                                             
                                     <?php                          
                                             '</tr>' ; 
@@ -1091,11 +1108,13 @@ $(document).ready(function() {
                       $(<?php echo "'#returnQty".$return."'"?>).attr("max", maxQty);
                       $(<?php echo "'#returnQty".$return."'"?>).attr("placeholder", maxQty);
                       $(<?php echo "'#category".$return."'"?>).val(category);
+                      $(<?php echo "'#returnQty".$return."'"?>).attr("min", 40);
                       
                 }else{
                       $(<?php echo "'#returnQty".$return."'"?>).attr("max", maxQtyx);
                       $(<?php echo "'#returnQty".$return."'"?>).attr("placeholder", maxQtyx);
                       $(<?php echo "'#category".$return."'"?>).val(category);
+                      $(<?php echo "'#returnQty".$return."'"?>).attr("min", 1);
                 } 
                      
                    
