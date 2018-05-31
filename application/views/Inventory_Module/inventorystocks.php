@@ -438,7 +438,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <table width = "100%" class="table table-striped table-bordered dt-responsive nowrap" id="table-mutasi<?php echo $details; ?>">
                                             <thead>
                                                 <tr>
-                                                    <td><b>Beginning Inventory</b></th>
+                                                    <td><b>Beginning Inventory</b></td>
                                                     <td><b> </b></td>
                                                     <td><b><?php echo ($physical/1000); ?> kg</b></td>
                                                     <td><b> </b></td>
@@ -616,9 +616,9 @@ SELECT quantity AS TotalOut FROM trans_raw INNER JOIN inv_transact ON trans_raw.
                                                                         </div>
                                                                     </div>
                                                             </div>
-                                                
-                                                    </center>  
                                                     </div>
+                                                </center>  
+                                                    
                                     </div>
                                 
                             </div>

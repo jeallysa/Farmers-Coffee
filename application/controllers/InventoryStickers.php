@@ -33,7 +33,7 @@
     if ($_POST){        
        for ($i = 0; $i < count($this->input->post("stckid")); $i++){
 
-             if((!empty($pck_physcountv[$i]) )){   
+             if((!empty($stck_physcountv[$i]) )){   
               
                 $data = array(
                     'sticker_id'             => $stck_idv[$i],
@@ -41,7 +41,7 @@
                     'sticker_physcount'      => $stck_physcountv[$i],
                     'sticker_discrepancy'    => $stck_discrepancyv[$i],
                     'sticker_remarks'        => $stck_remarksv[$i],
-                    'inventory_date'     => $inventory_datev[$i],
+                    'inventory_date'         => $inventory_datev[$i],
 
                 );
 
