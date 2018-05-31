@@ -745,6 +745,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $(document).ready(function() {
     $('#coffeein').DataTable({
 		"order": [[ 0, "desc"]],
+        "ordering": false,
         "lengthMenu": [ 5, 10, 25, 50, 100 ],
         select: {
             style: 'single'
@@ -756,6 +757,7 @@ $(document).ready(function() {
 $(document).ready(function() {
     $('#coffeeout').DataTable({
 		"order": [[ 0, "desc"]],
+        "ordering": false,
         "lengthMenu": [ 5, 10, 25, 50, 100 ],
         select: {
             style: 'single'
