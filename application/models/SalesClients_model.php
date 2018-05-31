@@ -51,7 +51,7 @@
 			return $query->result();
 		}
 		public function load_POClient($id){
-			$query = $this->db->query("SELECT * FROM contracted_client JOIN contracted_po ON contracted_client.client_id = contracted_po.client_id JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id JOIN packaging ON coffee_blend.package_id = packaging.package_id WHERE (contracted_po.delivery_stat = 'pending' OR contracted_po.delivery_stat = 'partial delivery' OR contracted_po.delivery_stat = 'delivered') AND contracted_client.client_id = '$id' ");
+			$query = $this->db->query("SELECT * FROM contracted_client JOIN contracted_po ON contracted_client.client_id = contracted_po.client_id JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id JOIN packaging ON coffee_blend.package_id = packaging.package_id WHERE (contracted_po.delivery_stat = 'pending delivery' OR contracted_po.delivery_stat = 'partial delivery' OR contracted_po.delivery_stat = 'delivered') AND contracted_client.client_id = '$id' ");
 			return $query->result();
 		}
 		public function load_DelClient($id){

@@ -103,7 +103,7 @@
                 $this->load->model('SalesDelivery_model');
                 $po = $this->input->post("po_undo");
                 $this->SalesDelivery_model->undoDel($po);
-                $this->session->set_flashdata('success', 'Purchase order has been cancelled.');
+                $this->session->set_flashdata('success', 'Purchase order has been archived.');
                 redirect('SalesDelivery', 'refresh');	
             }else{
                 $this->session->set_flashdata('error', 'Invalid password, failed to cancel order');

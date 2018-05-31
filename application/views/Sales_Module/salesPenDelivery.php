@@ -117,9 +117,20 @@
                     <div class="collapse navbar-collapse">
                         <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
-                                <li>
-                                    <p class="title" style="color: black; font-size: 20px;">Hi, <?php $username = $this->session->userdata('username'); print_r($username); ?></p>
-                                </li><span style="display:inline-block; width: YOURWIDTH;"></span>
+                               <li id="nameheader">
+                                    <?php $username = $this->session->userdata('username') ?>
+                                
+                                <?php
+                                              $retrieveUserDetails ="SELECT * FROM jhcs.user WHERE username = '$username';" ;
+                                              $query = $this->db->query($retrieveUserDetails);
+                                              if ($query->num_rows() > 0) {
+                                              foreach ($query->result() as $object) {
+                                           echo '<p class="title">Hi, '  . $object->u_fname  . ' ' . $object->u_lname  . '</p>' ;
+                                              }
+                                            }
+                                        ?>
+                                </li>
+                                <span style="display:inline-block; width: YOURWIDTH;"></span>
                                 <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
                                      <i class="glyphicon glyphicon-user"></i>
                                     <p class="hidden-lg hidden-md">Profile</p>
@@ -204,7 +215,7 @@
             <th><b class="pull-left">Unit Price</b></th>
             <th><b class="pull-left">Gross Amount</b></th>
             
-            <th><b class="pull-left">Delivery Status</b></th>
+            <th><b class="pull-left">Remarks</b></th>
             <th class="disabled-sorting" width="20%"><b class="pull-center">Actions</b></th>
             <th class="hidden"></th>
         </thead>
@@ -231,7 +242,18 @@
                      ?>
                 </td>
                 
-                <td><?php echo $row1->delivery_stat; ?></td>
+                <td><?php 
+                          $date_roasted = $row1->date_roasted;
+                          $roast = $row1->roast;
+                          if($roast == 'Yes'){
+                            echo  'roasted on '.$date_roasted. ', ';
+                            }else{
+                                echo '';
+                            }
+                            echo $row1->delivery_stat;
+                 ?>
+                    
+                </td>
                 <td><?php
                         $dbStat = $row1->delivery_stat;
                         $roast = $row1->roast;
@@ -257,7 +279,7 @@
                         echo '
                            <button data-toggle="modal" class="btn btn-warning btn-xs" data-target="#undo'.$row1->contractPO_id.'" title="archive order" disabled><span class="glyphicon glyphicon-remove-sign" style="color:black"></span> </button>
                         ';
-                        } else if ($dbStat == 'pending') {
+                        } else if ($dbStat == 'pending delivery') {
                         echo '
                            <button data-toggle="modal" class="btn btn-warning btn-xs" data-target="#undo'.$row1->contractPO_id.'" title="archive order"><span class="glyphicon glyphicon-remove-sign" style="color:black"></span> </button>
                         ';

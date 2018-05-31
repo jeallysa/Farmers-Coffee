@@ -100,9 +100,20 @@
                     <div class="collapse navbar-collapse">
                         <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
-                                <li>
-                                    <p class="title" style="color: black; font-size: 20px;">Hi, <?php $username = $this->session->userdata('username'); print_r($username); ?></p>
-                                </li><span style="display:inline-block; width: YOURWIDTH;"></span>
+                                <li id="nameheader">
+                                    <?php $username = $this->session->userdata('username') ?>
+                                
+                                <?php
+                                              $retrieveUserDetails ="SELECT * FROM jhcs.user WHERE username = '$username';" ;
+                                              $query = $this->db->query($retrieveUserDetails);
+                                              if ($query->num_rows() > 0) {
+                                              foreach ($query->result() as $object) {
+                                           echo '<p class="title">Hi, '  . $object->u_fname  . ' ' . $object->u_lname  . '</p>' ;
+                                              }
+                                            }
+                                        ?>
+                                </li>
+                                <span style="display:inline-block; width: YOURWIDTH;"></span>
                                 <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
                                     <i class="glyphicon glyphicon-user"></i>
                                     <p class="hidden-lg hidden-md">Profile</p>
@@ -289,7 +300,7 @@
         "lengthChange": false,
         "info":     false,
         "order": [[ 4, "asc"]],
-        "order": [[ 0, "asc"]],
+       
         buttons: [
             
             { 
@@ -306,11 +317,12 @@
                 "className": 'btn btn-danger btn-xs',
                 "orientation": 'landscape',
                 "title": 'Sales Collections',
+                "messageBottom": "\n \n \n Total Amount: <?php echo number_format($total, 2) ?> \n \n \n \n \n \n Prepared by: <?php echo $object->u_fname  . ' ' . $object->u_lname; ?>",
 
                 "download": 'open',
 
                 customize: function (doc) {
-                        doc.defaultStyle.alignment = 'left';
+                        doc.defaultStyle.alignment = 'right';
                         doc.styles.tableHeader.alignment = 'center';
                         doc.pageMargins = [50,50,50,80];
                         doc.defaultStyle.fontSize = 10;
@@ -359,7 +371,7 @@
                      }
              }
         ],
-         "footerCallback": function ( row, data, start, end, display ) {
+         /*"footerCallback": function ( row, data, start, end, display ) {
                         var api = this.api(), data;
              
                         // Remove the formatting to get integer data for summation
@@ -394,7 +406,7 @@
                            
                             'Php '+ total.toLocaleString() 
                         );
-                    }
+                    }*/
 
     });
 

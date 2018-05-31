@@ -109,9 +109,20 @@
                     <div class="collapse navbar-collapse">
                         <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
-                                <li>
-                                    <p class="title" style="color: black; font-size: 20px;">Hi, <?php $username = $this->session->userdata('username'); print_r($username); ?></p>
-                                </li><span style="display:inline-block; width: YOURWIDTH;"></span>
+                                <li id="nameheader">
+                                    <?php $username = $this->session->userdata('username') ?>
+                                
+                                <?php
+                                              $retrieveUserDetails ="SELECT * FROM jhcs.user WHERE username = '$username';" ;
+                                              $query = $this->db->query($retrieveUserDetails);
+                                              if ($query->num_rows() > 0) {
+                                              foreach ($query->result() as $object) {
+                                           echo '<p class="title">Hi, '  . $object->u_fname  . ' ' . $object->u_lname  . '</p>' ;
+                                              }
+                                            }
+                                        ?>
+                                </li>
+                                <span style="display:inline-block; width: YOURWIDTH;"></span>
                                 <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
                                     <i class="glyphicon glyphicon-user"></i>
                                     <p class="hidden-lg hidden-md">Profile</p>
@@ -281,9 +292,13 @@
                 }
             },
             
-            { "extend": 'pdf', "text":'<i class="fa fa-file-pdf-o"></i> PDF',"className": 'btn btn-danger btn-xs',"download": 'open',
+            { "extend": 'pdf', 
+            "text":'<i class="fa fa-file-pdf-o"></i> PDF',
+            "className": 'btn btn-danger btn-xs',
+            "download": 'open',
+              "messageBottom": "\n \n \n Total Amount: <?php echo number_format($total, 2) ?> \n \n \n \n \n \n Prepared by: <?php echo $object->u_fname  . ' ' . $object->u_lname; ?>",
 
-                orientation: 'portrait',
+                "orientation": 'portrait',
                         exportOptions: {
                          columns: ':visible'
                  
@@ -338,42 +353,42 @@
                      }
             }
         ],
-        "footerCallback": function ( row, data, start, end, display ) {
-                        var api = this.api(), data;
+    //     "footerCallback": function ( row, data, start, end, display ) {
+    //                     var api = this.api(), data;
              
-                        // Remove the formatting to get integer data for summation
-                        var intVal = function ( i ) {
-                            return typeof i === 'string' ?
-                                i.replace(/[^0-9\.]+/g, "")*1 :
-                                typeof i === 'number' ?
-                                    i : 0;
-                        };
+    //                     // Remove the formatting to get integer data for summation
+    //                     var intVal = function ( i ) {
+    //                         return typeof i === 'string' ?
+    //                             i.replace(/[^0-9\.]+/g, "")*1 :
+    //                             typeof i === 'number' ?
+    //                                 i : 0;
+    //                     };
              
-                        // Total over all pages
-                        total = api
-                            .column( 2 )
-                            .data()
-                            .reduce( function (a, b) {
-                                return intVal(a) + intVal(b);
-                            }, 0 );
+    //                     // Total over all pages
+    //                     total = api
+    //                         .column( 2 )
+    //                         .data()
+    //                         .reduce( function (a, b) {
+    //                             return intVal(a) + intVal(b);
+    //                         }, 0 );
              
-                        // Total over this page
-                        pageTotal = api
-                            .column( 2, { page: 'current'} )
-                            .data()
-                            .reduce( function (a, b) {
-                                return intVal(a) + intVal(b);
-                            }, 0 );
+    //                     // Total over this page
+    //                     pageTotal = api
+    //                         .column( 2, { page: 'current'} )
+    //                         .data()
+    //                         .reduce( function (a, b) {
+    //                             return intVal(a) + intVal(b);
+    //                         }, 0 );
              
-                        // Update footer
-                        $( api.column( 1 ).footer() ).html(
-                             ' Total Amount   : '
-                        );
-                        $( api.column( 2 ).footer() ).html(
+    //                     // Update footer
+    //                     $( api.column( 1 ).footer() ).html(
+    //                          ' Total Amount   : '
+    //                     );
+    //                     $( api.column( 2 ).footer() ).html(
                            
-                            'Php '+ total.toLocaleString() 
-                        );
-                    }
+    //                         'Php '+ total.toLocaleString() 
+    //                     );
+    //                 }
     });
 
     $('#min,#max').datepicker({

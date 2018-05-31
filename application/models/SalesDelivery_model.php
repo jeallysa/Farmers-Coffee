@@ -6,12 +6,12 @@
 		}
 		
 		public function get_delivery_list(){
-			$query = $this->db->query("SELECT * FROM contracted_client JOIN contracted_po ON contracted_client.client_id = contracted_po.client_id JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id JOIN packaging ON coffee_blend.package_id = packaging.package_id WHERE (contracted_po.delivery_stat = 'pending' OR contracted_po.delivery_stat = 'partial delivery') AND  contracted_po.undoDel = 0");
+			$query = $this->db->query("SELECT * FROM contracted_client JOIN contracted_po ON contracted_client.client_id = contracted_po.client_id JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id JOIN packaging ON coffee_blend.package_id = packaging.package_id WHERE (contracted_po.delivery_stat = 'pending delivery' OR contracted_po.delivery_stat = 'partial delivery') AND  contracted_po.undoDel = 0");
 			return $query->result();
 		}
 
 		public function get_cancel_list(){
-			$query = $this->db->query("SELECT * FROM contracted_client JOIN contracted_po ON contracted_client.client_id = contracted_po.client_id JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id JOIN packaging ON coffee_blend.package_id = packaging.package_id WHERE (contracted_po.delivery_stat = 'pending' OR contracted_po.delivery_stat = 'partial delivery') AND  contracted_po.undoDel = 1 AND  DATE_SUB(NOW(), INTERVAL 3 MONTH)");
+			$query = $this->db->query("SELECT * FROM contracted_client JOIN contracted_po ON contracted_client.client_id = contracted_po.client_id JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id JOIN packaging ON coffee_blend.package_id = packaging.package_id WHERE (contracted_po.delivery_stat = 'pending delivery' OR contracted_po.delivery_stat = 'partial delivery') AND  contracted_po.undoDel = 1 AND  DATE_SUB(NOW(), INTERVAL 3 MONTH)");
 			return $query->result();
 		}
 
@@ -85,7 +85,7 @@
 				$this->db->query('UPDATE sticker SET sticker_stock = sticker_stock - '.$quantity.' WHERE sticker_id ='.$stick_id.';');
 				$this->db->query('UPDATE coffee_blend SET blend_qty = blend_qty + '.$quantity.' WHERE blend_id ='.$blend_id.';');
 				$this->db->query("UPDATE contracted_po SET roast = 'Yes' WHERE contractPO_id = '".$po_id."';");
-				$this->db->query("UPDATE contracted_po SET date_roasted = '".$dateNow."' WHERE blend_id ='".$po_id."';  ");
+				$this->db->query("UPDATE contracted_po SET date_roasted = '".$dateNow."' WHERE contractPO_id ='".$po_id."';  ");
 
 				$data_trans = array(
 							'transact_date' => $date,
