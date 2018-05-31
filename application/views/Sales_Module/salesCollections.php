@@ -135,34 +135,34 @@
                                     <h3 class="title"><center>Collections Report</center></h3>
                                 </div>
                                 <div class="card-content">
-									<div class="row">
-										<div class="form-group col-xs-3 float-right">
-											 <label>Filter By:</label>
-											<div class="input-group input-daterange">
-												<input type="text" id="min" class="form-control" value="2000-01-01" >
-												<span class="input-group-addon">to</span>
-												<input type="text" id="max" class="form-control" value="<?php   echo date("Y-m-d") ?>" >
-											</div>
-										</div>
+                                    <div class="row">
+                                        <div class="form-group col-xs-3 float-right">
+                                             <label>Filter By:</label>
+                                            <div class="input-group input-daterange">
+                                                <input type="text" id="min" class="form-control" value="2000-01-01" >
+                                                <span class="input-group-addon">to</span>
+                                                <input type="text" id="max" class="form-control" value="<?php   echo date("Y-m-d") ?>" >
+                                            </div>
+                                        </div>
                                     <div class="form-group col-xs-3">
-										<p class="category">Total Collections: </p>
-                                    	<h3 class="title">
-										<b>
-										<?php
-											$total = $this->db->query("SELECT SUM(client_balance) AS total FROM client_delivery WHERE payment_remarks='paid'; ;")->row()->total;
+                                        <p class="category">Total Collections: </p>
+                                        <h3 class="title">
+                                        <b>
+                                        <?php
+                                            $total = $this->db->query("SELECT SUM(client_balance) AS total FROM client_delivery WHERE payment_remarks='paid'; ;")->row()->total;
 
-										if(!empty($total)){
-											echo 'Php '.number_format($total,2);
-										}else{
-											echo 0;
-										}
+                                        if(!empty($total)){
+                                            echo 'Php '.number_format($total,2);
+                                        }else{
+                                            echo 0;
+                                        }
 
-										 ?></b>
-											</h3>
+                                         ?></b>
+                                            </h3>
                                     </div>
-									</div>
+                                    </div>
                                     <div>
-                                        <table id="example" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                                        <table id="example" class="table table-striped cell-border dt-responsive nowrap" cellspacing="0" width="100%">
                                         <thead>
                                             <th><b class="pull-left">Collection Receipt No.</b></th>
                                             <th><b class="pull-left">Delivery Receipt No.</b></th>
@@ -200,6 +200,21 @@
                                                 }
                                               ?>
                                         </tbody>
+                                        <tfoot>
+                                                <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                
+                                             
+                                                 </tr>
+                                            </tfoot>
                                         </table>
                                     </div>
                                 </div>
@@ -273,20 +288,114 @@
         "dom":' fBrtip',
         "lengthChange": false,
         "info":     false,
-		buttons: [
+        "order": [[ 4, "asc"]],
+        "order": [[ 0, "asc"]],
+        buttons: [
             
-			{ 
+            { 
                 "extend": 'excel',
                  "text":'<i class="fa fa-file-excel-o"></i> CSV',
                  "className": 'btn btn-success btn-xs',
-                  "orientation": 'landscape'},
-			{ 
+                  "orientation": 'landscape',
+                  "message": "John Hay Coffeee Services Inc. \n Sales Collections"
+
+              },
+            { 
                 "extend": 'pdf', 
                 "text":'<i class="fa fa-file-pdf-o"></i> PDF',
                 "className": 'btn btn-danger btn-xs',
-                "orientation": 'landscape'
+                "orientation": 'landscape',
+                "title": 'Sales Collections',
+
+                "download": 'open',
+
+                customize: function (doc) {
+                        doc.defaultStyle.alignment = 'left';
+                        doc.styles.tableHeader.alignment = 'center';
+                        doc.pageMargins = [50,50,50,80];
+                        doc.defaultStyle.fontSize = 10;
+                        doc.styles.tableHeader.fontSize = 10;
+                        doc.styles.title.fontSize = 12;
+                         /*doc.content[1].table.widths = [ '30%', '40%', '35%']; */
+
+                         var now = new Date();
+                    var jsDate = now.getDate()+'-'+(now.getMonth()+1)+'-'+now.getFullYear();
+                    var logo = 'data:assets/img/logo.png';
+                    doc.content.splice(0, 1, {
+                      text: [{
+                        text: 'John Hay Coffee Services Inc.\n',
+                        bold: true,
+                        fontSize: 15
+                      }, {
+                        text: ' Sales Collections \n',
+                        bold: true,
+                        fontSize: 11
+                      }, {
+                        text: '',
+                        bold: true,
+                        fontSize: 11
+                      }],
+                      margin: [0, 0, 0,10],
+                      alignment: 'center',
+                     image: logo
+                    });
+
+                    doc['footer']=(function(page, pages) {
+                            return {
+                                columns: [
+                                    {
+                                        alignment: 'left',
+                                        text: ['Date Downloaded: ', { text: jsDate.toString() }]
+                                    },
+                                    {
+                                        alignment: 'right',
+                                        text: ['page ', { text: page.toString() },  ' of ', { text: pages.toString() }]
+                                    }
+                                ],
+                                margin: 20
+                            }
+                        });
+
+                     }
              }
-        ]
+        ],
+         "footerCallback": function ( row, data, start, end, display ) {
+                        var api = this.api(), data;
+             
+                        // Remove the formatting to get integer data for summation
+                        var intVal = function ( i ) {
+                            return typeof i === 'string' ?
+                                i.replace(/[^0-9\.]+/g, "")*1 :
+                                typeof i === 'number' ?
+                                    i : 0;
+                        };
+             
+                        // Total over all pages
+                        total = api
+                            .column( 5 )
+                            .data()
+                            .reduce( function (a, b) {
+                                return intVal(a) + intVal(b);
+                            }, 0 );
+             
+                        // Total over this page
+                        pageTotal = api
+                            .column( 5, { page: 'current'} )
+                            .data()
+                            .reduce( function (a, b) {
+                                return intVal(a) + intVal(b);
+                            }, 0 );
+             
+                        // Update footer
+                        $( api.column( 2 ).footer() ).html(
+                             ' Total Amount   : '
+                        );
+                        $( api.column( 3 ).footer() ).html(
+                           
+                            'Php '+ total.toLocaleString() 
+                        );
+                    }
+
     });
 
     $('#min,#max').datepicker({

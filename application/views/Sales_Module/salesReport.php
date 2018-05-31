@@ -26,6 +26,7 @@
     <style>
         .panel-primary>.panel-heading{color:#fff !important;background-color:#9c27b0 !important;border-color:#9c27b0 !important}
         .panel-primary{ border-color:#9c27b0 !important}
+       
     </style>
 
 </head>
@@ -127,7 +128,6 @@
                 </div>
             </nav>
             <div class="content">
-                <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card">
@@ -138,37 +138,37 @@
                                 </div>
                                 <div class="card-content">
                                 <div class="tab-content">
-    									<div class="row">
-    									<div class="form-group col-xs-3">
-    										<label>Filter By:</label>
-    										<div class="input-group input-daterange">
-    											<input type="text" id="min" class="form-control" value="2000-01-01" >
-    											<span class="input-group-addon">to</span>
-    											<input type="text" id="max" class="form-control" value="<?php   echo date("Y-m-d") ?>" >
-    										</div>
-    									</div>
-    								
-    									<div class="form-group col-xs-4 " >
-    										
-    										<p class="category">Total Sales of Contracted Clients: </p>
+                                        <div class="row">
+                                        <div class="form-group col-xs-3">
+                                            <label>Filter By:</label>
+                                            <div class="input-group input-daterange">
+                                                <input type="text" id="min" class="form-control" value="2000-01-01" >
+                                                <span class="input-group-addon">to</span>
+                                                <input type="text" id="max" class="form-control" value="<?php   echo date("Y-m-d") ?>" >
+                                            </div>
+                                        </div>
+                                    
+                                        <div class="form-group col-xs-4 " >
+                                            
+                                            <p class="category">Total Sales of Contracted Clients: </p>
                                         <h3 class="title">
-    										<b>
-    										<?php
-    											$total = $this->db->query("SELECT SUM(client_balance) AS total FROM client_delivery ;")->row()->total;
+                                            <b>
+                                            <?php
+                                                $total = $this->db->query("SELECT SUM(client_balance) AS total FROM client_delivery ;")->row()->total;
 
-    										if(!empty($total)){
-    											echo 'Php '.number_format($total,2);
-    										}else{
-    											echo 0;
-    										}
+                                            if(!empty($total)){
+                                                echo 'Php '.number_format($total,2);
+                                            }else{
+                                                echo 0;
+                                            }
 
-    										 ?></b>
-    											</h3>
-    									
-    									</div>
-    								</div>
+                                             ?></b>
+                                                </h3>
+                                        
+                                        </div>
+                                    </div>
 
-                                        <table id="example" class="display table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                                        <table id="example" class="display table-striped cell-border dt-responsive nowrap" cellspacing="0" width="100%">
                                             <thead>
                                                 <tr>
                                                     <th><b>Delivery Receipt No.</b></th>
@@ -189,6 +189,7 @@
                                                     foreach ($data['sales'] as $row) {
                                                  ?>
                                                  <tr>
+
                                                      <td><?php echo $row->client_dr; ?></td>
                                                      <td><?php echo $row->client_invoice; ?></td>
                                                      <td><?php echo $row->client_deliverDate; ?></td>
@@ -205,6 +206,22 @@
                                                     }
                                                   ?>
                                             </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                             
+                                                 </tr>
+                                            </tfoot>
                                         </table>
                             </div>
                         </div>
@@ -282,16 +299,130 @@ $(document).ready(function() {
     }
 
     var oTable = $('#example').dataTable({
+        "order": [[ 2, "asc"]],
+
         "dom":' fBrtip',
         "lengthChange": false,
         "info":     false,
-		buttons: [
+        buttons: [
             
-			{ "extend": 'excel', "text":'<i class="fa fa-file-excel-o"></i> CSV',"className": 'btn btn-success btn-xs', "orientation": 'landscape' },
-			{ "extend": 'pdf', "text":'<i class="fa fa-file-pdf-o"></i> PDF',"className": 'btn btn-danger btn-xs', 
-             "orientation": 'landscape'
+            { "extend": 'excel', "text":'<i class="fa fa-file-excel-o"></i> CSV',"className": 'btn btn-success btn-xs',
+            title: 'Sales Report', "message": "John Hay Coffeee Services Inc. \n Sales Report "
+            
+               
+                },
+            { 
+                "extend": 'pdf',
+                "text":'<i class="fa fa-file-pdf-o"></i> PDF',
+                "className": 'btn btn-danger btn-xs', 
+                "orientation": 'landscape', 
+                "title": 'Sales Report',
+                "download": 'open',
+                
+                "messageBottom": "\n \n \n \n \n Prepared by: ",
+                styles: {
+                    "messageBottom": {
+                        bold: true,
+                        fontSize: 15
+                    }
+                },
+                "exportOptions": {
+                     columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,],
+                     /*modifier: {
+                          page: 'current'
+                        }*/
+                  },
+
+                "header": true,
+                customize: function(doc) {
+                    var now = new Date();
+                    var jsDate = now.getDate()+'-'+(now.getMonth()+1)+'-'+now.getFullYear();
+                    var logo = 'data:assets/img/logo.png';
+                    doc.content.splice(0, 1, {
+                      text: [{
+                        text: 'John Hay Coffee Services Inc.\n',
+                        bold: true,
+                        fontSize: 15
+                      }, {
+                        text: ' Sales Report \n',
+                        bold: true,
+                        fontSize: 11
+                      }, {
+                        text: '',
+                        bold: true,
+                        fontSize: 11
+                      }],
+                      margin: [0, 0, 0,20],
+                      alignment: 'center',
+                     image: logo
+                    });
+
+                    doc.pageMargins = [40, 40, 40,40];
+                    doc['footer']=(function(page, pages) {
+                            return {
+                                columns: [
+                                    {
+                                        alignment: 'left',
+                                        text: ['Date Downloaded: ', { text: jsDate.toString() }]
+                                    },
+                                    {
+                                        alignment: 'right',
+                                        text: ['page ', { text: page.toString() },  ' of ', { text: pages.toString() }]
+                                    }
+                                ],
+                                margin: 20
+                            }
+                        });
+
+                    
+
+
+ 
+                  }
+
+
+
             }
-        ]
+
+        ],
+        "footerCallback": function ( row, data, start, end, display ) {
+                        var api = this.api(), data;
+             
+                        // Remove the formatting to get integer data for summation
+                        var intVal = function ( i ) {
+                            return typeof i === 'string' ?
+                                i.replace(/[^0-9\.]+/g, "")*1 :
+                                typeof i === 'number' ?
+                                    i : 0;
+                        };
+             
+                        // Total over all pages
+                        total = api
+                            .column( 9 )
+                            .data()
+                            .reduce( function (a, b) {
+                                return intVal(a) + intVal(b);
+                            }, 0 );
+             
+                        // Total over this page
+                        pageTotal = api
+                            .column( 9, { page: 'current'} )
+                            .data()
+                            .reduce( function (a, b) {
+                                return intVal(a) + intVal(b);
+                            }, 0 );
+             
+                        // Update footer
+                        $( api.column( 3 ).footer() ).html(
+                             ' Total Balance   : '
+                        );
+                        $( api.column( 4 ).footer() ).html(
+                           
+                            'Php '+ total.toLocaleString() 
+                        );
+                    }
+
+       
     });
 
     $('#min,#max').datepicker({
