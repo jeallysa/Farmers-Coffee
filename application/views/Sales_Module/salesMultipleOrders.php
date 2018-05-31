@@ -165,6 +165,7 @@
                                             }
                                         ?>
                                 </li>
+
                                 <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
                                     <i class="glyphicon glyphicon-user"></i>
                                     <p class="hidden-lg hidden-md">Profile</p>

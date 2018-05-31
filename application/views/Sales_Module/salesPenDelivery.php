@@ -117,7 +117,9 @@
                     <div class="collapse navbar-collapse">
                         <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
+
                                 <li id="nameheader">
+
                                     <?php $username = $this->session->userdata('username') ?>
                                 
                                 <?php
@@ -130,6 +132,7 @@
                                             }
                                         ?>
                                 </li>
+
                                 <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
                                      <i class="glyphicon glyphicon-user"></i>
                                     <p class="hidden-lg hidden-md">Profile</p>
@@ -202,7 +205,7 @@
                 <strong><?php echo $success; ?></strong> 
             </div>
       <?php } ?> 
-    <table id="fresh-datatables" class="display hover order-column cell-border" cellspacing="0" width="100%">
+    <table id="" class="display hover order-column cell-border" cellspacing="0" width="100%">
         <thead>
             <th><b class="pull-left">Purchase Date</b></th>
             <th><b class="pull-left">Purchase Order No.</b></th>
@@ -214,7 +217,7 @@
             <th><b class="pull-left">Unit Price</b></th>
             <th><b class="pull-left">Gross Amount</b></th>
             
-            <th><b class="pull-left">Delivery Status</b></th>
+            <th><b class="pull-left">Remarks</b></th>
             <th class="disabled-sorting" width="20%"><b class="pull-center">Actions</b></th>
             <th class="hidden"></th>
         </thead>
@@ -241,7 +244,18 @@
                      ?>
                 </td>
                 
-                <td><?php echo $row1->delivery_stat; ?></td>
+                <td><?php 
+                          $date_roasted = $row1->date_roasted;
+                          $roast = $row1->roast;
+                          if($roast == 'Yes'){
+                            echo  'roasted on '.$date_roasted. ', ';
+                            }else{
+                                echo '';
+                            }
+                            echo $row1->delivery_stat;
+                 ?>
+                    
+                </td>
                 <td><?php
                         $dbStat = $row1->delivery_stat;
                         $roast = $row1->roast;
@@ -267,7 +281,7 @@
                         echo '
                            <button data-toggle="modal" class="btn btn-warning btn-xs" data-target="#undo'.$row1->contractPO_id.'" title="archive order" disabled><span class="glyphicon glyphicon-remove-sign" style="color:black"></span> </button>
                         ';
-                        } else if ($dbStat == 'pending') {
+                        } else if ($dbStat == 'pending delivery') {
                         echo '
                            <button data-toggle="modal" class="btn btn-warning btn-xs" data-target="#undo'.$row1->contractPO_id.'" title="archive order"><span class="glyphicon glyphicon-remove-sign" style="color:black"></span> </button>
                         ';
@@ -472,12 +486,12 @@
 <div class="tab-pane" id="deliveries">
     <table id="" class="display hover order-column cell-border" cellspacing="0" width="100%">
         <thead>
-            <th><b class="pull-left">Delivery Date</b></th>
+            
             <th><b class="pull-left">Purchase Order No.</b></th>
             <th><b class="pull-left">Receipt No.</b></th>
-            
             <th><b class="pull-left">Client</b></th>
             <th><b class="pull-left">Coffee Blend</b></th>
+            <th><b class="pull-left">Delivery Date</b></th>
             <th><b class="pull-left">Quantity Delivered</b></th>
             <th><b class="pull-left">Total Amount</b></th>
             <th><b>Received By</b></th>
@@ -490,7 +504,7 @@
                 {
             ?>
             <tr>
-                <td><?php echo $row2->client_deliverDate; ?></td>
+                
                 <td><?php echo $row2->contractPO_id; ?></td>
                 <td><?php echo $row2->client_dr.'-'.$row2->client_invoice; ?></td>
                 
@@ -501,6 +515,7 @@
                         echo 'Php '.number_format($price,2);
                      ?>
                 </td>
+                <td><?php echo $row2->client_deliverDate; ?></td>
                 <td><?php echo $row2->deliver_quantity; ?> bags</td>
                 <td>Php                     
                     <?php
@@ -931,8 +946,11 @@
 $(document).ready(function() {
 
     $('table.display').DataTable( {
-        "order": [[ 0, "asc"]],
-        "order": [[ 1, "asc"]]
+
+      // "columnDefs": [
+      //   { "orderable": false, "targets": 0 }
+      // ]
+      "ordering": false
     } );
 
     $('#datePicker')

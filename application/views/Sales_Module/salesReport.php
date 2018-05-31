@@ -101,7 +101,9 @@
                     <div class="collapse navbar-collapse">
                         <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
+
                                  <li id="nameheader">
+
                                     <?php $username = $this->session->userdata('username') ?>
                                 
                                 <?php
@@ -113,7 +115,9 @@
                                               }
                                             }
                                         ?>
+
                                 </li>
+
                                 <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
                                      <i class="glyphicon glyphicon-user"></i>
                                     <p class="hidden-lg hidden-md">Profile</p>
@@ -309,7 +313,7 @@ $(document).ready(function() {
     }
 
     var oTable = $('#example').dataTable({
-        "order": [[ 2, "desc"]],
+        "order": [[ 2, "asc"]],
         "dom":' fBrtip',
         "lengthChange": false,
         "info":     true,
@@ -329,7 +333,9 @@ $(document).ready(function() {
                 "title": 'Sales Report',
                 "download": 'open',
                 
-               "messageBottom": "\n \n \n \n \n Prepared by:  <?php echo $object->u_fname  . ' ' . $object->u_lname; ?>",
+
+               "messageBottom": "\n \n \n Total Amount: <?php echo number_format($total, 2) ?> \n \n \n \n \n Prepared by:  <?php echo $object->u_fname  . ' ' . $object->u_lname; ?>",
+
                 styles: {
                     "messageBottom": {
                         bold: true,
@@ -345,6 +351,8 @@ $(document).ready(function() {
 
                 "header": true,
                 customize: function(doc) {
+                    doc.defaultStyle.alignment = 'right';
+                    doc.styles.tableHeader.alignment = 'center';
                     var now = new Date();
                     var jsDate = now.getDate()+'-'+(now.getMonth()+1)+'-'+now.getFullYear();
                     var logo = 'data:assets/img/logo.png';
@@ -393,7 +401,9 @@ $(document).ready(function() {
 
 
             }
+
         ]
+
     });
 
     $('#min,#max').datepicker({

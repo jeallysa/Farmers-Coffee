@@ -154,7 +154,9 @@
                     <div class="collapse navbar-collapse">
                         <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
+
                                  <li id="nameheader">
+
                                     <?php $username = $this->session->userdata('username') ?>
                                 
                                 <?php
@@ -167,6 +169,7 @@
                                             }
                                         ?>
                                 </li>
+
                                 <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
                                     <i class="glyphicon glyphicon-user"></i>
                                     <p class="hidden-lg hidden-md">Profile</p>

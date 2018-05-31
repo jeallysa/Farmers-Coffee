@@ -20,6 +20,7 @@
 
 			$data = $this->input->post('table_data');
 
+			
 			$this->SalesClients_model->activity_logs('sales', "Added other Purchase Order ");
 			$this->SalesClients_model->AddMultipleOrders($data);
 			$this->output->set_content_type('application/json');
