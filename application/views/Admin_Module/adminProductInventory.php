@@ -455,11 +455,11 @@ a:focus {
                                                       
                                                     <?php if ($row->raw_activation == 1): ?>
                                                           <!-- Button to deactivate -->
-                                                        <button class="btn btn-danger" data-toggle="modal" data-target="#deactivate<?php echo $row->raw_id;?>">Deactivate</button>
+                                                        <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deactivate<?php echo $row->raw_id;?>">Deactivate</button>
                                                      <!--     <input type="checkbox" id="button<?php echo $row->raw_id;?>" class="toggle-switch" data-toggle="modal" data-target="#deactivate<?php echo $row->raw_id;?>" checked> -->
                                                     <?php else: ?>
                                                         <!-- Button to Activate -->
-                                                        <button class="btn btn-success" data-toggle="modal" data-target="#deactivate<?php echo $row->raw_id;?>">Activate</button>
+                                                        <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#deactivate<?php echo $row->raw_id;?>">Activate</button>
                                                        <!--  <input type="checkbox" id="button<?php echo $row->raw_id;?>" class="toggle-switch" data-toggle="modal" data-target="#deactivate<?php echo $row->raw_id;?>"> -->
                                                     <?php endif ?>
                                                   
@@ -690,7 +690,7 @@ $(document).ready(function() {
                 "title": 'Raw Coffee Inventory',
                 "download": 'open',
                 
-                "messageBottom": "\n \n \n \n \n Prepared by: ",
+                "messageBottom": "\n \n \n \n \n Prepared by:  <?php echo $object->u_fname  . ' ' . $object->u_lname; ?>",
                 styles: {
                     "messageBottom": {
                         bold: true,

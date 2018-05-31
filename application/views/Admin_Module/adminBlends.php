@@ -495,7 +495,7 @@ a:focus {
                                                                             </div>
                                                                         </div>
                                                             <!-- END OF PROPORTION DATA-->
-                                                    <button class="btn btn-primary" data-toggle="modal" data-target="#proportions<?php echo $row->main_id; ?>">Show Proportions</button>
+                                                    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#proportions<?php echo $row->main_id; ?>">Show Proportions</button>
                                                 </td>
                                                 <td>
                                                     <a href="<?php echo base_url(); ?>AdminBlends/edit_show?id=<?php echo $row->main_id; ?>" class="btn btn-warning btn-sm" style="float: right">Edit</a>
@@ -504,11 +504,11 @@ a:focus {
                                                     <div class="onoffswitch">
                                                          <?php if ($row->blend_activation == 1): ?>
                                                           <!-- Button to deactivate -->
-                                                        <button class="btn btn-danger" data-toggle="modal" data-target="#deactivate<?php echo $row->main_id;?>">Deactivate</button>
+                                                        <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deactivate<?php echo $row->main_id;?>">Deactivate</button>
                                                      <!--     <input type="checkbox" id="button<?php echo $row->raw_id;?>" class="toggle-switch" data-toggle="modal" data-target="#deactivate<?php echo $row->raw_id;?>" checked> -->
                                                     <?php else: ?>
                                                         <!-- Button to Activate -->
-                                                        <button class="btn btn-success" data-toggle="modal" data-target="#deactivate<?php echo $row->main_id;?>">Activate</button>
+                                                        <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#deactivate<?php echo $row->main_id;?>">Activate</button>
                                                        <!--  <input type="checkbox" id="button<?php echo $row->raw_id;?>" class="toggle-switch" data-toggle="modal" data-target="#deactivate<?php echo $row->raw_id;?>"> -->
                                                     <?php endif ?>
                                                     </div>
