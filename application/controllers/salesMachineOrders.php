@@ -4,6 +4,7 @@
 		function __construct(){
 			parent::__construct();
 			$this->load->model('sellProduct_model');
+            $this->load->model('SalesClients_model');
 		}
 		
 		public function index()
@@ -19,8 +20,7 @@
 			}
         }
 
-        public function addMultipleOrders()
-        {
+        public function addMultipleOrders(){
             $data = $this->input->post('table_data');
 			$this->sellProduct_model->multipleOrderMachine($data);
 			$this->output->set_content_type('application/json');
@@ -28,6 +28,25 @@
 			
 			redirect('salesSellProduct');
         }
+        
+        
+        
+             public function orderValidationMachine(){
+         
+             $mach_id = $this->input->post('mach_id');
+             $qty     = $this->input->post('qty');
+             
+            $result = $this->SalesClients_model->orderValidationMachine($mach_id , $qty);
+             
+            if(count($result)>0){
+                echo json_encode($result);
+              }
+             
+         }
+  
+        
+        
+        
         
     }
 ?>

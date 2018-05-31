@@ -51,7 +51,7 @@
 			return $query->result();
 		}
 		public function load_POClient($id){
-			$query = $this->db->query("SELECT * FROM contracted_client JOIN contracted_po ON contracted_client.client_id = contracted_po.client_id JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id JOIN packaging ON coffee_blend.package_id = packaging.package_id WHERE (contracted_po.delivery_stat = 'pending delivery' OR contracted_po.delivery_stat = 'partial delivery' OR contracted_po.delivery_stat = 'delivered') AND contracted_client.client_id = '$id' ");
+			$query = $this->db->query("SELECT * FROM contracted_client JOIN contracted_po ON contracted_client.client_id = contracted_po.client_id JOIN coffee_blend ON contracted_po.blend_id = coffee_blend.blend_id JOIN packaging ON coffee_blend.package_id = packaging.package_id WHERE (contracted_po.delivery_stat = 'pending' OR contracted_po.delivery_stat = 'partial delivery' OR contracted_po.delivery_stat = 'delivered') AND contracted_client.client_id = '$id' ");
 			return $query->result();
 		}
 		public function load_DelClient($id){
@@ -66,6 +66,141 @@
 			$query = $this->db->query("SELECT * FROM machine_out NATURAL JOIN contracted_client NATURAL JOIN machine where status = 'rented' AND contract_id IS NOT NULL AND client_id='$id'");
 			return $query->result();
 		}
+        
+        
+        
+        public function orderValidation($blend , $qty){
+            
+           $raw_message ='';
+           $sticker_message ='';
+           $packaging_message ='';
+            
+        
+			$query1 = $this->db->query("SELECT * FROM coffee_blend join packaging using(package_id) where blend_id =".$blend);
+               if ($query1->num_rows() > 0) {
+                      $res1 = $query1->row();
+                         $blend_name = $res1->blend;
+                         $package_size = $res1->package_size;
+                         $package_type = $res1->package_type;
+                         $packaging = $res1->package_id;
+                         $sticker = $res1->sticker_id;
+                         
+                         $size = $res1->package_size;
+            
+            
+                               $query2 = $this->db->query("SELECT * FROM packaging where package_id =".$packaging);
+                                   $res2 = $query2->row();
+                                     if($res2->package_stock < $qty){
+                                      $packaging_message = "Insufficient Packaging";
+                                    }
+                            
+            
+                               $query3 = $this->db->query("SELECT * from sticker where sticker_id =".$sticker);
+                                   $res3 = $query3->row();
+                                     if($res3->sticker_stock < $qty){
+                                      $sticker_message = "Insufficient Sticker";
+                                   }
+                   
+                   
+                           $query4 = $this->db->query("select * from proportions where percentage !=0 and blend_id = ".$blend);
+                                   $res4 = $query4->result();
+                                     foreach($res4 as $object){
+                                         
+                                         $raw_id     = $object->raw_id;
+                                         $proportion = ($object->percentage)/100;
+                                         
+                                         $weight = $size * $proportion;
+                                         
+                                         $totalWeight = $weight * $qty;
+                                         
+                                         $query5 = $this->db->query("select * from raw_coffee where  raw_id = ".$raw_id." and raw_stock < ".$totalWeight);
+                                            if ($query5->num_rows() > 0) {
+                                                $raw_message = "Insufficient Raw Coffee";
+                                             break;
+                                            }
+                                     }
+                                
+                        $arrayMessage = array('blend_name' =>$blend_name,
+                                              'package_type' =>$package_type,
+                                              'package_size' =>$package_size,
+                                              'raw' => $raw_message,
+                                              'sticker' => $sticker_message,
+                                              'packaging' => $packaging_message,
+                                             );
+            
+                        return $arrayMessage;
+            
+             }
+            
+		}
+        
+        
+        
+        
+        
+        
+        
+        
+        
+               public function orderValidationMachine($mach_id , $qty){
+              
+			    $query = $this->db->query("select * from machine where mach_id =".$mach_id);
+                      $res = $query->row();
+            
+                         $stocks = $res->mach_stocks;
+                         $brewer = $res->brewer;
+                         $type   = $res->brewer_type;
+                   
+                          if($stocks < $qty){
+                             
+                              $result = array('stocks' => $stocks,
+                                              'brewer' => $brewer,
+                                              'type'   => $type, 
+                                              'status' => 0,
+                                             );
+                            
+            
+                          }else{
+                              
+                              $result = array('stocks' => $stocks,
+                                              'brewer' => $brewer,
+                                              'type'   => $type, 
+                                              'status' => 1,
+                                             );
+                          }
+            
+               return $result;
+            
+		}
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
 		public function getClientInfo($id){
 			$query = $this->db->query("SELECT * FROM contracted_client WHERE client_id='$id'");
 			return $query->result();

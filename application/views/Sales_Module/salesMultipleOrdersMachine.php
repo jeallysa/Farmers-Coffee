@@ -148,28 +148,21 @@
                 </ul>
             </div>
         </div>
+        
+        
+        
+        
+        
+        
         <div class="main-panel">
             <nav class="navbar navbar-transparent navbar-absolute">
                 <div class="container-fluid">
                     <div class="collapse navbar-collapse">
                         <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
-
-                                 <li id="nameheader">
-
-                                    <?php $username = $this->session->userdata('username') ?>
-                                
-                                <?php
-                                              $retrieveUserDetails ="SELECT * FROM jhcs.user WHERE username = '$username';" ;
-                                              $query = $this->db->query($retrieveUserDetails);
-                                              if ($query->num_rows() > 0) {
-                                              foreach ($query->result() as $object) {
-                                           echo '<p class="title">Hi, '  . $object->u_fname  . ' ' . $object->u_lname  . '</p>' ;
-                                              }
-                                            }
-                                        ?>
-                                </li>
-
+                                <li>
+                                    <p class="title" style="color: black; font-size: 20px;">Hi, <?php $username = $this->session->userdata('username'); print_r($username); ?></p>
+                                </li><span style="display:inline-block; width: YOURWIDTH;"></span>
                                 <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
                                     <i class="glyphicon glyphicon-user"></i>
                                     <p class="hidden-lg hidden-md">Profile</p>
@@ -193,6 +186,8 @@
                     </div>
                 </div>
             </nav>
+        
+        
             <div class="content">
                 <div class="container-fluid">
                     <div class="row">
@@ -283,6 +278,52 @@
                 </div>
             </div>
         </div>
+    
+    
+    
+    
+    
+        
+    
+  <div class="modal fade" id="invalidOrder" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <b><h1 class="modal-title">Insufficient Stock:</h1></b>
+        </div>
+           <hr>
+        <div class="modal-body">
+            <h3><center><b><p id="header"></p></b></center></h3>
+           <hr>    
+            <h5><b><p id="status1"></p></b></h5>
+            <hr>
+            
+        <div class="modal-footer">
+            <center><button type="button" class="btn btn-danger" data-dismiss="modal">Close</button> </center>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     </div>
 </body>
 <script src="<?php echo base_url(); ?>assets/js/jquery-3.2.1.min.js" type="text/javascript"></script>
@@ -310,6 +351,7 @@
 	
 	var count = 0;
 	$("#append_data").click(function(){
+        
 		
 		var machine_id = document.loginform.machine_id;
 		var client_id = document.loginform.client_id;
@@ -320,16 +362,70 @@
 		{
 			document.getElementById("errorMessage").innerHTML = "please fill out all necessary field .. ";
 			return false;
-		}
 		
-
-    	else{
+        
+        
+        
+        
+        }else{
+            
+		    var mach_id = $('#machine_id').val();
+		    var qty = $('#qty').val();
 		
-			addDataTable();
-		  }
-		
-	});
+                                $.ajax({
+                                  async: false,
+                                  url:'<?php echo base_url(); ?>salesMachineOrders/orderValidationMachine' ,
+                                  method:"POST",
+                                  data: {mach_id : mach_id , qty : qty }, 
+                                  dataType: 'json',
+                                  success: function(data){
+                                  var status = data['status'];
+                                  var stocks = data['stocks'];
+                                  var brewer = data['brewer'];
+                                  var type = data['type'];
+                                      
+                                   if(status == 0){ 
+                                          var notifHeader = brewer + " - " + type;
+                                          var notif1= "Current stock : "+stocks;
+                  
+                                
+                                document.getElementById("header").innerHTML = notifHeader;
+                                document.getElementById("status1").innerHTML = notif1;
+                                //$(<?php echo "'#invalidOrder input[id=modalOrderStatusHeader]'"?>).val(notifHeader);
+                                //$(<?php echo "'#invalidOrder input[id=modalOrderStatus1]'"?>).val(notif1);
+                                       
+                                $("#invalidOrder").modal();
+                                       
+                                   }else{
+                                       
+                                        addDataTable();
+                                       
+                                   }
+                            
+             
+                                  },
+                                   error: function(){
+                                      alert('error');
+                                   }
+                                        
+                             });
+            
+            
+			
+                }
+        
+        
+        
+ 
+		  });
 	
+    
+    
+    
+    
+    
+    
+    
 	function addDataTable(){
 		var dateOfPO = $('#DatePO').val();
 		var client_id = $('#client_id').val();

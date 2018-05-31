@@ -87,7 +87,13 @@
 	</style>
 </head>
 
+    
+    
+    
+    
 <body>
+    
+    
     <div class="wrapper">
         <div class="sidebar" data-color="purple" data-image="../assets/img/sidebar-0.jpg">
             <div class="logo">
@@ -146,8 +152,12 @@
                 </ul>
             </div>
         </div>
+        
+        
+        
         <div class="main-panel">
-            <nav class="navbar navbar-transparent navbar-absolute">
+            
+           <nav class="navbar navbar-transparent navbar-absolute">
                 <div class="container-fluid">
                     <div class="collapse navbar-collapse">
                         <ul class="nav navbar-nav navbar-right">
@@ -165,7 +175,6 @@
                                             }
                                         ?>
                                 </li>
-
                                 <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
                                     <i class="glyphicon glyphicon-user"></i>
                                     <p class="hidden-lg hidden-md">Profile</p>
@@ -189,6 +198,9 @@
                     </div>
                 </div>
             </nav>
+        
+        
+        
             <div class="content">
                 <div class="container-fluid">
                     <div class="row">
@@ -254,8 +266,68 @@
                         </div>
                     </div>
                 </div>
-            </div>
         </div>
+    
+    
+    
+    
+    
+    
+    
+  <div class="modal fade" id="invalidOrder" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <b><h1 class="modal-title">Insufficient Stock:</h1></b>
+        </div>
+           <hr>
+        <div class="modal-body">
+            <h3><center><b><p id="header"></p></b></center></h3>
+           <hr>    
+            <!-- <input type="text" class="form-control"  id = "modalOrderStatusHeader" readonly/>
+            <input type="text" class="form-control"  id = "modalOrderStatus1" readonly/> 
+           <input type="text" class="form-control"  id = "modalOrderStatus2" readonly/>  
+           <input type="text" class="form-control"  id = "modalOrderStatus3" readonly/>  -->
+            <h5><b><p id="status1"></p></b></h5>
+            <h5><b><p id="status2"></p></b></h5>
+            <h5><b><p id="status3"></p></b></h5>
+            <hr>
+            
+        <div class="modal-footer">
+            <center><button type="button" class="btn btn-danger" data-dismiss="modal">Close</button> </center>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     </div>
 </body>
 <script src="<?php echo base_url(); ?>assets/js/jquery-3.2.1.min.js" type="text/javascript"></script>
@@ -276,6 +348,16 @@
 <script src="<?php echo base_url(); ?>assets/js/bootstrap-select.min.js"></script>
 
 <script type="text/javascript">
+    
+    
+    
+ 
+
+                  
+   
+    
+    
+    
 	$('document').ready(function(){
 	
 	$('.selectpicker').selectpicker({ 
@@ -284,37 +366,88 @@
 	
 	var count = 0;
 	$("#append_data").click(function(){
-
+        
+        var returnvalue = true; 
+         
 		var username = document.loginform.blend;
 		var password = document.loginform.qty;
-
 
 
       	if (username.value == "" && password.value != "")
 		{
 			document.getElementById("errorMessage").innerHTML = "There No Coffee Blend Selected";
-			return false;
+			    return false;
 		}
 		
 		if (username.value != "" && password.value == "")
 		{
 			document.getElementById("errorMessage").innerHTML = "Please Enter Order Quantity ";
-			return false;
+			   return false;
 		}
 		if(username.value == "" && password.value == "")
 		{
-				document.getElementById("errorMessage").innerHTML = "please fill out all necessary field  ";
+  			 document.getElementById("errorMessage").innerHTML = "please fill out all necessary field  ";
 				return false;
-		}
-
-    	else{
+            
+		}else{
+            
+		    var blend = $('#blend').val();
+		    var qty = $('#qty').val();
 		
-			addDataTable();
-
-
-		
-		  }
-	});
+                                $.ajax({
+                                  async: false,
+                                  url:'<?php echo base_url(); ?>salesMultipleOrders/orderValidation' ,
+                                  method:"POST",
+                                  data: {    blend : blend , qty : qty }, //used the sup_id to know whose product.
+                                  dataType: 'json',
+                                  success: function(data){
+                                      
+                                      var raw        = data['raw'];
+                                      var sticker    = data['sticker'];
+                                      var packaging  = data['packaging'];
+                                      var blend_name = data['blend_name'];
+                                      var size       = data['package_size'];
+                                      var bag_type   = data['package_type'];
+                                      
+                                if(raw !=='' || sticker !=='' || packaging !==''){ 
+                                       
+                               var notifHeader = blend_name + " - " + size+"g" + " - "+ bag_type;
+                               var notif1= raw;
+                               var notif2 = sticker;
+                               var notif3 = packaging;
+                  
+                                
+                                document.getElementById("header").innerHTML = notifHeader;
+                                document.getElementById("status1").innerHTML = raw;
+                                document.getElementById("status2").innerHTML = sticker;
+                                document.getElementById("status3").innerHTML = packaging;
+                                //$(<?php echo "'#invalidOrder input[id=modalOrderStatusHeader]'"?>).val(notifHeader);
+                                //$(<?php echo "'#invalidOrder input[id=modalOrderStatus1]'"?>).val(notif1);
+                                //$(<?php echo "'#invalidOrder input[id=modalOrderStatus2]'"?>).val(notif2);
+                                //$(<?php echo "'#invalidOrder input[id=modalOrderStatus3]'"?>).val(notif3);
+                                $("#invalidOrder").modal();
+                 
+                                       
+                                       
+                                   }else{
+                                       
+                                        addDataTable();
+                                       
+                                   }
+                            
+             
+                                  },
+                                   error: function(){
+                                      //alert('error');
+                                   }
+                                        
+                             });
+            
+            
+			
+                }
+		  });
+        
 	
 	function addDataTable(){
 		var dateO = $('#date').val();

@@ -20,7 +20,6 @@
 
 			$data = $this->input->post('table_data');
 
-			
 			$this->SalesClients_model->activity_logs('sales', "Added other Purchase Order ");
 			$this->SalesClients_model->AddMultipleOrders($data);
 			$this->output->set_content_type('application/json');
@@ -28,6 +27,22 @@
 			
 			redirect('salesMultipleOrders');
 		}
+        
+        
+         public function orderValidation(){
+         
+             $blend = $this->input->post('blend');
+             $qty = $this->input->post('qty');
+             
+            $result = $this->SalesClients_model->orderValidation($blend , $qty);
+             
+            if(count($result)>0){
+                echo json_encode($result);
+              }
+             
+         }
+        
+        
     }
 ?>
         
