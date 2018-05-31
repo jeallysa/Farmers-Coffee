@@ -307,7 +307,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <div class="panel panel-primary">
                                         <div class="panel-heading">
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                            <h1 class="panel-title" id="contactLabel"><b>Physical Count</b></h1>
+                                            <h1 class="panel-title" id="contactLabel"><b>Record Physical Count for Raw Coffees</b></h1>
                                         </div>
                                         <div class="modal-body" style="padding: 5px;">
                                             <table id="example3" class="table table-striped table-bordered dt-responsive" width="100%">
@@ -335,7 +335,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 '<td>'.$object->raw_type.'<input type="hidden" style="resize:vertical;" class="form-control" rows="2" name="raw_type[]" value="'.$object->raw_type.'" id="raw_name'.$mapModal.'"></td>' ,
                                               
                                                 '<td><input  id="physcount'.$mapModal.'" min="0" step= "0.001"    name="physcount[]" placeholder="Kilograms" type="number" class="form-control"/></td>',
-                                                '<td><input  id="discrepancy'.$mapModal.'" name="discrepancy[]" class="form-control" readonly/></td>',
+                                                '<td><input value="0" id="discrepancy'.$mapModal.'" name="discrepancy[]" class="form-control" readonly/></td>',
                                                 '<td><input value="'.date("Y-m-d").'" id="date'.$mapModal.'" type="date" name="date[]" class="form-control" min="2017-01-01" max="'.date("Y-m-d").'"/></td>',
                                                 '<td><input style="resize:vertical;" class="form-control"    name="remarks[]" id="remarks'.$mapModal.'"><input  type="hidden" value="'.$object->raw_id.'" name="rawid[]" /></td>' ,
                                         
@@ -655,7 +655,7 @@ SELECT quantity AS TotalOut FROM trans_raw INNER JOIN inv_transact ON trans_raw.
                                 
                                 <div class="card-content ">
                                     <div style="text-align:right">
-                                        <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#physcountmodal">Physical Count</a>
+                                        <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#physcountmodal">Record Physical Count</a>
                                     </div>
                                     <br>
                                     <table id="example" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
