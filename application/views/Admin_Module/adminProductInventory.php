@@ -690,7 +690,7 @@ $(document).ready(function() {
                 "title": 'Raw Coffee Inventory',
                 "download": 'open',
                 
-                "messageBottom": "\n \n \n \n \n Prepared by: ",
+                "messageBottom": "\n \n \n \n \n Prepared by:  <?php echo $object->u_fname  . ' ' . $object->u_lname; ?>",
                 styles: {
                     "messageBottom": {
                         bold: true,
