@@ -122,10 +122,7 @@
                                             }
                                         ?>
                                 </li>
-<<<<<<< HEAD
-                                <span style="display:inline-block; width: YOURWIDTH;"></span>
-=======
->>>>>>> 602dc2755e1a32c73056b41f2f93ee136adb964e
+
                                 <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
                                     <i class="glyphicon glyphicon-user"></i>
                                     <p class="hidden-lg hidden-md">Profile</p>
@@ -283,7 +280,7 @@
 
 
     var oTable = $('#example').dataTable({ 
-        "order": [[ 0, "desc"]],
+        "order": [[ 0, "asc"]],
         "dom":' fBrtip',
         "lengthChange": false,
         "info":     true,
@@ -296,27 +293,7 @@
                 }
             },
             
-<<<<<<< HEAD
-            { "extend": 'pdf', 
-            "text":'<i class="fa fa-file-pdf-o"></i> PDF',
-            "className": 'btn btn-danger btn-xs',
-            "download": 'open',
-              "messageBottom": "\n \n \n Total Amount: <?php echo number_format($total, 2) ?> \n \n \n \n \n \n Prepared by: <?php echo $object->u_fname  . ' ' . $object->u_lname; ?>",
 
-                "orientation": 'portrait',
-                        exportOptions: {
-                         columns: ':visible'
-                 
-                        },
-                    customize: function (doc) {
-                        doc.defaultStyle.alignment = 'right';
-                        doc.styles.tableHeader.alignment = 'center';
-                        doc.pageMargins = [50,50,80,80];
-                        doc.defaultStyle.fontSize = 10;
-                        doc.styles.tableHeader.fontSize = 10;
-                        doc.styles.title.fontSize = 12;
-                         doc.content[1].table.widths = [ '30%', '40%', '35%']; 
-=======
             { 
                 "extend": 'pdf',
                 "text":'<i class="fa fa-file-pdf-o"></i> PDF',
@@ -325,7 +302,7 @@
                 "title": 'Accounts Receivable Report',
                 "download": 'open',
                 
-                "messageBottom": "\n \n \n \n \n Prepared by:  <?php echo $object->u_fname  . ' ' . $object->u_lname; ?>",
+                "messageBottom": "\n \n \n Total Amount: <?php echo number_format($total, 2) ?> \n \n \n \n \n \n Prepared by: <?php echo $object->u_fname  . ' ' . $object->u_lname; ?>",
                 styles: {
                     "messageBottom": {
                         bold: true,
@@ -338,10 +315,12 @@
                           page: 'current'
                         }*/
                   },
->>>>>>> 602dc2755e1a32c73056b41f2f93ee136adb964e
+
 
                 "header": true,
                 customize: function(doc) {
+                    doc.defaultStyle.alignment = 'right';
+                        doc.styles.tableHeader.alignment = 'center';
                     var now = new Date();
                     var jsDate = now.getDate()+'-'+(now.getMonth()+1)+'-'+now.getFullYear();
                     var logo = 'data:assets/img/logo.png';
@@ -390,47 +369,9 @@
 
 
             }
-<<<<<<< HEAD
-        ],
-    //     "footerCallback": function ( row, data, start, end, display ) {
-    //                     var api = this.api(), data;
-             
-    //                     // Remove the formatting to get integer data for summation
-    //                     var intVal = function ( i ) {
-    //                         return typeof i === 'string' ?
-    //                             i.replace(/[^0-9\.]+/g, "")*1 :
-    //                             typeof i === 'number' ?
-    //                                 i : 0;
-    //                     };
-             
-    //                     // Total over all pages
-    //                     total = api
-    //                         .column( 2 )
-    //                         .data()
-    //                         .reduce( function (a, b) {
-    //                             return intVal(a) + intVal(b);
-    //                         }, 0 );
-             
-    //                     // Total over this page
-    //                     pageTotal = api
-    //                         .column( 2, { page: 'current'} )
-    //                         .data()
-    //                         .reduce( function (a, b) {
-    //                             return intVal(a) + intVal(b);
-    //                         }, 0 );
-             
-    //                     // Update footer
-    //                     $( api.column( 1 ).footer() ).html(
-    //                          ' Total Amount   : '
-    //                     );
-    //                     $( api.column( 2 ).footer() ).html(
-                           
-    //                         'Php '+ total.toLocaleString() 
-    //                     );
-    //                 }
-=======
+
         ]
->>>>>>> 602dc2755e1a32c73056b41f2f93ee136adb964e
+
     });
 
    $('#min,#max').datepicker({

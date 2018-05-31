@@ -98,11 +98,9 @@
                     <div class="collapse navbar-collapse">
                         <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
-<<<<<<< HEAD
-                               <li id="nameheader">
-=======
+
                                 <li id="nameheader">
->>>>>>> 602dc2755e1a32c73056b41f2f93ee136adb964e
+
                                     <?php $username = $this->session->userdata('username') ?>
                                 
                                 <?php
@@ -115,10 +113,7 @@
                                             }
                                         ?>
                                 </li>
-<<<<<<< HEAD
-                                <span style="display:inline-block; width: YOURWIDTH;"></span>
-=======
->>>>>>> 602dc2755e1a32c73056b41f2f93ee136adb964e
+
                                 <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
                                          <i class="glyphicon glyphicon-user"></i>
                                         <p class="hidden-lg hidden-md">Profile</p>

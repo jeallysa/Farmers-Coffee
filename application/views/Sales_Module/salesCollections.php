@@ -100,11 +100,9 @@
                     <div class="collapse navbar-collapse">
                         <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
-<<<<<<< HEAD
-                                <li id="nameheader">
-=======
+
                                <li id="nameheader">
->>>>>>> 602dc2755e1a32c73056b41f2f93ee136adb964e
+
                                     <?php $username = $this->session->userdata('username') ?>
                                 
                                 <?php
@@ -117,10 +115,7 @@
                                             }
                                         ?>
                                 </li>
-<<<<<<< HEAD
-                                <span style="display:inline-block; width: YOURWIDTH;"></span>
-=======
->>>>>>> 602dc2755e1a32c73056b41f2f93ee136adb964e
+
                                 <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
                                     <i class="glyphicon glyphicon-user"></i>
                                     <p class="hidden-lg hidden-md">Profile</p>
@@ -303,27 +298,16 @@
 
 
     var oTable = $('#example').dataTable({ 
-        "order": [[ 4, "desc"]],
+        "order": [[ 4, "asc"]],
         "dom":' fBrtip',
         "lengthChange": false,
-<<<<<<< HEAD
-        "info":     false,
-        "order": [[ 4, "asc"]],
-       
-        buttons: [
-            
-            { 
-                "extend": 'excel',
-                 "text":'<i class="fa fa-file-excel-o"></i> CSV',
-                 "className": 'btn btn-success btn-xs',
-                  "orientation": 'landscape',
-                  "message": "John Hay Coffeee Services Inc. \n Sales Collections"
-=======
+
         "info":     true,
 		buttons: [
->>>>>>> 602dc2755e1a32c73056b41f2f93ee136adb964e
+
 
 			{ "extend": 'excel', "text":'<i class="fa fa-file-excel-o"></i> CSV',"className": 'btn btn-success btn-xs',
+            "message": "John Hay Coffeee Services Inc. \n Sales Collections",
                 exportOptions: {
                     columns: [0, 1, 2, 3, 4, 5, 6, 7, 8]
                 }
@@ -337,20 +321,14 @@
             { 
                 "extend": 'pdf',
                 "text":'<i class="fa fa-file-pdf-o"></i> PDF',
-<<<<<<< HEAD
-                "className": 'btn btn-danger btn-xs',
-                "orientation": 'landscape',
-                "title": 'Sales Collections',
-                "messageBottom": "\n \n \n Total Amount: <?php echo number_format($total, 2) ?> \n \n \n \n \n \n Prepared by: <?php echo $object->u_fname  . ' ' . $object->u_lname; ?>",
 
-=======
                 "className": 'btn btn-danger btn-xs', 
                 "orientation": 'landscape', 
                 "title": 'Collection Report',
->>>>>>> 602dc2755e1a32c73056b41f2f93ee136adb964e
+
                 "download": 'open',
                 
-               "messageBottom": "\n \n \n \n \n Prepared by:  <?php echo $object->u_fname  . ' ' . $object->u_lname; ?>",
+               "messageBottom": "\n \n  Total Amount: <?php echo number_format($total, 2) ?> \n \n \n \n \n  Prepared by: <?php echo $object->u_fname  . ' ' . $object->u_lname; ?>",
                 styles: {
                     "messageBottom": {
                         bold: true,
@@ -364,7 +342,7 @@
                         }*/
                   },
 
-<<<<<<< HEAD
+
                 customize: function (doc) {
                         doc.defaultStyle.alignment = 'right';
                         doc.styles.tableHeader.alignment = 'center';
@@ -375,11 +353,7 @@
                          /*doc.content[1].table.widths = [ '30%', '40%', '35%']; */
 
                          var now = new Date();
-=======
-                "header": true,
-                customize: function(doc) {
-                    var now = new Date();
->>>>>>> 602dc2755e1a32c73056b41f2f93ee136adb964e
+
                     var jsDate = now.getDate()+'-'+(now.getMonth()+1)+'-'+now.getFullYear();
                     var logo = 'data:assets/img/logo.png';
                     doc.content.splice(0, 1, {
@@ -418,53 +392,12 @@
                             }
                         });
 
-<<<<<<< HEAD
-                     }
-             }
-        ],
-         /*"footerCallback": function ( row, data, start, end, display ) {
-                        var api = this.api(), data;
-             
-                        // Remove the formatting to get integer data for summation
-                        var intVal = function ( i ) {
-                            return typeof i === 'string' ?
-                                i.replace(/[^0-9\.]+/g, "")*1 :
-                                typeof i === 'number' ?
-                                    i : 0;
-                        };
-             
-                        // Total over all pages
-                        total = api
-                            .column( 5 )
-                            .data()
-                            .reduce( function (a, b) {
-                                return intVal(a) + intVal(b);
-                            }, 0 );
-             
-                        // Total over this page
-                        pageTotal = api
-                            .column( 5, { page: 'current'} )
-                            .data()
-                            .reduce( function (a, b) {
-                                return intVal(a) + intVal(b);
-                            }, 0 );
-             
-                        // Update footer
-                        $( api.column( 2 ).footer() ).html(
-                             ' Total Amount   : '
-                        );
-                        $( api.column( 3 ).footer() ).html(
-                           
-                            'Php '+ total.toLocaleString() 
-                        );
-                    }*/
-=======
                     
 
 
  
                   }
->>>>>>> 602dc2755e1a32c73056b41f2f93ee136adb964e
+
 
 
 

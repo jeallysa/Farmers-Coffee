@@ -101,11 +101,9 @@
                     <div class="collapse navbar-collapse">
                         <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
-<<<<<<< HEAD
-                               <li id="nameheader">
-=======
+
                                  <li id="nameheader">
->>>>>>> 602dc2755e1a32c73056b41f2f93ee136adb964e
+
                                     <?php $username = $this->session->userdata('username') ?>
                                 
                                 <?php
@@ -117,11 +115,9 @@
                                               }
                                             }
                                         ?>
-<<<<<<< HEAD
-                                </li><span style="display:inline-block; width: YOURWIDTH;"></span>
-=======
+
                                 </li>
->>>>>>> 602dc2755e1a32c73056b41f2f93ee136adb964e
+
                                 <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
                                      <i class="glyphicon glyphicon-user"></i>
                                     <p class="hidden-lg hidden-md">Profile</p>
@@ -317,7 +313,7 @@ $(document).ready(function() {
     }
 
     var oTable = $('#example').dataTable({
-        "order": [[ 2, "desc"]],
+        "order": [[ 2, "asc"]],
         "dom":' fBrtip',
         "lengthChange": false,
         "info":     true,
@@ -337,11 +333,9 @@ $(document).ready(function() {
                 "title": 'Sales Report',
                 "download": 'open',
                 
-<<<<<<< HEAD
-                "messageBottom": "\n \n \n Total Amount: <?php echo number_format($total, 2) ?> \n \n \n \n \n \n Prepared by: <?php echo $object->u_fname  . ' ' . $object->u_lname; ?>",
-=======
-               "messageBottom": "\n \n \n \n \n Prepared by:  <?php echo $object->u_fname  . ' ' . $object->u_lname; ?>",
->>>>>>> 602dc2755e1a32c73056b41f2f93ee136adb964e
+
+               "messageBottom": "\n \n \n Total Amount: <?php echo number_format($total, 2) ?> \n \n \n \n \n Prepared by:  <?php echo $object->u_fname  . ' ' . $object->u_lname; ?>",
+
                 styles: {
                     "messageBottom": {
                         bold: true,
@@ -407,50 +401,9 @@ $(document).ready(function() {
 
 
             }
-<<<<<<< HEAD
 
-        ],
-       /* "footerCallback": function ( row, data, start, end, display ) {
-                        var api = this.api(), data;
-             
-                        // Remove the formatting to get integer data for summation
-                        var intVal = function ( i ) {
-                            return typeof i === 'string' ?
-                                i.replace(/[^0-9\.]+/g, "")*1 :
-                                typeof i === 'number' ?
-                                    i : 0;
-                        };
-             
-                        // Total over all pages
-                        total = api
-                            .column( 9 )
-                            .data()
-                            .reduce( function (a, b) {
-                                return intVal(a) + intVal(b);
-                            }, 0 );
-             
-                        // Total over this page
-                        pageTotal = api
-                            .column( 9, { page: 'current'} )
-                            .data()
-                            .reduce( function (a, b) {
-                                return intVal(a) + intVal(b);
-                            }, 0 );
-             
-                        // Update footer
-                        $( api.column( 3 ).footer() ).html(
-                             ' Total Balance   : '
-                        );
-                        $( api.column( 4 ).footer() ).html(
-                           
-                            'Php '+ total.toLocaleString() 
-                        );
-                    }
-*/
-       
-=======
         ]
->>>>>>> 602dc2755e1a32c73056b41f2f93ee136adb964e
+
     });
 
     $('#min,#max').datepicker({
