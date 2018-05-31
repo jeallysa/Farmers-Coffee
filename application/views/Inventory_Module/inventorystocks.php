@@ -223,38 +223,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 </div>
             </nav>
             
-
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            
              <?php
         $details = 1; 
       if(!empty($coffee)) {                                     
@@ -332,7 +300,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             </div>
             
             
-            <form action="InventoryStocks/update/" method="post" accept-charset="utf-8">
+            
+             <form action="InventoryStocks/update/" method="post" accept-charset="utf-8">
                             <div class="modal fade" id="physcountmodal" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-lg">
                                     <div class="panel panel-primary">
@@ -417,7 +386,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             
             
             
-            
          <!-----------------------------------------------------------------------  MODAL DETAILS -------------------------------------->
             <div class="modal fade" id="<?php echo "details" . $details   ?>" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
@@ -438,7 +406,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <table width = "100%" class="table table-striped table-bordered dt-responsive nowrap" id="table-mutasi<?php echo $details; ?>">
                                             <thead>
                                                 <tr>
-                                                    <td><b>Beginning Inventory</b></td>
+                                                    <td><b>Beginning Inventory</b></th>
                                                     <td><b> </b></td>
                                                     <td><b><?php echo ($physical/1000); ?> kg</b></td>
                                                     <td><b> </b></td>
@@ -616,9 +584,9 @@ SELECT quantity AS TotalOut FROM trans_raw INNER JOIN inv_transact ON trans_raw.
                                                                         </div>
                                                                     </div>
                                                             </div>
+                                                
+                                                    </center>  
                                                     </div>
-                                                </center>  
-                                                    
                                     </div>
                                 
                             </div>
