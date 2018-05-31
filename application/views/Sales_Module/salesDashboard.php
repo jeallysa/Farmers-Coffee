@@ -266,7 +266,7 @@
                          <div class="col-lg-3 col-md-6 col-sm-6">
                             <div class="card card-stats">
                                 <div class="card-header" data-background-color="white">
-                                    <i class="glyphicon glyphicon-warning-sign"></i>
+                                    <i class="glyphicon glyphicon-shopping-cart"></i>
                                 </div>
                                 <div class="card-content">
                                     <p class="category">Pending Orders</p>
@@ -293,7 +293,7 @@
                         <div class="col-lg-3 col-md-6 col-sm-6">
                             <div class="card card-stats">
                                 <div class="card-header" data-background-color="white">
-                                    <i class="glyphicon glyphicon-warning-sign"></i>
+                                    <i class="glyphicon glyphicon-shopping-cart"></i>
                                 </div>
                                 <div class="card-content">
                                     <p class="category">Partial Deliveries</p>
@@ -320,7 +320,7 @@
                         <div class="col-lg-3 col-md-6 col-sm-6">
                             <div class="card card-stats">
                                 <div class="card-header" data-background-color="white">
-                                    <i class="glyphicon glyphicon-warning-sign"></i>
+                                    <i class="glyphicon glyphicon-shopping-cart"></i>
                                 </div>
                                 <div class="card-content">
                                     <p class="category">Partial Payments</p>
@@ -348,7 +348,7 @@
                      <div class="col-lg-3 col-md-6 col-sm-6">
                             <div class="card card-stats">
                                 <div class="card-header" data-background-color="white">
-                                    <i class="glyphicon glyphicon-warning-sign"></i>
+                                    <i class="glyphicon glyphicon-shopping-cart"></i>
                                 </div>
                                 <div class="card-content">
                                     <p class="category">Unpaid Payments</p>
@@ -377,32 +377,40 @@
                         <div class="col-lg-12 col-md-12">
                             <div class="card">
                                 <div class="card-header" data-background-color="purple">
-                                    <h4 class="title">Reminders</h4>
+                                    <h4 class="title">Reminders<i class="glyphicon glyphicon-info-sign" style="color:red !important"></i> </h4>
                                 </div>
                                 <div class="card-content table-responsive">
-                                    <table class="table">
-                                        <tbody>
-
+                                    
                                         <?php
 
                                             $query = $this->db->query("SELECT date_expiration,client_id,client_company,seen FROM contract NATURAL JOIN contracted_client");
                                                 $date = date('Y-m-d');
 
-                                             $query2 = $this->db->query("SELECT date_expiration FROM contract NATURAL JOIN contracted_client WHERE DATE_SUB(NOW(), INTERVAL 1 MONTH) ");
+                                             $query2 = $this->db->query("SELECT a.client_id, client_company, date_expiration, ABS((dayofyear(date_expiration) - dayofyear(now()))) as numdays        from contracted_client a
+join contract b on a.client_id = b.client_id
+where ABS((dayofyear(date_expiration) - dayofyear(now()))) = 10 or ABS((dayofyear(date_expiration) - dayofyear(now()))) < 10 and year(date_expiration) = year(now()) != 0");
 
                                                 if(!empty($query)){
                                                     foreach($query->result() as $object){
                                                         if($object->date_expiration == $date ){
                                         ?>
-                                                <tr>
-                                                    <td>
-                                                        The Contract of <?php echo $object->client_company; ?> has expired today ! 
-                                                    </td>
-
-                                                </tr>
+                                                <ul>
+                                                      <li>  The Contract of <?php echo $object->client_company; ?> has expired today ! </li>
+                                                </ul>
                                         <?php
                                                         }
                                                     }
+                                                }
+
+                                                if(!empty($query2)){
+                                                    foreach ($query2->result() as $key ) {
+                                                        if($key->date_expiration != $date ){
+                                                     ?>
+                                                    <ul>
+                                                      <li>  The Contract of <?php echo $key->client_company; ?> will expire <?php echo $key->numdays; ?> day/s from now. </li>
+                                                    </ul>
+                                                     <?php  
+                                                    }}
                                                 }
 
                                         ?>
@@ -451,8 +459,7 @@
 
                                             ?> -->
 
-                                        </tbody>
-                                    </table>
+                                        
                                 </div>
                             </div>
                         </div>

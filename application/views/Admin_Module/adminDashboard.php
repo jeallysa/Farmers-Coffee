@@ -305,32 +305,40 @@ a:focus {
                 <div class="col-lg-12 col-md-12">
                     <div class="card">
                         <div class="card-header" data-background-color="green">
-                            <h4 class="title">Reminder</h4>
+                            <h4 class="title">Reminder <i class="glyphicon glyphicon-info-sign" style="color:red !important"></i></h4>
                         </div>
                         <div class="card-content table-responsive">
                             <table id=example class="table table-hover">
                                 <tbody>
 
-                                <?php
+                                 <?php
 
                                             $query = $this->db->query("SELECT date_expiration,client_id,client_company,seen FROM contract NATURAL JOIN contracted_client");
                                                 $date = date('Y-m-d');
 
-                                             $query2 = $this->db->query("SELECT date_expiration FROM contract NATURAL JOIN contracted_client WHERE DATE_SUB(NOW(), INTERVAL 1 MONTH) ");
+                                             $query2 = $this->db->query("SELECT a.client_id, client_company, date_expiration, ABS((dayofyear(date_expiration) - dayofyear(now()))) as numdays from contracted_client a join contract b on a.client_id = b.client_id where ABS((dayofyear(date_expiration) - dayofyear(now()))) = 7 or ABS((dayofyear(date_expiration) - dayofyear(now()))) < 7 and year(date_expiration) = year(now()) != 0");
 
                                                 if(!empty($query)){
                                                     foreach($query->result() as $object){
                                                         if($object->date_expiration == $date ){
                                         ?>
-                                                <tr>
-                                                    <td>
-                                                        The Contract of <?php echo $object->client_company; ?> has expired today ! 
-                                                    </td>
-
-                                                </tr>
+                                                <ul>
+                                                      <li>  The Contract of <?php echo $object->client_company; ?> has expired today ! </li>
+                                                </ul>
                                         <?php
                                                         }
                                                     }
+                                                }
+
+                                                if(!empty($query2)){
+                                                    foreach ($query2->result() as $key ) {
+                                                        if($key->date_expiration != $date ){
+                                                     ?>
+                                                    <ul>
+                                                      <li>  The Contract of <?php echo $key->client_company; ?> will expire <?php echo $key->numdays; ?> day/s from now. </li>
+                                                    </ul>
+                                                     <?php  
+                                                    }}
                                                 }
 
                                         ?>
