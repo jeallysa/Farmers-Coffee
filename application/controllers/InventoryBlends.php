@@ -38,21 +38,21 @@
               
                 $data = array(
                 	'blend_id'             => $blend_idv[$i],
-                    'blend_qty'          => $blend_stockv[$i],
+                    'blend_qty'            => $blend_stockv[$i],
                     'blend_physcount'      => $blend_physcountv[$i],
                     'blend_discrepancy'    => $blend_discrepancyv[$i],
                     'blend_remarks'        => $blend_remarksv[$i],
-                    'inventory_date'     => $inventory_datev[$i],
+                    'inventory_date'       => $inventory_datev[$i],
 
                 );
 
-            $this->InventoryBlends_Model->update($data , $blnd_idv[$i]); 
+            $this->InventoryBlends_Model->update($data , $blend_idv[$i]); 
 
         	$this->InventoryBlends_Model->activity_logs('inventory', "Record Physical Count under Coffee Blends Inventory Stocks ");
         	
-        	$this->InventoryBlends_Model->walkin_sales(1, $blnd_idv[$i]);
-        	$this->InventoryBlends_Model->client_coffreturn(1, $blnd_idv[$i]);  
-        	$this->InventoryBlends_Model->contracted_po(1, $blnd_idv[$i]); 
+        	$this->InventoryBlends_Model->walkin_sales(1, $blend_idv[$i]);
+        	$this->InventoryBlends_Model->client_coffreturn(1, $blend_idv[$i]);  
+        	$this->InventoryBlends_Model->contracted_po(1, $blend_idv[$i]); 
         
        
         }
