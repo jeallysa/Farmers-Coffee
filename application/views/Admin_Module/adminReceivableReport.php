@@ -366,6 +366,7 @@ a:focus {
 
 
     var oTable = $('#example').dataTable({ 
+        "order": [[ 0, "desc"]],
         "dom":' fBrtip',
         "lengthChange": false,
         "info":     true,
@@ -386,7 +387,7 @@ a:focus {
                 "title": 'Accounts Receivable Report',
                 "download": 'open',
                 
-                "messageBottom": "\n \n \n \n \n Prepared by: ",
+                "messageBottom": "\n \n \n \n \n Prepared by:  <?php echo $object->u_fname  . ' ' . $object->u_lname; ?>",
                 styles: {
                     "messageBottom": {
                         bold: true,

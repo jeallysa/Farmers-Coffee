@@ -101,7 +101,11 @@
                     <div class="collapse navbar-collapse">
                         <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
+<<<<<<< HEAD
                                <li id="nameheader">
+=======
+                                 <li id="nameheader">
+>>>>>>> 602dc2755e1a32c73056b41f2f93ee136adb964e
                                     <?php $username = $this->session->userdata('username') ?>
                                 
                                 <?php
@@ -113,7 +117,11 @@
                                               }
                                             }
                                         ?>
+<<<<<<< HEAD
                                 </li><span style="display:inline-block; width: YOURWIDTH;"></span>
+=======
+                                </li>
+>>>>>>> 602dc2755e1a32c73056b41f2f93ee136adb964e
                                 <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
                                      <i class="glyphicon glyphicon-user"></i>
                                     <p class="hidden-lg hidden-md">Profile</p>
@@ -284,9 +292,9 @@ $(document).ready(function() {
 });
 </script> -->
 
-<script>
-
-
+<script>   
+    
+    
     $.fn.dataTableExt.afnFiltering.push(
         function(oSettings, aData, iDataIndex){
             var dateStart = parseDateValue($("#min").val());
@@ -309,19 +317,19 @@ $(document).ready(function() {
     }
 
     var oTable = $('#example').dataTable({
-        "order": [[ 2, "asc"]],
-
+        "order": [[ 2, "desc"]],
         "dom":' fBrtip',
         "lengthChange": false,
-        "info":     false,
-        buttons: [
+        "info":     true,
+		buttons: [
+    
+			{ "extend": 'excel', "text":'<i class="fa fa-file-excel-o"></i> CSV',"className": 'btn btn-success btn-xs',
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+                }
+            },
             
-            { "extend": 'excel', "text":'<i class="fa fa-file-excel-o"></i> CSV',"className": 'btn btn-success btn-xs',
-            title: 'Sales Report', "message": "John Hay Coffeee Services Inc. \n Sales Report "
-            
-               
-                },
-            { 
+			{ 
                 "extend": 'pdf',
                 "text":'<i class="fa fa-file-pdf-o"></i> PDF',
                 "className": 'btn btn-danger btn-xs', 
@@ -329,7 +337,11 @@ $(document).ready(function() {
                 "title": 'Sales Report',
                 "download": 'open',
                 
+<<<<<<< HEAD
                 "messageBottom": "\n \n \n Total Amount: <?php echo number_format($total, 2) ?> \n \n \n \n \n \n Prepared by: <?php echo $object->u_fname  . ' ' . $object->u_lname; ?>",
+=======
+               "messageBottom": "\n \n \n \n \n Prepared by:  <?php echo $object->u_fname  . ' ' . $object->u_lname; ?>",
+>>>>>>> 602dc2755e1a32c73056b41f2f93ee136adb964e
                 styles: {
                     "messageBottom": {
                         bold: true,
@@ -395,6 +407,7 @@ $(document).ready(function() {
 
 
             }
+<<<<<<< HEAD
 
         ],
        /* "footerCallback": function ( row, data, start, end, display ) {
@@ -435,6 +448,9 @@ $(document).ready(function() {
                     }
 */
        
+=======
+        ]
+>>>>>>> 602dc2755e1a32c73056b41f2f93ee136adb964e
     });
 
     $('#min,#max').datepicker({
@@ -447,12 +463,12 @@ $(document).ready(function() {
 
     // Event Listeners
     $("#min").datepicker().on( 'changeDate', function() {
-        oTable.fnDraw();
+        oTable.fnDraw(); 
     });
-    $("#max").datepicker().on( 'changeDate', function() {
-        oTable.fnDraw();
+    $("#max").datepicker().on( 'changeDate', function() { 
+        oTable.fnDraw(); 
     });
-
+    
 
 
 </script>

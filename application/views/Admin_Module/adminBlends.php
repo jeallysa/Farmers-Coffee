@@ -486,16 +486,12 @@ a:focus {
                                                                                                 </tbody>
                                                                                             </table>
                                                                                         </div>
-                                                                                        <div class="panel-footer" style="margin-bottom:-14px;">
-                                                                                            
-                                                                                            <button type="button" class="btn btn-danger btn-close"  data-dismiss="modal">Close</button>
-                                                                                        </div>
                                                                                         
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                             <!-- END OF PROPORTION DATA-->
-                                                    <button class="btn btn-primary" data-toggle="modal" data-target="#proportions<?php echo $row->main_id; ?>">Show Proportions</button>
+                                                    <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#proportions<?php echo $row->main_id; ?>">Show Proportions</button>
                                                 </td>
                                                 <td>
                                                     <a href="<?php echo base_url(); ?>AdminBlends/edit_show?id=<?php echo $row->main_id; ?>" class="btn btn-warning btn-sm" style="float: right">Edit</a>
@@ -504,11 +500,11 @@ a:focus {
                                                     <div class="onoffswitch">
                                                          <?php if ($row->blend_activation == 1): ?>
                                                           <!-- Button to deactivate -->
-                                                        <button class="btn btn-danger" data-toggle="modal" data-target="#deactivate<?php echo $row->main_id;?>">Deactivate</button>
+                                                        <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deactivate<?php echo $row->main_id;?>">Deactivate</button>
                                                      <!--     <input type="checkbox" id="button<?php echo $row->raw_id;?>" class="toggle-switch" data-toggle="modal" data-target="#deactivate<?php echo $row->raw_id;?>" checked> -->
                                                     <?php else: ?>
                                                         <!-- Button to Activate -->
-                                                        <button class="btn btn-success" data-toggle="modal" data-target="#deactivate<?php echo $row->main_id;?>">Activate</button>
+                                                        <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#deactivate<?php echo $row->main_id;?>">Activate</button>
                                                        <!--  <input type="checkbox" id="button<?php echo $row->raw_id;?>" class="toggle-switch" data-toggle="modal" data-target="#deactivate<?php echo $row->raw_id;?>"> -->
                                                     <?php endif ?>
                                                     </div>
@@ -629,14 +625,81 @@ $(document).ready(function() {
             
             { "extend": 'excel', "text":'<i class="fa fa-file-excel-o"></i> CSV',"className": 'btn btn-success btn-xs',
                 exportOptions: {
-                    columns: [':not(:nth-last-child(1)):not(:nth-last-child(2))']
+                    columns: [0, 1, 2, 3, 4]
                 }
             },
             
-            { "extend": 'pdf', "text":'<i class="fa fa-file-pdf-o"></i> PDF',"className": 'btn btn-danger btn-xs',
-                exportOptions: {
-                    columns: [':not(:nth-last-child(1)):not(:nth-last-child(2))']
-                }
+            { 
+                "extend": 'pdf',
+                "text":'<i class="fa fa-file-pdf-o"></i> PDF',
+                "className": 'btn btn-danger btn-xs', 
+                "orientation": 'portrait', 
+                "title": 'Company Blends Inventory',
+                "download": 'open',
+                
+               "messageBottom": "\n \n \n \n \n Prepared by:  <?php echo $object->u_fname  . ' ' . $object->u_lname; ?>",
+                styles: {
+                    "messageBottom": {
+                        bold: true,
+                        fontSize: 15
+                    }
+                },
+                "exportOptions": {
+                     columns: [0, 1, 2, 3, 4],
+                     /*modifier: {
+                          page: 'current'
+                        }*/
+                  },
+
+                "header": true,
+                customize: function(doc) {
+                    var now = new Date();
+                    var jsDate = now.getDate()+'-'+(now.getMonth()+1)+'-'+now.getFullYear();
+                    var logo = 'data:assets/img/logo.png';
+                    doc.content.splice(0, 1, {
+                      text: [{
+                        text: 'John Hay Coffee Services Inc.\n',
+                        bold: true,
+                        fontSize: 15
+                      }, {
+                        text: ' Company Blends Inventory \n',
+                        bold: true,
+                        fontSize: 11
+                      }, {
+                        text: '',
+                        bold: true,
+                        fontSize: 11
+                      }],
+                      margin: [0, 0, 0,20],
+                      alignment: 'center',
+                     image: logo
+                    });
+                    doc.content[1].table.widths = ['20%','20%','20%','20%','20%'];
+                    doc.pageMargins = [40, 40, 40,40];
+                    doc['footer']=(function(page, pages) {
+                            return {
+                                columns: [
+                                    {
+                                        alignment: 'left',
+                                        text: ['Date Downloaded: ', { text: jsDate.toString() }]
+                                    },
+                                    {
+                                        alignment: 'right',
+                                        text: ['page ', { text: page.toString() },  ' of ', { text: pages.toString() }]
+                                    }
+                                ],
+                                margin: 20
+                            }
+                        });
+
+                    
+
+
+ 
+                  }
+
+
+
             }
         ]
     });

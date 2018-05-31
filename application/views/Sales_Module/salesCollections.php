@@ -100,7 +100,11 @@
                     <div class="collapse navbar-collapse">
                         <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
+<<<<<<< HEAD
                                 <li id="nameheader">
+=======
+                               <li id="nameheader">
+>>>>>>> 602dc2755e1a32c73056b41f2f93ee136adb964e
                                     <?php $username = $this->session->userdata('username') ?>
                                 
                                 <?php
@@ -113,7 +117,10 @@
                                             }
                                         ?>
                                 </li>
+<<<<<<< HEAD
                                 <span style="display:inline-block; width: YOURWIDTH;"></span>
+=======
+>>>>>>> 602dc2755e1a32c73056b41f2f93ee136adb964e
                                 <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
                                     <i class="glyphicon glyphicon-user"></i>
                                     <p class="hidden-lg hidden-md">Profile</p>
@@ -270,9 +277,9 @@
 <script src="../assets/js/demo.js"></script>
 
 
-<script>
-
-
+<script>   
+    
+    
     $.fn.dataTableExt.afnFiltering.push(
         function(oSettings, aData, iDataIndex){
             var dateStart = parseDateValue($("#min").val());
@@ -295,9 +302,11 @@
     }
 
 
-    var oTable = $('#example').dataTable({
+    var oTable = $('#example').dataTable({ 
+        "order": [[ 4, "desc"]],
         "dom":' fBrtip',
         "lengthChange": false,
+<<<<<<< HEAD
         "info":     false,
         "order": [[ 4, "asc"]],
        
@@ -309,18 +318,53 @@
                  "className": 'btn btn-success btn-xs',
                   "orientation": 'landscape',
                   "message": "John Hay Coffeee Services Inc. \n Sales Collections"
+=======
+        "info":     true,
+		buttons: [
+>>>>>>> 602dc2755e1a32c73056b41f2f93ee136adb964e
 
-              },
+			{ "extend": 'excel', "text":'<i class="fa fa-file-excel-o"></i> CSV',"className": 'btn btn-success btn-xs',
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 8]
+                }
+            },
+            
+			/*{ "extend": 'pdf', "text":'<i class="fa fa-file-pdf-o"></i> PDF',"className": 'btn btn-danger btn-xs',
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 8]
+                }
+            }*/
             { 
-                "extend": 'pdf', 
+                "extend": 'pdf',
                 "text":'<i class="fa fa-file-pdf-o"></i> PDF',
+<<<<<<< HEAD
                 "className": 'btn btn-danger btn-xs',
                 "orientation": 'landscape',
                 "title": 'Sales Collections',
                 "messageBottom": "\n \n \n Total Amount: <?php echo number_format($total, 2) ?> \n \n \n \n \n \n Prepared by: <?php echo $object->u_fname  . ' ' . $object->u_lname; ?>",
 
+=======
+                "className": 'btn btn-danger btn-xs', 
+                "orientation": 'landscape', 
+                "title": 'Collection Report',
+>>>>>>> 602dc2755e1a32c73056b41f2f93ee136adb964e
                 "download": 'open',
+                
+               "messageBottom": "\n \n \n \n \n Prepared by:  <?php echo $object->u_fname  . ' ' . $object->u_lname; ?>",
+                styles: {
+                    "messageBottom": {
+                        bold: true,
+                        fontSize: 15
+                    }
+                },
+                "exportOptions": {
+                     columns: [0, 1, 2, 3, 4, 5, 6, 7, 8],
+                     /*modifier: {
+                          page: 'current'
+                        }*/
+                  },
 
+<<<<<<< HEAD
                 customize: function (doc) {
                         doc.defaultStyle.alignment = 'right';
                         doc.styles.tableHeader.alignment = 'center';
@@ -331,6 +375,11 @@
                          /*doc.content[1].table.widths = [ '30%', '40%', '35%']; */
 
                          var now = new Date();
+=======
+                "header": true,
+                customize: function(doc) {
+                    var now = new Date();
+>>>>>>> 602dc2755e1a32c73056b41f2f93ee136adb964e
                     var jsDate = now.getDate()+'-'+(now.getMonth()+1)+'-'+now.getFullYear();
                     var logo = 'data:assets/img/logo.png';
                     doc.content.splice(0, 1, {
@@ -339,7 +388,7 @@
                         bold: true,
                         fontSize: 15
                       }, {
-                        text: ' Sales Collections \n',
+                        text: ' Collection Report \n',
                         bold: true,
                         fontSize: 11
                       }, {
@@ -347,11 +396,12 @@
                         bold: true,
                         fontSize: 11
                       }],
-                      margin: [0, 0, 0,10],
+                      margin: [0, 0, 0,20],
                       alignment: 'center',
                      image: logo
                     });
-
+                    
+                    doc.pageMargins = [40, 40, 40,40];
                     doc['footer']=(function(page, pages) {
                             return {
                                 columns: [
@@ -368,6 +418,7 @@
                             }
                         });
 
+<<<<<<< HEAD
                      }
              }
         ],
@@ -407,7 +458,18 @@
                             'Php '+ total.toLocaleString() 
                         );
                     }*/
+=======
+                    
 
+
+ 
+                  }
+>>>>>>> 602dc2755e1a32c73056b41f2f93ee136adb964e
+
+
+
+            }
+        ]
     });
 
     $('#min,#max').datepicker({
@@ -420,12 +482,12 @@
 
     // Event Listeners
     $("#min").datepicker().on( 'changeDate', function() {
-        oTable.fnDraw();
+        oTable.fnDraw(); 
     });
-    $("#max").datepicker().on( 'changeDate', function() {
-        oTable.fnDraw();
+    $("#max").datepicker().on( 'changeDate', function() { 
+        oTable.fnDraw(); 
     });
-
+    
 
 
 </script>

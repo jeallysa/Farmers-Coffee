@@ -122,7 +122,10 @@
                                             }
                                         ?>
                                 </li>
+<<<<<<< HEAD
                                 <span style="display:inline-block; width: YOURWIDTH;"></span>
+=======
+>>>>>>> 602dc2755e1a32c73056b41f2f93ee136adb964e
                                 <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
                                     <i class="glyphicon glyphicon-user"></i>
                                     <p class="hidden-lg hidden-md">Profile</p>
@@ -256,7 +259,7 @@
 <script>   
     
     
-    $.fn.dataTableExt.afnFiltering.push(
+      $.fn.dataTableExt.afnFiltering.push(
         function(oSettings, aData, iDataIndex){
             var dateStart = parseDateValue($("#min").val());
             var dateEnd = parseDateValue($("#max").val());
@@ -278,13 +281,14 @@
     }
 
 
+
     var oTable = $('#example').dataTable({ 
+        "order": [[ 0, "desc"]],
         "dom":' fBrtip',
         "lengthChange": false,
-        "info":     false,
-        "order": [[ 0, "asc"]],
+        "info":     true,
         buttons: [
-            
+
             
             { "extend": 'excel', "text":'<i class="fa fa-file-excel-o"></i> CSV',"className": 'btn btn-success btn-xs',
                 exportOptions: {
@@ -292,6 +296,7 @@
                 }
             },
             
+<<<<<<< HEAD
             { "extend": 'pdf', 
             "text":'<i class="fa fa-file-pdf-o"></i> PDF',
             "className": 'btn btn-danger btn-xs',
@@ -311,8 +316,33 @@
                         doc.styles.tableHeader.fontSize = 10;
                         doc.styles.title.fontSize = 12;
                          doc.content[1].table.widths = [ '30%', '40%', '35%']; 
+=======
+            { 
+                "extend": 'pdf',
+                "text":'<i class="fa fa-file-pdf-o"></i> PDF',
+                "className": 'btn btn-danger btn-xs', 
+                "orientation": 'portrait', 
+                "title": 'Accounts Receivable Report',
+                "download": 'open',
+                
+                "messageBottom": "\n \n \n \n \n Prepared by:  <?php echo $object->u_fname  . ' ' . $object->u_lname; ?>",
+                styles: {
+                    "messageBottom": {
+                        bold: true,
+                        fontSize: 15
+                    }
+                },
+                "exportOptions": {
+                     columns: [0, 1, 2],
+                     /*modifier: {
+                          page: 'current'
+                        }*/
+                  },
+>>>>>>> 602dc2755e1a32c73056b41f2f93ee136adb964e
 
-                         var now = new Date();
+                "header": true,
+                customize: function(doc) {
+                    var now = new Date();
                     var jsDate = now.getDate()+'-'+(now.getMonth()+1)+'-'+now.getFullYear();
                     var logo = 'data:assets/img/logo.png';
                     doc.content.splice(0, 1, {
@@ -321,7 +351,7 @@
                         bold: true,
                         fontSize: 15
                       }, {
-                        text: ' Sales Receivables \n',
+                        text: ' Accounts Receivable Report \n',
                         bold: true,
                         fontSize: 11
                       }, {
@@ -329,11 +359,12 @@
                         bold: true,
                         fontSize: 11
                       }],
-                      margin: [0, 0, 0,10],
+                      margin: [0, 0, 0,20],
                       alignment: 'center',
                      image: logo
                     });
-
+                    doc.content[1].table.widths = ['32%','34%','33%'];
+                    doc.pageMargins = [40, 40, 40,40];
                     doc['footer']=(function(page, pages) {
                             return {
                                 columns: [
@@ -350,8 +381,16 @@
                             }
                         });
 
-                     }
+                    
+
+
+ 
+                  }
+
+
+
             }
+<<<<<<< HEAD
         ],
     //     "footerCallback": function ( row, data, start, end, display ) {
     //                     var api = this.api(), data;
@@ -389,9 +428,12 @@
     //                         'Php '+ total.toLocaleString() 
     //                     );
     //                 }
+=======
+        ]
+>>>>>>> 602dc2755e1a32c73056b41f2f93ee136adb964e
     });
 
-    $('#min,#max').datepicker({
+   $('#min,#max').datepicker({
         format: "yyyy-mm-dd",
         weekStart: 1,
         daysOfWeekHighlighted: "0",
