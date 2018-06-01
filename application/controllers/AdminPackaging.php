@@ -32,7 +32,8 @@
 			$sup_id = $this->input->post("sup_company");
 			$this->AdminPackaging_model->activity_logs('admin', "Updated Packaging: '".$type." bag, ".$size."g'");
 			$this->AdminPackaging_model->update($id, $type, $size, $unitprice, $reorder, $stocks, $sup_id);
-			echo "<script>alert('Update successful!');</script>";
+			$this->session->set_flashdata('success', 'Update of '.$type.' bag, '.$size.'g is successful!');
+			// echo "<script>alert('Update successful!');</script>";
 			redirect('adminPackaging', 'refresh');
 		}
         
@@ -56,7 +57,7 @@
 					$this->AdminPackaging_model->activity_logs('admin', "Inserted New Packaging: '".$type." bag, ".$size."g'");
 					$data = $this->security->xss_clean($data);
 					$this->AdminPackaging_model->insert_data($data);
-					$this->session->set_flashdata('error', 'Packaging added successfully');
+					$this->session->set_flashdata('success', 'Packaging added successfully');
 					redirect('adminPackaging', 'refresh');
 				
 			
@@ -71,13 +72,15 @@
             $size = $this->input->post("size");
 
 			if ($deact == 1){
-				$this->AdminPackaging_model->activity_logs('admin', "Deativated: '".$type." bag, ".$size."g'");	
+				$this->AdminPackaging_model->activity_logs('admin', "Deactivated: '".$type." bag, ".$size."g'");	
 				$this->AdminPackaging_model->activation($id);
-				redirect('adminPackaging', 'refresh');
+				$this->session->set_flashdata('success', 'Deactivation of  '.$type.' bag, '.$size.'g is successful!');
+				redirect('adminPackaging');
 			} else {
 				$this->AdminPackaging_model->activity_logs('admin', "Activated: '".$type." bag, ".$size."g'");
 				$this->AdminPackaging_model->activation($id);
-				redirect('adminPackaging', 'refresh');
+				$this->session->set_flashdata('success', 'Activation of  '.$type.' bag, '.$size.'g is successful!');
+				redirect('adminPackaging');
 			}
 
 

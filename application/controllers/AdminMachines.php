@@ -44,8 +44,8 @@
 					$this->AdminMachines_model->activity_logs('admin', "Inserted Coffee Machine: '".$brewer.", ".$type."'");
 					$data = $this->security->xss_clean($data);
 					$this->AdminMachines_model->insert_data($data);
-					$this->session->set_flashdata('error', 'Machine added successfully');
-					redirect('adminMachines', 'refresh');
+					$this->session->set_flashdata('success', 'Machine added successfully');
+					redirect('adminMachines');
 				}
 			
 		}

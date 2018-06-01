@@ -30,8 +30,9 @@
 			$this->Admin_Accounts_Model->activity_logs('admin', "Updated Account: ".$l_name.",".$f_name." of ".$position." Department ");
 
 			$this->Admin_Accounts_Model->update($id, $l_name, $f_name, $position, $address, $email, $cell_no);
-			echo "<script>alert('Update successful!');</script>";
-			redirect('adminAccounts', 'refresh');
+			$this->session->set_flashdata('success', 'Update done to the account of '.$l_name.','.$f_name.' is a success!');
+			// echo "<script>alert('Update successful!');</script>";
+			redirect('adminAccounts');
 		}
         
         function activation(){

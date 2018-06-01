@@ -31,8 +31,8 @@
 			$this->Admin_Clients_Model->activity_logs('admin', "Updated Client information: ".$comp_name." under ".$cli_type." ");
 
 			$this->Admin_Clients_Model->update($id, $comp_name, $cli_type, $l_name, $f_name, $address, $email, $cell_no);
-			echo "<script>alert('Update successful!');</script>";
-			redirect('adminClients', 'refresh');
+			$this->session->set_flashdata('success', 'Update of '.$comp_name.' under '.$cli_type.'  is successful!');
+			redirect('adminClients');
 		}
 
         function activation(){
@@ -45,18 +45,22 @@
 			if ($deact == 1){
 				$this->Admin_Clients_Model->activity_logs('admin', "Deactivated: ".$comp_name." under ".$cli_type." ");
 				$this->Admin_Clients_Model->activation($id);
-				redirect('adminClients', 'refresh');
+				$this->session->set_flashdata('success', 'Deactivation of '.$comp_name.' under '.$cli_type.'  is successful!');
+
+				redirect('adminClients');
 
 			}else{	
 				$this->Admin_Clients_Model->activity_logs('admin', "Activated: ".$comp_name." under ".$cli_type." ");	
 				$this->Admin_Clients_Model->activation($id);
+				$this->session->set_flashdata('success', 'Activation of '.$comp_name.' under '.$cli_type.'  is successful!');
+
 				
-				redirect('adminClients', 'refresh');
+				redirect('adminClients');
 			}	
 
-			$this->Admin_Clients_Model->activation($id);
+			// $this->Admin_Clients_Model->activation($id);
 			
-			redirect('adminClients');
+			// redirect('adminClients');
 
 		}
 	}

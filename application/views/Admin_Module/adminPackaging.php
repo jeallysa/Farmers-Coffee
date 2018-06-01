@@ -402,6 +402,19 @@ a:focus {
                                     </div>
                                 </div>
                                 <div class="card-content">
+                                     <?php
+                                    $error = $this->session->flashdata('error');
+                                    $success = $this->session->flashdata('success');
+                                    if(!empty($error)){
+                                        ?>
+                                        <div class="alert alert-danger" style="margin: 0px; text-align: center; opacity: 0.8; width:50%;">
+                                            <strong><?php echo $error; ?></strong> 
+                                        </div>
+                                  <?php } else if(!empty($success)){ ?>
+                                        <div class="alert alert-success" style="margin: 0px; text-align: center; opacity: 0.8; width:50%">
+                                            <strong><?php echo $success; ?></strong> 
+                                        </div>
+                                  <?php } ?> 
                                     <a class="btn btn-success" data-toggle="modal" data-target="#stock" data-original-title style="float: right">Add New Packaging</a>
                                     <table id="example" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                                         <thead>

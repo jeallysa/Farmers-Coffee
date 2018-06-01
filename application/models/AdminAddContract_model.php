@@ -29,10 +29,11 @@ class AdminAddContract_model extends CI_model
 	 function insert_data($data){ 
 	 	$this->db->insert('contract', $data);
 		
-         
-         echo "<script>alert('You have inserted a new contract!');
-		window.location.href='" . base_url() . "adminClients';
-		</script>";
+         $this->session->set_flashdata('success', 'You have inserted a new contract!');
+  //        echo "<script>alert('You have inserted a new contract!');
+		// window.location.href='" . base_url() . "adminClients';
+		// </script>";
+		redirect('adminClients');
 	}
 	/**
 	 function insert_data($data){ 

@@ -30,16 +30,18 @@
 			if ($deact == 1){
 				$this->Admin_Blends_model->activity_logs('admin', "Deactivated: ".$name." ".$type." ".$size." grams ");	
 				$this->Admin_Blends_model->activation($id);
+				$this->session->set_flashdata('success', 'Deactivation of '.$name.' is successful!');
 
-				echo "<script>alert('Deactivation successful!');</script>";
-				redirect('adminClientBlends', 'refresh');
+				// echo "<script>alert('Deactivation successful!');</script>";
+				redirect('adminClientBlends');
 
 			}else{	
 				$this->Admin_Blends_model->activity_logs('admin', "Activated: ".$name." ".$type." ".$size." grams ");	
 				$this->Admin_Blends_model->activation($id);
-				echo "<script>alert('Activation successful!');</script>";
+				$this->session->set_flashdata('success', 'Activation of '.$name.' is successful!');
 
-				redirect('adminClientBlends', 'refresh');
+				// echo "<script>alert('Deactivation successful!');</script>";
+				redirect('adminClientBlends');
 			}
 		}
 

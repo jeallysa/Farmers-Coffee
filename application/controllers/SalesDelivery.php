@@ -121,7 +121,7 @@
 			$dateNow = $this->input->post("dateNow");
 
 			$this->SalesDelivery_model->roastDel($date, $QTY, $blend_id, $po_id, $dateNow);
-			redirect('SalesDelivery', 'refresh');
+			redirect('SalesDelivery');
 		}
 
         function retDel()
