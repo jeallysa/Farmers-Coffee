@@ -388,7 +388,7 @@
 
                                              $query2 = $this->db->query("SELECT a.client_id, client_company, date_expiration, ABS((dayofyear(date_expiration) - dayofyear(now()))) as numdays        from contracted_client a
 join contract b on a.client_id = b.client_id
-where ABS((dayofyear(date_expiration) - dayofyear(now()))) = 10 or ABS((dayofyear(date_expiration) - dayofyear(now()))) < 10 and year(date_expiration) = year(now()) != 0");
+where ABS((dayofyear(date_expiration) - dayofyear(now()))) = 14 or ABS((dayofyear(date_expiration) - dayofyear(now()))) < 14 and year(date_expiration) = year(now()) != 0");
 
                                                 if(!empty($query)){
                                                     foreach($query->result() as $object){
