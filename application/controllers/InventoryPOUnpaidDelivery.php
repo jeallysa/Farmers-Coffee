@@ -96,16 +96,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         public function insertReturn(){
              $category = $this->input->post('category');
              $returnQty = $this->input->post('returnQty');
+             // var_dump($returnQty);
             if($category == 1){
-          
-                  $data = array(      "poNo"               => $this->input->post('poNo'),
-                                      "drNo"               => $this->input->post('drList'),
-                                      "sup_returnDate"     => $this->input->post('date'),
-                                      "sup_returnItem"     => $this->input->post('item'),
-                                      "sup_returnRemarks"  => $this->input->post('remarks'),
-                                      "sup_returnQty"      => $returnQty * 1000,
-                                      "categoryr"          => $category,
-                                     );   
+                $data = array(      
+                    "poNo"               => $this->input->post('poNo'),
+                    "drNo"               => $this->input->post('drList'),
+                    "sup_returnDate"     => $this->input->post('date'),
+                    "sup_returnItem"     => $this->input->post('item'),
+                    "sup_returnRemarks"  => $this->input->post('remarks'),
+                    "sup_returnQty"      => $returnQty * 1000,
+                    "categoryr"          => $category,
+                  );   
             }else{
                 
                  $data = array(      "poNo"                => $this->input->post('poNo'),
@@ -122,7 +123,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 
             }
         
-         $this->inventoryPOUnpaidDelivery_model->insertReturns($data);
+        $date_ret = $this->input->post('date');
+        $blend_id = $this->input->post('item');
+        // var_dump($blend_id);
+        // var_dump($category);
+         $this->inventoryPOUnpaidDelivery_model->insertReturns($data, $date_ret, $blend_id, $returnQty);
           
          $this->inventoryPOUnpaidDelivery_model->updateStocks($data);  
           

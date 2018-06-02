@@ -112,10 +112,30 @@ $queryLimit = $this->db->query("SELECT sum(yield_weight) as yield_weight , categ
       
       
       
-         function insertReturns($data){ 
-                  
+         function insertReturns($data, $date_ret, $blend_id, $ret_quan){             
            $this->db->insert("company_returns" , $data);
-           }  
+           $id = $this->db->insert_id();
+           $inv_trans = array(
+              'transact_date' => $date_ret,
+              'company_returnID' => $id,
+              'type' => 'OUT'
+
+           );
+           $this->db->insert('inv_transact', $inv_trans);
+           $trans_id = $this->db->insert_id();
+           $pack_size = $this->db->query("SELECT a.blend, b.package_id, b.package_type, b.package_size FROM coffee_blend a JOIN packaging b ON a.package_id = b.package_id WHERE a.blend_type = 'Client' AND a.blend_id = '".$blend_id."';")->row()->package_size;
+           $props = $this->db->query("SELECT c.raw_id, c.raw_coffee, b.percentage FROM coffee_blend a JOIN proportions b ON a.blend_id = b.blend_id JOIN raw_coffee c ON b.raw_id = c.raw_id WHERE a.blend_id = '".$blend_id."' AND b.percentage > 0");
+           foreach($props->result() AS $row){
+                $percentage = $row->percentage;
+                $trans_raw = array(
+                    'trans_id' => $trans_id,
+                    'raw_coffeeid' => $row->raw_id,
+                    'quantity' => $ret_quan*($pack_size*($percentage*0.01))
+                );
+                $this->db->insert('trans_raw', $trans_raw);
+           }
+
+         }  
       
       
       
