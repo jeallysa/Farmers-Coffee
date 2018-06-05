@@ -124,10 +124,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             }
         
         $date_ret = $this->input->post('date');
-        $blend_id = $this->input->post('item');
+        $sup_po_id = $this->input->post('item');
         // var_dump($blend_id);
         // var_dump($category);
-         $this->inventoryPOUnpaidDelivery_model->insertReturns($data, $date_ret, $blend_id, $returnQty);
+         $this->inventoryPOUnpaidDelivery_model->insertReturns($data, $date_ret, $sup_po_id, $returnQty);
           
          $this->inventoryPOUnpaidDelivery_model->updateStocks($data);  
           

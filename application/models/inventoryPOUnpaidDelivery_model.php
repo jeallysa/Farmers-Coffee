@@ -4,7 +4,7 @@
   
   function _construct(){
    
-     parent::_construnct();
+     parent::_construct();
   }
   
   
@@ -112,7 +112,7 @@ $queryLimit = $this->db->query("SELECT sum(yield_weight) as yield_weight , categ
       
       
       
-         function insertReturns($data, $date_ret, $blend_id, $ret_quan){             
+         function insertReturns($data, $date_ret, $supp_po_id, $ret_quan){             
            $this->db->insert("company_returns" , $data);
            $id = $this->db->insert_id();
            $inv_trans = array(
@@ -123,17 +123,51 @@ $queryLimit = $this->db->query("SELECT sum(yield_weight) as yield_weight , categ
            );
            $this->db->insert('inv_transact', $inv_trans);
            $trans_id = $this->db->insert_id();
-           $pack_size = $this->db->query("SELECT a.blend, b.package_id, b.package_type, b.package_size FROM coffee_blend a JOIN packaging b ON a.package_id = b.package_id WHERE a.blend_type = 'Client' AND a.blend_id = '".$blend_id."';")->row()->package_size;
-           $props = $this->db->query("SELECT c.raw_id, c.raw_coffee, b.percentage FROM coffee_blend a JOIN proportions b ON a.blend_id = b.blend_id JOIN raw_coffee c ON b.raw_id = c.raw_id WHERE a.blend_id = '".$blend_id."' AND b.percentage > 0");
-           foreach($props->result() AS $row){
-                $percentage = $row->percentage;
-                $trans_raw = array(
+           // $pack_size = $this->db->query("SELECT a.blend, b.package_id, b.package_type, b.package_size FROM coffee_blend a JOIN packaging b ON a.package_id = b.package_id WHERE a.blend_type = 'Client' AND a.blend_id = '".$blend_id."';")->row()->package_size;
+           // $props = $this->db->query("SELECT c.raw_id, c.raw_coffee, b.percentage FROM coffee_blend a JOIN proportions b ON a.blend_id = b.blend_id JOIN raw_coffee c ON b.raw_id = c.raw_id WHERE a.blend_id = '".$blend_id."' AND b.percentage > 0");
+           $supp_po = $this->db->query("SELECT * FROM supp_po_ordered WHERE supp_po_ordered_id = '".$supp_po_id."';");
+           $item = $supp_po->row()->item;
+           $type = $supp_po->row()->type;
+           $raw_check = $this->db->query("SELECT IF(EXISTS(SELECT * FROM raw_coffee WHERE raw_coffee = '".$item."' AND raw_type = '".$type."' AND raw_activation = 1), 1, 0) AS raw_check;")->row()->raw_check;
+           $pack_check = $this->db->query("SELECT IF(EXISTS(SELECT * FROM packaging WHERE package_type = '".$item."' AND package_size = '".$type."' AND pack_activation = 1), 1, 0) AS pack_check;")->row()->pack_check;
+           $mach_check = $this->db->query("SELECT IF(EXISTS(SELECT * FROM machine WHERE brewer = '".$item."' AND brewer_type = '".$type."' AND mach_activation = 1), 1, 0) AS mach_check;")->row()->mach_check;
+           $stick_check = $this->db->query("SELECT IF(EXISTS(SELECT * FROM sticker WHERE sticker = '".$item."' AND sticker_type = '".$type."' AND sticker_activation = 1), 1, 0) AS stick_check;")->row()->mach_check;
+
+           if ($raw_check == 1){
+              $sel_raw = $this->db->query("SELECT * FROM raw_coffee WHERE raw_coffee = '".$item."' AND raw_type = '".$type."'");
+              $sel_raw_id = $sel_raw->row()->raw_id;
+              $trans_raw = array(
                     'trans_id' => $trans_id,
-                    'raw_coffeeid' => $row->raw_id,
-                    'quantity' => $ret_quan*($pack_size*($percentage*0.01))
-                );
-                $this->db->insert('trans_raw', $trans_raw);
+                    'raw_coffeeid' => $sel_raw_id,
+                    'quantity' => $ret_quan
+              );
+              $this->db->insert('trans_raw', $trans_raw);
+              $this->db->query("UPDATE raw_coffee SET raw_stock = raw_stock - ".$ret_quan." WHERE raw_coffee = '".$item."' AND raw_type = '".$type."';");
+           }else if ($pack_check == 1){
+              $sel_pack = $this->db->query("SELECT * FROM packaging WHERE package_type = '".$item."' AND package_size = '".$type."'");
+              $sel_pack_id = $sel_pack->row()->package_id;
+              $trans_pack = array(
+                    'trans_id' => $trans_id,
+                    'package_id' => $sel_raw_id,
+                    'quantity' => $ret_quan
+              );
+              $this->db->insert('trans_pack', $trans_pack);
+              $this->db->query("UPDATE packaging SET package_stock = package_stock - ".$ret_quan." WHERE package_type = '".$item."' AND package_size = '".$type."';");
+           }else if ($mach_check == 1){
+
+           }else if ($stick_check == 1){
+
            }
+
+           // foreach($props->result() AS $row){
+           //      $percentage = $row->percentage;
+           //      $trans_raw = array(
+           //          'trans_id' => $trans_id,
+           //          'raw_coffeeid' => $row->raw_id,
+           //          'quantity' => $ret_quan*($pack_size*($percentage*0.01))
+           //      );
+           //      $this->db->insert('trans_raw', $trans_raw);
+           // }
 
          }  
       
