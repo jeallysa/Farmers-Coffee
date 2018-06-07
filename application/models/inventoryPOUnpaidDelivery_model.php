@@ -131,7 +131,11 @@ $queryLimit = $this->db->query("SELECT sum(yield_weight) as yield_weight , categ
            $raw_check = $this->db->query("SELECT IF(EXISTS(SELECT * FROM raw_coffee WHERE raw_coffee = '".$item."' AND raw_type = '".$type."' AND raw_activation = 1), 1, 0) AS raw_check;")->row()->raw_check;
            $pack_check = $this->db->query("SELECT IF(EXISTS(SELECT * FROM packaging WHERE package_type = '".$item."' AND package_size = '".$type."' AND pack_activation = 1), 1, 0) AS pack_check;")->row()->pack_check;
            $mach_check = $this->db->query("SELECT IF(EXISTS(SELECT * FROM machine WHERE brewer = '".$item."' AND brewer_type = '".$type."' AND mach_activation = 1), 1, 0) AS mach_check;")->row()->mach_check;
-           $stick_check = $this->db->query("SELECT IF(EXISTS(SELECT * FROM sticker WHERE sticker = '".$item."' AND sticker_type = '".$type."' AND sticker_activation = 1), 1, 0) AS stick_check;")->row()->mach_check;
+           $stick_check = $this->db->query("SELECT IF(EXISTS(SELECT * FROM sticker WHERE sticker = '".$item."' AND sticker_type = '".$type."' AND sticker_activation = 1), 1, 0) AS stick_check;")->row()->stick_check;
+           // var_dump($raw_check);
+           // var_dump($pack_check);
+           // var_dump($mach_check);
+           // var_dump($stick_check);
 
            if ($raw_check == 1){
               $sel_raw = $this->db->query("SELECT * FROM raw_coffee WHERE raw_coffee = '".$item."' AND raw_type = '".$type."'");
@@ -139,7 +143,7 @@ $queryLimit = $this->db->query("SELECT sum(yield_weight) as yield_weight , categ
               $trans_raw = array(
                     'trans_id' => $trans_id,
                     'raw_coffeeid' => $sel_raw_id,
-                    'quantity' => $ret_quan
+                    'quantity' => $ret_quan * 1000
               );
               $this->db->insert('trans_raw', $trans_raw);
               $this->db->query("UPDATE raw_coffee SET raw_stock = raw_stock - ".$ret_quan." WHERE raw_coffee = '".$item."' AND raw_type = '".$type."';");
@@ -154,9 +158,23 @@ $queryLimit = $this->db->query("SELECT sum(yield_weight) as yield_weight , categ
               $this->db->insert('trans_pack', $trans_pack);
               $this->db->query("UPDATE packaging SET package_stock = package_stock - ".$ret_quan." WHERE package_type = '".$item."' AND package_size = '".$type."';");
            }else if ($mach_check == 1){
-
+              $sel_mach = $this->db->query("SELECT * FROM machine WHERE brewer = '".$item."' AND brewer_type = '".$type."'");
+              $sel_mach_id = $sel_mach->row()->package_id;
+              $trans_mach = array(
+                    'trans_id' => $trans_id,
+                    'mach_id' => $sel_mach_id,
+                    'quantity' => $ret_quan
+              );
+              $this->db->insert('trans_mach', $trans_mach);
            }else if ($stick_check == 1){
-
+              $sel_stick = $this->db->query("SELECT * FROM sticker WHERE sticker = '".$item."' AND sticker_type = '".$type."'");
+              $sel_stick_id = $sel_stick->row()->sticker_id;
+              $trans_stick = array(
+                    'trans_id' => $trans_id,
+                    'sticker_id' => $sel_stick_id,
+                    'quantity' => $ret_quan
+              );
+              $this->db->insert('trans_stick', $trans_stick);
            }
 
            // foreach($props->result() AS $row){
@@ -212,7 +230,7 @@ $queryLimit = $this->db->query("SELECT sum(yield_weight) as yield_weight , categ
                                        $this->db->where($where);  //used the where here
                                        $this->db->update($arrayItem[$i], $toUpdate);   
                                                
-                                        $this->db->insert($arrayItem[$i] , $toUpdate);       
+                                        //$this->db->insert($arrayItem[$i] , $toUpdate);       
                                               }
                                             }
                       

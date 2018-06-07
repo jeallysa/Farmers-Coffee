@@ -4,7 +4,7 @@ class Admin_Inventory_Report_Model extends CI_Model {
     
     public function get_coffeein(){
 		$count = $this->db->count_all_results('raw_coffee');
-        $qcount = $this->db->query("SELECT DISTINCT raw_coffee FROM raw_coffee WHERE raw_activation = 1;");
+        $qcount = $this->db->query("SELECT DISTINCT raw_coffee FROM raw_coffee WHERE raw_activation = 1 ORDER BY 1;");
 		$query_append = "SELECT  a.* FROM
                             (SELECT c.trans_id AS main_id, c.type AS type, c.transact_date AS transact_date, c.po_supplier as po_no, f.sup_company as supplier";
 
@@ -60,7 +60,7 @@ class Admin_Inventory_Report_Model extends CI_Model {
     
     public function get_coffeeinWithP($sdf){
 		$count = $this->db->count_all_results('raw_coffee');
-        $qcount = $this->db->query("SELECT DISTINCT raw_coffee FROM raw_coffee WHERE raw_activation = 1;");
+        $qcount = $this->db->query("SELECT DISTINCT raw_coffee FROM raw_coffee WHERE raw_activation = 1 ORDER BY 1;");
 		$query_append = "SELECT a.* FROM
                             (SELECT c.trans_id AS main_id, c.type AS type, c.transact_date AS transact_date, c.po_supplier as po_no, f.sup_company as supplier";
 
@@ -116,7 +116,7 @@ class Admin_Inventory_Report_Model extends CI_Model {
     
     public function get_coffeeout(){
 		$count = $this->db->count_all_results('raw_coffee');
-		$qcount = $this->db->query("SELECT DISTINCT raw_coffee FROM raw_coffee WHERE raw_activation = 1;");
+		$qcount = $this->db->query("SELECT DISTINCT raw_coffee FROM raw_coffee WHERE raw_activation = 1 ORDER BY 1;");
 		$query_append = "SELECT a.* FROM
                             (SELECT c.trans_id AS main_id, c.transact_date AS transact_date, c.type AS type, c.po_client as dr_no, e.client_company as client";
 
@@ -161,7 +161,7 @@ class Admin_Inventory_Report_Model extends CI_Model {
 			$query_append .=  " AS '". $row->raw_coffee ."' ";
 		}
         
-        $query_append .= " FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN company_returns d ON c.company_returnID = d.company_returnID GROUP BY c.trans_id) a WHERE type = 'OUT' AND MONTH(transact_date)=month(now()) GROUP BY a.main_id "  ;
+        $query_append .= " FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN company_returns d ON c.company_returnID = d.company_returnID GROUP BY c.trans_id) a WHERE type = 'OUT' AND MONTH(transact_date)=month(now()) GROUP BY a.main_id"  ;
 
 		$query = $this->db->query($query_append);
 		return $query;
@@ -170,7 +170,7 @@ class Admin_Inventory_Report_Model extends CI_Model {
     
     public function get_coffeeoutWithP($sdf){
 				$count = $this->db->count_all_results('raw_coffee');
-				$qcount = $this->db->query("SELECT DISTINCT raw_coffee FROM raw_coffee WHERE raw_activation = 1;");
+				$qcount = $this->db->query("SELECT DISTINCT raw_coffee FROM raw_coffee WHERE raw_activation = 1 ORDER BY 1;");
 		$query_append = "SELECT a.* FROM
                             (SELECT c.trans_id AS main_id, c.transact_date AS transact_date, c.type AS type, c.po_client as dr_no, e.client_company as client";
 
@@ -215,7 +215,7 @@ class Admin_Inventory_Report_Model extends CI_Model {
 			$query_append .=  " AS '". $row->raw_coffee ."' ";
 		}
         
-        $query_append .= " FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN company_returns d ON c.company_returnID = d.company_returnID GROUP BY c.trans_id) a WHERE type = 'OUT' AND MONTH(transact_date)='".$sdf."' GROUP BY a.main_id "  ;
+        $query_append .= " FROM raw_coffee a JOIN trans_raw b ON a.raw_id = b.raw_coffeeid JOIN inv_transact c ON b.trans_id = c.trans_id JOIN company_returns d ON c.company_returnID = d.company_returnID GROUP BY c.trans_id) a WHERE type = 'OUT' AND MONTH(transact_date)='".$sdf."' GROUP BY a.main_id ORDER BY 2 DESC"  ;
 
 		$query = $this->db->query($query_append);
 		return $query;
