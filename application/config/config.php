@@ -25,7 +25,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 
 
+<<<<<<< HEAD
 $config['base_url'] = 'http://192.168.2.103/';
+=======
+$config['base_url'] = 'http://localhost/';
+>>>>>>> c3b2a1db526f9d1b56ede5575a034a0ebd17c13f
 
 
 /*

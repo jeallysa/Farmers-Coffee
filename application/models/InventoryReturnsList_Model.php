@@ -148,7 +148,7 @@ for($i = 0 ; $i <= 3 ; $i++){
                                        $this->db->where($where);  //used the where here
                                        $this->db->update($arrayItem[$i], $toUpdate);   
                                                
-                                        $this->db->insert($arrayItem[$i] , $toUpdate);       
+                                        //$this->db->insert($arrayItem[$i] , $toUpdate);       
                                               }
                                             }
                       
