@@ -42,7 +42,7 @@
                     'blend_physcount'      => $blend_physcountv[$i],
                     'blend_discrepancy'    => $blend_discrepancyv[$i],
                     'blend_remarks'        => $blend_remarksv[$i],
-                    'inventory_date'       => $inventory_datev[$i],
+                    'inventory_date'       => $inventory_datev,
 
                 );
 

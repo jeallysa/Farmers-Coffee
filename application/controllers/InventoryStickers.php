@@ -41,7 +41,7 @@
                     'sticker_physcount'      => $stck_physcountv[$i],
                     'sticker_discrepancy'    => $stck_discrepancyv[$i],
                     'sticker_remarks'        => $stck_remarksv[$i],
-                    'inventory_date'         => $inventory_datev[$i],
+                    'inventory_date'         => $inventory_datev,
 
                 );
 

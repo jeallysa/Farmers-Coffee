@@ -279,7 +279,7 @@
 
                         if ($dbStat == 'partial delivery') {
                         echo '
-                           <button data-toggle="modal" class="btn btn-warning btn-xs" data-target="#undo'.$row1->contractPO_id.'" title="archive order" disabled><span class="glyphicon glyphicon-remove-sign" style="color:black"></span> </button>
+                           <button data-toggle="modal" class="btn btn-warning btn-xs" data-target="#undo'.$row1->contractPO_id.'" title="archive order"><span class="glyphicon glyphicon-remove-sign" style="color:black"></span> </button>
                         ';
                         } else if ($dbStat == 'pending delivery') {
                         echo '

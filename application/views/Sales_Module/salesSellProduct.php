@@ -172,7 +172,7 @@
                                                     <?php
                                                   } ?>
                                                 <?php echo validation_errors('<div class="alert alert-danger">', '</div>'); ?>
-												 <table id="cosales" class="display table-striped table-hover cell-border" cellspacing="0" width="100%" style="width:100%">
+												 <table id="" class="display table-striped table-hover cell-border" cellspacing="0" width="100%" style="width:100%">
                                                 <thead>
                                                     <tr>
                                                         <th><b>Purchase Order No.</b></th>
@@ -336,11 +336,12 @@
 											</div>
 											<div class="tab-pane" id="machine">
                                                 <a href="<?php echo base_url(); ?>salesMachineOrders" class="btn btn-success btn-md" style="float: right">Add Sales</a>
-												<table id="masales" class="display table-striped table-hover cell-border" cellspacing="0" width="100%">
+												<table id="" class="display table-striped table-hover cell-border" cellspacing="0" width="100%">
 													<thead>
                                                         <th><b>Purchase Order No.</b></th>
+                                                        <th><b>Purchase Date</b></th>
 														<th><b>Serial No.</b></th>
-														<th><b>Purchase Date</b></th>
+														
 														<th><b>Client</b></th>
 														<th><b>Machine</b></th>
 														<th><b>Sold Quantity</b></th>
@@ -354,8 +355,9 @@
                                                      ?>
                                                      <tr>
                                                          <td><?php echo $row->mach_salesID; ?></td>
-                                                         <td><?php echo $row->mach_serial; ?></td>
                                                          <td><?php echo $row->date; ?></td>
+                                                         <td><?php echo $row->mach_serial; ?></td>
+                                                         
                                                          <td><?php echo $row->client_company; ?></td>
                                                          <td><?php echo $row->brewer; ?></td>
                                                          <td><?php echo $row->mach_qty; ?> /unit</td>
@@ -526,18 +528,33 @@
 <script src="../assets/js/demo.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-    $('#cosales').DataTable({
-        
-    });
+
+    $('table.display').DataTable( {
+        "order": [[ 1, "desc"]]
+      // "columnDefs": [
+      //   { "orderable": false, "targets": 0 }
+      // ]
+      
+    } );
+
+    $('#datePicker')
+        .datepicker({
+            format: 'mm/dd/yyyy'
+        })
+        .on('changeDate', function(e) {
+            $('#eventForm').formValidation('revalidateField', 'date');
+        });
 });
+
+
 </script>
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 $(document).ready(function() {
     $('#masales').DataTable({
-
+        "order": [[ 0, "asc"]]
     });
 });
-</script>
+</script> -->
 
 <script type="text/javascript">
 $(document).ready(function(){
@@ -553,28 +570,7 @@ $(document).ready(function(){
 <script>
 
 
-    $.fn.dataTableExt.afnFiltering.push(
-        function(oSettings, aData, iDataIndex){
-            var dateStart = parseDateValue($("#min").val());
-            var dateEnd = parseDateValue($("#max").val());
-            var evalDate= parseDateValue(aData[2]);
-
-            if (evalDate >= dateStart && evalDate <= dateEnd) {
-                return true;
-            }
-            else {
-                return false;
-            }
-    });
-    //Date Converter
-    function parseDateValue(rawDate) {
-        var month = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
-        var dateArray = rawDate.split(" ");
-        var parsedDate = dateArray[2] + month + dateArray[0];
-        return parsedDate;
-    }
-
-    var oTable = $('#example').dataTable({
+/*    var oTable = $('#example').dataTable({
         "dom":' fBrtip',
         "lengthChange": false,
         "info":     false,
@@ -598,29 +594,13 @@ $(document).ready(function(){
              "orientation": 'landscape'
             }
         ]
-    });
-
-    $('#min,#max').datepicker({
-        format: "yyyy-mm-dd",
-        weekStart: 1,
-        daysOfWeekHighlighted: "0",
-        autoclose: true,
-        todayHighlight: true
-    });
-
-    // Event Listeners
-    $("#min").datepicker().on( 'changeDate', function() {
-        oTable.fnDraw();
-    });
-    $("#max").datepicker().on( 'changeDate', function() {
-        oTable.fnDraw();
-    });
+    });*/
 
 
 
 </script>
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
     $(document).ready(function() {
     $('#example').DataTable({
         "dom":' fBrtip',
@@ -643,5 +623,5 @@ $(document).ready(function(){
         ]
     });
 });
-</script>
+</script> -->
 </html>

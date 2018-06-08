@@ -294,6 +294,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <h1 class="panel-title" id="contactLabel"><b>Record Physical Count for Coffee Blends</b></h1>
                                         </div>
                                         <div class="modal-body" style="padding: 5px;">
+
+                                        <label><b>Inventory Date</b></label>
+
+                                        <?php
+                                                       
+                                         $date = date("Y-m-d");
+?>
+                                        <input  value="<?php echo $date ?>" id="date" type="date" name="date" class="form-control" min="2017-01-01" max="<?php echo date("Y-m-d") ?>"/>
                                             <table id="example3" class="table table-striped table-bordered dt-responsive" width="100%">
                                                 <thead>
                                                 <tr>
@@ -301,7 +309,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     <th align="center"><b>Packaging</b></th>
                                                     <th align="center"><b>Physical Count</b></th>
                                                     <th align="center"><b>Discrepancy</b></th>
-                                                    <th align="center"><b>Inventory Date</b></th>
                                                     <th align="center"><b>Remarks</b></th>
                                                 </tr>
                                             </thead>
@@ -318,7 +325,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                        '<td>'. $object->package_type .' '. $object->package_size .' g<input type="hidden" style="resize:vertical;" class="form-control" name="pck_pckgng[]" value="'. $object->package_type .'" id="blnd_pckgng'.$mapModal.'"></td>' ,
                        '<td><input  id="physcount'.$mapModal.'" min="0" step= "0.001"    name="physcount[]" placeholder="Kilograms" type="number" class="form-control"/></td>',
                        '<td><input  value="0" id="discrepancy'.$mapModal.'" name="discrepancy[]" class="form-control" readonly/></td>',
-                       '<td><input  value="'.date("Y-m-d").'" id="date'.$mapModal.'" type="date" name="date[]" class="form-control" min="2017-01-01" max="'.date("Y-m-d").'"/></td>',
                        '<td><input  type="hidden" value="'.$object->blend_id.'" name="blendid[]" /><input  style="resize:vertical;" class="form-control"    name="remarks[]" id="remarks'.$mapModal.'"></td>',
                                                 '</tr>' ; 
                            $mapModal++;

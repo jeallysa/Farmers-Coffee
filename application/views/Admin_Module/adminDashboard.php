@@ -314,10 +314,12 @@ a:focus {
 
                                  <?php
 
-                                            $query = $this->db->query("SELECT date_expiration,client_id,client_company,seen FROM contract NATURAL JOIN contracted_client");
+                                           $query = $this->db->query("SELECT date_expiration,client_id,client_company,seen FROM contract NATURAL JOIN contracted_client WHERE client_activation = 1");
                                                 $date = date('Y-m-d');
 
-                                             $query2 = $this->db->query("SELECT a.client_id, client_company, date_expiration, ABS((dayofyear(date_expiration) - dayofyear(now()))) as numdays from contracted_client a join contract b on a.client_id = b.client_id where ABS((dayofyear(date_expiration) - dayofyear(now()))) = 14 or ABS((dayofyear(date_expiration) - dayofyear(now()))) < 14 and year(date_expiration) = year(now()) != 0");
+                                             $query2 = $this->db->query("SELECT a.client_id, client_company, date_expiration, ((date(date_expiration) - date(now()))) as numdays        from contracted_client a
+join contract b on a.client_id = b.client_id
+where ((date(date_expiration) - date(now()))) = 14 or ((date(date_expiration) - date(now()))) < 14 and year(date_expiration) = year(now()) != 0 and ((date(date_expiration) - date(now()))) >= 0 and client_activation = 1 ");
 
                                                 if(!empty($query)){
                                                     foreach($query->result() as $object){

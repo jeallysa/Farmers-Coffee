@@ -42,7 +42,7 @@
                     'mach_physcount'      => $mach_physcountv[$i],
                     'mach_discrepancy'    => $mach_discrepancyv[$i],
                     'mach_remarks'        => $mach_remarksv[$i],
-                    'inventory_date'     => $inventory_datev[$i],
+                    'inventory_date'     => $inventory_datev,
 
                 );
 

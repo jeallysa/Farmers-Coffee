@@ -42,7 +42,7 @@
                     'raw_physcount'      => ($raw_physcountv[$i] * 1000),
                     'raw_discrepancy'    => ($raw_discrepancyv[$i] * 1000),
                     'raw_remarks'        => $raw_remarksv[$i],
-                    'inventory_date'     => $inventory_datev[$i],
+                    'inventory_date'     => $inventory_datev,
 
                 );
 			   

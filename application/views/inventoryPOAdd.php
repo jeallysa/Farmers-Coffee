@@ -416,7 +416,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                     <div class="form-group label-floating">
                                                                       <label for="date">Order Date:</label>
                                                                         
-                                                                  <input class="form-control" type="date" name="date" id ="poDate" max="<?php echo date("Y-m-d") ?>" value="" required>
+                                                                  <input class="form-control" type="date" name="date" id ="poDate" min="2018-01-01" max="<?php echo date("Y-m-d") ?>" value="" required>
                                                                         
                                                                     </div>
                                                                 </div>

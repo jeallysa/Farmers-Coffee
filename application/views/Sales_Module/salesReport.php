@@ -355,6 +355,7 @@ $(document).ready(function() {
                     doc.styles.tableHeader.alignment = 'center';
                     var now = new Date();
                     var jsDate = now.getDate()+'-'+(now.getMonth()+1)+'-'+now.getFullYear();
+                    var jsPick = now.getDate()+
                     var logo = 'data:assets/img/logo.png';
                     doc.content.splice(0, 1, {
                       text: [{

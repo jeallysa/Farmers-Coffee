@@ -307,9 +307,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <div class="panel panel-primary">
                                         <div class="panel-heading">
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                            <h1 class="panel-title" id="contactLabel"><b>Record Physical Count for Raw Coffees</b></h1>
+                                            <h1 class="panel-title" id="contactLabel"><b>Record Physical Count for Raw Coffee</b></h1>
                                         </div>
                                         <div class="modal-body" style="padding: 5px;">
+                                        <label><b>Inventory Date</b></label><input value=<?php echo date("Y-m-d")?> id="date" type="date" name="date" class="form-control" min="2017-01-01" max=<?php echo date("Y-m-d") ?>/>
                                             <table id="example3" class="table table-striped table-bordered dt-responsive" width="100%">
                                                 <thead>
                                                 <tr>
@@ -317,7 +318,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     <th align="center"><b>Type of Roast</b></th>
                                                     <th align="center"><b>Physical Count</b></th>
                                                     <th align="center"><b>Discrepancy</b></th>
-                                                    <th align="center"><b>Inventory Date</b></th>
                                                     <th align="center"><b>Remarks</b></th>
                                                 </tr>
                                             </thead>
@@ -336,7 +336,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                               
                                                 '<td><input  id="physcount'.$mapModal.'" min="0" step= "0.001"    name="physcount[]" placeholder="Kilograms" type="number" class="form-control"/></td>',
                                                 '<td><input value="0" id="discrepancy'.$mapModal.'" name="discrepancy[]" class="form-control" readonly/></td>',
-                                                '<td><input value="'.date("Y-m-d").'" id="date'.$mapModal.'" type="date" name="date[]" class="form-control" min="2017-01-01" max="'.date("Y-m-d").'"/></td>',
                                                 '<td><input style="resize:vertical;" class="form-control"    name="remarks[]" id="remarks'.$mapModal.'"><input  type="hidden" value="'.$object->raw_id.'" name="rawid[]" /></td>' ,
                                         
                                               
@@ -828,6 +827,7 @@ $(document).ready(function() {
             var y = parseFloat($(this).val());
             var x = parseFloat($(<?php echo "'input[id=rawstocks".$c."]'"?>).val());
             var res = y - (x / 1000) || 0;
+            var res = res.toFixed(2);
             $(<?php echo "'input[id=discrepancy".$c."]'"?>).val(res);
 });      
 });     

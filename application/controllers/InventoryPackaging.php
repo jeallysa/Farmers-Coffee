@@ -42,7 +42,7 @@
                     'package_physcount'      => $pck_physcountv[$i],
                     'package_discrepancy'    => $pck_discrepancyv[$i],
                     'package_remarks'        => $pck_remarksv[$i],
-                    'inventory_date'     => $inventory_datev[$i],
+                    'inventory_date'     => $inventory_datev,
 
                 );
 
